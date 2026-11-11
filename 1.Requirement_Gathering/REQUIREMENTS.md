@@ -22,13 +22,13 @@ flowchart TD
     end
 
     subgraph ProcessingPipeline ["Processing & Normalization Pipeline"]
-        P1["Audio-to-Speech Engine<br/>(Transcription to .md)"]
-        P2["Document & Text Parsing<br/>(XML/Docx to Structured Markdown)"]
-        P3["Course Curriculum Extraction<br/>(Scraped Lectures & Hands-on Prompts)"]
+        P1["Audio-to-Speech Engine: Transcription to .md"]
+        P2["Document & Text Parsing: XML/Docx to Structured Markdown"]
+        P3["Course Curriculum Extraction: Scraped Lectures & Hands-on Prompts"]
     end
 
     subgraph Target ["Consolidated Output"]
-        OUT["Single Comprehensive Requirements File<br/>(REQUIREMENTS.md)"]
+        OUT["Single Comprehensive Requirements File: REQUIREMENTS.md"]
     end
 
     S1 --> F2

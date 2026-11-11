@@ -4,6 +4,17 @@ A full-stack, enterprise-ready Vehicle Management System developed with **Flutte
 
 ---
 
+## AI-Assisted Pair Programming Architecture
+
+![AI-Assisted Pair Programming Architecture](ai_pair_programming_architecture.png)
+
+The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver** paradigm:
+1. **Human Engineer (Navigator & Architect)**: Defines business requirements (SRS), designs system boundaries, reviews generated diffs, and validates runtime correctness. The AI never decides what to build.
+2. **AI Agent (Driver & Implementer - Google Antigravity)**: Rapidly synthesizes boilerplate, scaffolds clean architecture, executes surgical fixes from error stack traces, runs single-pass audits, and automates Git synchronization.
+3. **6-Stage Interactive Loop**: Context Grounding (`@workspace`) ➔ Atomic Micro-Prompting ➔ Diff Inspection ➔ Runtime Verification (Mockito/MockMvc/Flutter) ➔ Diagnostic Self-Correction ➔ Attestation & Git Sync.
+
+---
+
 ## System Architecture
 
 ### High-Level System Architecture

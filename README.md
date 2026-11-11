@@ -6,29 +6,63 @@ A full-stack, enterprise-ready Vehicle Management System developed with **Flutte
 
 ## System Architecture
 
+### High-Level System Architecture
 ![SquareHealth-VMS System Architecture](architecture_diagram.jpg)
 
-### Architectural Layers
+### Deep Technical Architecture Blueprint
+![SquareHealth-VMS Deep Technical Blueprint](architecture_detailed_spec.png)
+
+### 4-Tier Visual Architecture Blueprint
+![SquareHealth-VMS Visual Blueprint](architecture_blueprint.jpg)
+
+### Architectural Layers in Detail
 
 1. **Client Layer (Flutter Web Frontend)**
-   - **Framework**: Flutter Web (Dart) with Material 3 Design System.
-   - **Modules**: Fleet Dashboard, Vehicle Registry, Driver Assignment, and Maintenance Logs.
-   - **Architecture**: Feature-First modular layered design (`core/`, `features/`, `shared/`, `web/`).
+   - **Framework**: Flutter Web 3.x (Dart) compiling to WebAssembly / CanvasKit for 60fps responsive desktop web experiences.
+   - **Styling**: Stark Group Material 3 Design System (`#0A192F` Deep Navy, `#3B82F6` Electric Blue, `#10B981` Emerald).
+   - **Feature-First Architecture**:
+     - `features/dashboard`: Fleet KPI cards, fleet utilization metrics, alert banners.
+     - `features/vehicles`: Paginated vehicle registry table, status chips (Available, Maintenance, In-Trip), modal CRUD forms.
+     - `features/drivers`: Driver license records, shift assignments, status management.
+     - `features/maintenance`: Periodic maintenance logs, service costs, odometer trackers.
+     - `features/documents`: Vehicle registration certificates, fitness licenses, insurance expiry tracking.
+     - `features/auth`: Corporate login, session persistence, secure token storage.
+   - **Core & Networking**:
+     - `ApiClient`: Centralized HTTP REST client with Bearer JWT injection and timeout interceptors.
+     - `VehicleModel`: Bidirectional JSON serialization (`fromJson`/`toJson`) and immutability.
+     - `Mock Data Fallback`: `assets/mock_data/vehicles_mock.json` allowing independent frontend verification without a live backend.
 
 2. **API & Business Logic Layer (Java Spring Boot)**
-   - **Framework**: Spring Boot 3 with Java 17/21.
-   - **Controllers**: REST APIs under `/api/v1/vehicles` and `/api/v1/auth`.
-   - **Business Validation**: Dedicated service layer with business rule enforcement (e.g. duplicate license plate / VIN prevention).
-   - **Data Access & Security**: Spring Data JPA ORM with Spring Security and CORS policies.
+   - **Framework**: Spring Boot 3.2.x on Java 17/21.
+   - **REST API Endpoints**:
+     - `GET /api/v1/vehicles`: Paginated retrieval of vehicles mapped to `VehicleResponseDto`.
+     - `POST /api/v1/vehicles`: Creation of new vehicle with `@Valid` payload validation.
+     - `GET /api/v1/vehicles/{id}`: Retrieval of specific vehicle details.
+     - `PUT /api/v1/vehicles/{id}`: Update of existing vehicle attributes.
+     - `DELETE /api/v1/vehicles/{id}`: Soft/hard removal returning HTTP 204.
+     - `POST /api/v1/auth/login`: Authentication returning JWT bearer token.
+   - **Business Rules Enforcement**:
+     - `VehicleServiceImpl`: Enforces uniqueness on vehicle registration number via `vehicleRepository.existsByVehicleNumber(dto.getVehicleNumber())`. Throws `DuplicateVehicleException` on collision.
+   - **Error Handling & Security**:
+     - `GlobalExceptionHandler` (`@RestControllerAdvice`): Uniform error envelope (`ErrorResponseDto`) returning standard HTTP 400, 404, and 409 responses.
+     - `CorsConfig` & `SecurityConfig`: Cross-Origin controls for Netlify frontend origin and stateless REST security.
 
-3. **Data Layer (PostgreSQL Database)**
-   - **Engine**: Relational SQL (PostgreSQL / H2 in-memory for testing).
-   - **Entities**: Vehicles, Maintenance Logs, Drivers, and Users.
+3. **Data Layer (PostgreSQL Relational Database)**
+   - **Persistence Provider**: Spring Data JPA with Hibernate ORM and HikariCP connection pool.
+   - **Relational Schema**:
+     - `vehicles`: `id` (PK), `vehicle_number` (UNIQUE NOT NULL), `brand`, `model`, `manufacturing_year`, `status`, `daily_rate`, `created_at`, `updated_at`.
+     - `drivers`: `id` (PK), `full_name`, `license_number` (UNIQUE), `phone`, `status`.
+     - `maintenance_logs`: `id` (PK), `vehicle_id` (FK referencing `vehicles.id`), `service_type`, `cost`, `service_date`, `description`.
+     - `users`: `id` (PK), `username` (UNIQUE), `password_hash`, `role`.
 
-4. **DevOps & Infrastructure**
-   - **Containerization**: Docker multi-stage containerization.
-   - **Repository Structure**: Decoupled Monorepo (`vms-frontend/` and `vms-backend/`).
-   - **Cloud Deployment**: Netlify for Flutter Web client and Render for Spring Boot backend service.
+4. **DevOps, Testing & Cloud Infrastructure**
+   - **Monorepo Design**: Clean technical separation between `vms-frontend/` and `vms-backend/`.
+   - **Test Pyramid**:
+     - Mockito Unit Tests (`VehicleServiceTest`): Business validation logic verification in isolation.
+     - MockMvc Integration Tests (`VehicleControllerTest`): End-to-end HTTP contract testing.
+   - **Cloud Targets**:
+     - **Netlify Edge**: Automated web build via `flutter build web --release`.
+     - **Render Cloud**: Dockerized containerized backend service running the Spring Boot fat JAR connected to managed PostgreSQL.
 
 ---
 

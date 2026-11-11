@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SquareHealth-VMS Deep Technical Architecture</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #070d19;
+      color: #e2e8f0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      padding: 30px;
+      width: 2560px;
+      height: 1540px;
+      overflow: hidden;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      background: linear-gradient(135deg, #0d1527 0%, #111e38 100%);
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .title-box h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+    .title-box p {
+      font-size: 15px;
+      color: #94a3b8;
+    }
+    .badges {
+      display: flex;
+      gap: 12px;
+    }
+    .badge {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+    .badge span { color: #38bdf8; }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 780px 880px 840px;
+      gap: 24px;
+      height: 1380px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: #0d1527;
+      border-radius: 14px;
+      border: 1px solid #1e293b;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title .icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* Colors */
+    .cyan { border-top: 3px solid #06b6d4; }
+    .cyan .icon { background: #06b6d4; box-shadow: 0 0 10px #06b6d4; }
+    .cyan .tag { background: rgba(6,182,212,0.15); color: #38bdf8; border: 1px solid rgba(6,182,212,0.3); }
+
+    .green { border-top: 3px solid #10b981; }
+    .green .icon { background: #10b981; box-shadow: 0 0 10px #10b981; }
+    .green .tag { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+
+    .purple { border-top: 3px solid #a855f7; }
+    .purple .icon { background: #a855f7; box-shadow: 0 0 10px #a855f7; }
+    .purple .tag { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+
+    .amber { border-top: 3px solid #f59e0b; }
+    .amber .icon { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
+    .amber .tag { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+
+    .blue { border-top: 3px solid #3b82f6; }
+    .blue .icon { background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+    .blue .tag { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+
+    /* Module boxes */
+    .module-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .module-box {
+      background: #111e38;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .module-box h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .module-box p {
+      font-size: 11.5px;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+    .code-pill {
+      font-family: 'Consolas', monospace;
+      font-size: 11px;
+      background: #1e293b;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #38bdf8;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    /* List items */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .list-entry {
+      background: #111e38;
+      border: 1px solid #1e293b;
+      padding: 10px 14px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .list-entry-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .list-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #f8fafc;
+    }
+    .list-subtitle {
+      font-size: 11px;
+      color: #64748b;
+      font-family: 'Consolas', monospace;
+    }
+    .method-badge {
+      font-family: 'Consolas', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .method-get { background: rgba(56,189,248,0.2); color: #38bdf8; }
+    .method-post { background: rgba(52,211,153,0.2); color: #34d399; }
+    .method-put { background: rgba(251,191,36,0.2); color: #fbbf24; }
+    .method-delete { background: rgba(248,113,113,0.2); color: #f87171; }
+
+    /* Schema Table */
+    .db-table {
+      background: #111e38;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .db-table-header {
+      background: #1e293b;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fbbf24;
+      display: flex;
+      justify-content: space-between;
+    }
+    .db-row {
+      display: grid;
+      grid-template-columns: 140px 110px 1fr;
+      padding: 6px 12px;
+      font-size: 11px;
+      border-bottom: 1px solid #142036;
+      font-family: 'Consolas', monospace;
+    }
+    .db-row:last-child { border-bottom: none; }
+    .db-col-name { color: #f1f5f9; font-weight: 600; }
+    .db-col-type { color: #38bdf8; }
+    .db-col-constraint { color: #94a3b8; font-size: 10px; }
+    .pk { color: #f59e0b; font-weight: bold; }
+    .fk { color: #a855f7; font-weight: bold; }
+
+    /* Flow Callout */
+    .flow-connector {
+      background: linear-gradient(90deg, rgba(6,182,212,0.1), rgba(16,185,129,0.1));
+      border: 1px dashed #334155;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 11.5px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+    .arrow { color: #38bdf8; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="title-box">
+      <h1>SquareHealth-VMS — Deep Technical Architecture Blueprint</h1>
+      <p>Stark Group Enterprise Fleet Management System • Monorepo Technical Design Specification</p>
+    </div>
+    <div class="badges">
+      <div class="badge">Frontend: <span>Flutter 3.x Web (Dart)</span></div>
+      <div class="badge">Backend: <span>Java 21 • Spring Boot 3.2.x</span></div>
+      <div class="badge">Database: <span>PostgreSQL 16 (Relational)</span></div>
+      <div class="badge">Deploy: <span>Netlify Edge + Render Cloud</span></div>
+    </div>
+  </div>
+
+  <!-- 3-Column Ultra Detailed Architecture -->
+  <div class="grid-container">
+
+    <!-- COLUMN 1: CLIENT TIER (Flutter Web) -->
+    <div class="column">
+      
+      <!-- Card: Presentation Layer -->
+      <div class="card cyan">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>Client Layer: Flutter Web Frontend</div>
+          <div class="tag">Feature-First Architecture</div>
+        </div>
+        <div class="module-grid">
+          <div class="module-box">
+            <h4>📊 Fleet Dashboard</h4>
+            <p>KPI metrics, fleet utilization, real-time vehicle status donut chart, alert banner.</p>
+            <span class="code-pill">DashboardScreen</span>
+          </div>
+          <div class="module-box">
+            <h4>🚗 Vehicle Registry</h4>
+            <p>Paginated data table, status filtering (Available, Maintenance, In-Trip), modal forms.</p>
+            <span class="code-pill">VehicleListScreen</span>
+          </div>
+          <div class="module-box">
+            <h4>👨‍✈️ Driver Assignment</h4>
+            <p>License validation, active shift binding, driver status management & history.</p>
+            <span class="code-pill">DriverManagementScreen</span>
+          </div>
+          <div class="module-box">
+            <h4>🔧 Maintenance Logs</h4>
+            <p>Service records, odometer logs, scheduled service alerts, expense calculations.</p>
+            <span class="code-pill">MaintenanceScreen</span>
+          </div>
+        </div>
+
+        <div class="item-list">
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">AppShell Navigation & Responsive Layout</span>
+              <span class="list-subtitle">lib/shared/widgets/app_shell.dart</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#38bdf8;">Sidebar + AppBar</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">Stark Group Material 3 Design System</span>
+              <span class="list-subtitle">lib/core/theme/app_theme.dart (#0A192F / #3B82F6)</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#34d399;">Design Tokens</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">Offline Mock Repository Fallback</span>
+              <span class="list-subtitle">assets/mock_data/vehicles_mock.json</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#f59e0b;">Zero-Backend UI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Frontend Networking & Serialization -->
+      <div class="card cyan">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>Client Networking & DTO Serialization</div>
+          <div class="tag">Data & Network Layer</div>
+        </div>
+        <div class="item-list">
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">ApiClient (Centralized HTTP Client)</span>
+              <span class="list-subtitle">lib/core/network/api_client.dart (BaseURL, Bearer Token)</span>
+            </div>
+            <span class="method-badge method-get">HTTP/REST</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">VehicleModel (JSON Serialization)</span>
+              <span class="list-subtitle">fromJson(), toJson(), copyWith(), Equatable</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#c084fc;">Serialization</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">Form Validation Engine</span>
+              <span class="list-subtitle">lib/core/utils/validators.dart (VIN, Year, Number Plate)</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#34d399;">Regex Rules</span>
+          </div>
+        </div>
+
+        <div class="flow-connector" style="margin-top: 14px;">
+          <div class="flow-step"><span>Web UI</span></div>
+          <span class="arrow">➔</span>
+          <div class="flow-step"><span>Form Validator</span></div>
+          <span class="arrow">➔</span>
+          <div class="flow-step"><span>ApiClient</span></div>
+          <span class="arrow">➔</span>
+          <div class="flow-step"><span>Bearer JWT Auth</span></div>
+        </div>
+      </div>
+
+      <!-- Card: Frontend Build & Hosting -->
+      <div class="card blue">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>Frontend Hosting & Web Engine</div>
+          <div class="tag">Netlify Edge</div>
+        </div>
+        <p style="font-size: 12px; color: #94a3b8; line-height: 1.5; margin-bottom: 10px;">
+          Flutter Web compiles to native WASM / CanvasKit rendering engine for 60fps canvas performance. Hosted on Netlify Edge CDN with zero backend dependency.
+        </p>
+        <div class="list-entry">
+          <div class="list-entry-left">
+            <span class="list-title">Build Command: flutter build web --release</span>
+            <span class="list-subtitle">Publish Directory: vms-frontend/build/web</span>
+          </div>
+          <span class="tag" style="background:#1e293b; color:#60a5fa;">Static Edge CDN</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLUMN 2: BACKEND TIER (Java Spring Boot) -->
+    <div class="column">
+      
+      <!-- Card: API Gateway & Controller Layer -->
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>Spring Boot 3 REST API Layer</div>
+          <div class="tag">Controller Tier</div>
+        </div>
+
+        <div class="item-list">
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">GET /api/v1/vehicles</span>
+              <span class="list-subtitle">VehicleController.getAllVehicles() -> List&lt;VehicleResponseDto&gt;</span>
+            </div>
+            <span class="method-badge method-get">GET 200</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">POST /api/v1/vehicles</span>
+              <span class="list-subtitle">VehicleController.createVehicle(@Valid @RequestBody VehicleRequestDto)</span>
+            </div>
+            <span class="method-badge method-post">POST 201</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">GET /api/v1/vehicles/{id}</span>
+              <span class="list-subtitle">VehicleController.getVehicleById(@PathVariable Long id)</span>
+            </div>
+            <span class="method-badge method-get">GET 200</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">PUT /api/v1/vehicles/{id}</span>
+              <span class="list-subtitle">VehicleController.updateVehicle(@PathVariable Long id, @Valid dto)</span>
+            </div>
+            <span class="method-badge method-put">PUT 200</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">DELETE /api/v1/vehicles/{id}</span>
+              <span class="list-subtitle">VehicleController.deleteVehicle(@PathVariable Long id)</span>
+            </div>
+            <span class="method-badge method-delete">DELETE 204</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">POST /api/v1/auth/login</span>
+              <span class="list-subtitle">AuthController.login(@Valid LoginRequestDto) -> AuthResponseDto</span>
+            </div>
+            <span class="method-badge method-post">AUTH 200</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Business Logic & Validation Engine -->
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>Business Logic & Validation Layer</div>
+          <div class="tag">Service Tier</div>
+        </div>
+
+        <div class="module-box" style="margin-bottom: 12px; border-left: 3px solid #10b981;">
+          <h4>🛡️ Duplicate Vehicle Number Rule Enforcement</h4>
+          <p style="margin-bottom: 6px;">
+            Strict assignment rule: Every registered vehicle must possess a globally unique license number / VIN across the entire Stark Group fleet.
+          </p>
+          <div style="font-family: Consolas; font-size: 11px; color: #a7f3d0; background: #06281e; padding: 6px 10px; border-radius: 4px;">
+            if (vehicleRepository.existsByVehicleNumber(dto.getVehicleNumber())) {<br/>
+            &nbsp;&nbsp;throw new DuplicateVehicleException("Vehicle already registered!");<br/>
+            }
+          </div>
+        </div>
+
+        <div class="item-list">
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">VehicleServiceImpl (@Service, @Transactional)</span>
+              <span class="list-subtitle">Full CRUD orchestration, entity-DTO mapping, uniqueness verification</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#34d399;">Core Service</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">GlobalExceptionHandler (@RestControllerAdvice)</span>
+              <span class="list-subtitle">Translates exceptions to standardized ErrorResponseDto</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#f87171;">400 / 404 / 409</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">CorsConfig & SecurityConfig</span>
+              <span class="list-subtitle">Configures allowed origins (Netlify, localhost:3000), CSRF disable</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#c084fc;">Security</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Spring Data JPA Repository -->
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>Spring Data JPA & ORM Layer</div>
+          <div class="tag">Data Access Tier</div>
+        </div>
+        <div class="item-list">
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">VehicleRepository extends JpaRepository&lt;Vehicle, Long&gt;</span>
+              <span class="list-subtitle">boolean existsByVehicleNumber(String vehicleNumber)</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#38bdf8;">JPA Query</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">HikariCP High-Performance Connection Pool</span>
+              <span class="list-subtitle">maximumPoolSize: 10, connectionTimeout: 20000ms</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#34d399;">Connection Pool</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLUMN 3: DATA TIER & DEVOPS -->
+    <div class="column">
+      
+      <!-- Card: Relational Database Schema -->
+      <div class="card amber">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>PostgreSQL Relational Schema</div>
+          <div class="tag">Data Tier (SQL)</div>
+        </div>
+
+        <!-- Table: vehicles -->
+        <div class="db-table">
+          <div class="db-table-header">
+            <span>TABLE: vehicles</span>
+            <span>Relational Entity</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name pk">id (PK)</span>
+            <span class="db-col-type">BIGSERIAL</span>
+            <span class="db-col-constraint">PRIMARY KEY</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name">vehicle_number</span>
+            <span class="db-col-type">VARCHAR(50)</span>
+            <span class="db-col-constraint">UNIQUE, NOT NULL</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name">brand / model</span>
+            <span class="db-col-type">VARCHAR(100)</span>
+            <span class="db-col-constraint">NOT NULL</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name">status</span>
+            <span class="db-col-type">VARCHAR(30)</span>
+            <span class="db-col-constraint">AVAILABLE / IN_TRIP</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name">daily_rate</span>
+            <span class="db-col-type">DECIMAL(10,2)</span>
+            <span class="db-col-constraint">DEFAULT 0.00</span>
+          </div>
+        </div>
+
+        <!-- Table: maintenance_logs -->
+        <div class="db-table">
+          <div class="db-table-header">
+            <span>TABLE: maintenance_logs</span>
+            <span>Relational Entity</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name pk">id (PK)</span>
+            <span class="db-col-type">BIGSERIAL</span>
+            <span class="db-col-constraint">PRIMARY KEY</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name fk">vehicle_id (FK)</span>
+            <span class="db-col-type">BIGINT</span>
+            <span class="db-col-constraint">REFERENCES vehicles(id)</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name">cost / date</span>
+            <span class="db-col-type">DECIMAL, DATE</span>
+            <span class="db-col-constraint">Service details</span>
+          </div>
+        </div>
+
+        <!-- Table: drivers & users -->
+        <div class="db-table">
+          <div class="db-table-header">
+            <span>TABLE: drivers & users</span>
+            <span>Relational Entity</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name pk">drivers.id (PK)</span>
+            <span class="db-col-type">BIGSERIAL</span>
+            <span class="db-col-constraint">license_no UNIQUE</span>
+          </div>
+          <div class="db-row">
+            <span class="db-col-name pk">users.id (PK)</span>
+            <span class="db-col-type">BIGSERIAL</span>
+            <span class="db-col-constraint">username UNIQUE, ROLE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Testing Suite & Quality Assurance -->
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>Test Pyramid & Verification</div>
+          <div class="tag">Quality Assurance</div>
+        </div>
+        <div class="item-list">
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">Mockito Unit Tests (VehicleServiceTest)</span>
+              <span class="list-subtitle">Tests duplicate vehicle exception isolation without live DB</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#34d399;">100% Pass</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">MockMvc REST Integration Tests</span>
+              <span class="list-subtitle">VehicleControllerTest validates HTTP 200, 201, 400, 404, 409</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#38bdf8;">Integration</span>
+          </div>
+          <div class="list-entry">
+            <div class="list-entry-left">
+              <span class="list-title">Single-Pass Rendering Auditor (scripts/audit_rendering.py)</span>
+              <span class="list-subtitle">O(1) git-aware diff checker for zero rendering failures</span>
+            </div>
+            <span class="tag" style="background:#1e293b; color:#c084fc;">Zero-Failure CI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Cloud Deployment & Monorepo -->
+      <div class="card blue">
+        <div class="card-header">
+          <div class="card-title"><div class="icon"></div>Cloud Deployment & DevOps</div>
+          <div class="tag">Render + Netlify</div>
+        </div>
+        <div class="module-grid">
+          <div class="module-box">
+            <h4>🌐 Netlify Edge</h4>
+            <p>Static Flutter Web hosting, instant cache invalidation, automated GitHub push triggers.</p>
+            <span class="code-pill">Flutter Web CDN</span>
+          </div>
+          <div class="module-box">
+            <h4>☁️ Render Web Service</h4>
+            <p>Dockerized Spring Boot container, auto-restart, live PostgreSQL database connectivity.</p>
+            <span class="code-pill">Spring Boot API</span>
+          </div>
+        </div>
+        <div class="list-entry">
+          <div class="list-entry-left">
+            <span class="list-title">Monorepo Isolation Architecture</span>
+            <span class="list-subtitle">Independent build pipelines: vms-frontend/ & vms-backend/</span>
+          </div>
+          <span class="tag" style="background:#1e293b; color:#38bdf8;">Clean Monorepo</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

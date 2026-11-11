@@ -148,7 +148,7 @@ SquareHealth-VMS/
 │   └── Notebook.md                      # Complete story and tech breakdown for a 10-year-old
 ├── readme_folderstructure.md            # Detailed framework-specific & merged folder documentation
 ├── specifications/                      # Centralized technical specification repository
-│   ├── API_SPECIFICATION.md             # Centralized REST API data contracts & DTO schemas                 # Centralized REST API data contracts & DTO schemas
+│   ├── specifications/STEP_3_SPECIFICATION.md             # Centralized REST API data contracts & DTO schemas                 # Centralized REST API data contracts & DTO schemas
 └── Any Project Skill.docx               # Step-by-step project blueprint
 ```
 

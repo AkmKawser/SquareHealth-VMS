@@ -46,10 +46,10 @@ SquareHealth-VMS/
 │   └── REQUIREMENTS.md                  # Consolidated Single Software Requirements Specification
 ├── specifications/                      # Centralized technical specification repository
 │   ├── README.md                        # Master specification catalog & index
-│   ├── API_SPECIFICATION.md             # Canonical REST API data contracts & DTO schemas
+│   ├── specifications/STEP_3_SPECIFICATION.md             # Canonical REST API data contracts & DTO schemas
 │   ├── STEP_1_REQUIREMENTS_SPECIFICATION.md
 │   ├── STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md
-│   └── STEP_3_UI_PROTOTYPE_SPECIFICATION.md
+│   └── STEP_3_SPECIFICATION.md
 ├── vms-frontend/                        # Flutter Web client (Feature-First Architecture)
 │   ├── assets/
 │   │   └── mock_data/                   # Offline mock data for isolated UI prototyping
@@ -84,7 +84,7 @@ SquareHealth-VMS/
 
 ## 4. Module Isolation & Architectural Boundary Rules
 
-1. **Strict Client-Server Isolation**: Code inside `vms-frontend/` must never reference or depend on Java packages in `vms-backend/`. All cross-boundary communication occurs exclusively over standard HTTP/JSON via contracts defined in `specifications/API_SPECIFICATION.md`.
+1. **Strict Client-Server Isolation**: Code inside `vms-frontend/` must never reference or depend on Java packages in `vms-backend/`. All cross-boundary communication occurs exclusively over standard HTTP/JSON via contracts defined in `specifications/STEP_3_SPECIFICATION.md`.
 2. **DTO Isolation**: Backend database `@Entity` classes must never be returned directly from REST endpoints. All payloads must be mapped to immutable `DTO` records.
 3. **Asset Decoupling**: Static assets, mock datasets, and media files must reside inside designated `assets/` sub-folders, declared within `pubspec.yaml` to ensure cross-platform web loading.
 4. **Tooling & Scripts Centralization**: Automated scripts for continuous integration, code auditing, and documentation validation must reside in `scripts/`.

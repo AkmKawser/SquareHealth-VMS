@@ -144,7 +144,10 @@ SquareHealth-VMS/
 │   └── src/test/java/                   # Unit (Mockito) & Integration (MockMvc) test suite
 ├── chat/                                # Conversation logs & session history
 │   └── chat.md                          # Full transcript of user requests & agent actions
+├── notebook/                            # Kid-friendly comprehensive technology guide
+│   └── Notebook.md                      # Complete story and tech breakdown for a 10-year-old
 ├── readme_folderstructure.md            # Detailed framework-specific & merged folder documentation
+├── API_SPECIFICATION.md                 # Centralized REST API data contracts & DTO schemas
 └── Any Project Skill.docx               # Step-by-step project blueprint
 ```
 

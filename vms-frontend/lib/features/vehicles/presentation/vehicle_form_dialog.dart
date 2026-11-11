@@ -371,3 +371,4 @@ class _VehicleFormDialogState extends State<VehicleFormDialog> {
     );
   }
 }
+

@@ -6,25 +6,69 @@
     "type": "Ambulance",
     "brand": "Toyota",
     "model": "HiAce",
-    "status": "ACTIVE"
+    "status": "AVAILABLE"
   },
   {
     "id": 2,
     "vehicleNumber": "DHAKA-METRO-CHA-44-5566",
-    "company": "Stark Logistics",
+    "company": "Square Pharmaceuticals",
     "type": "Delivery Van",
     "brand": "Hyundai",
     "model": "Mighty",
-    "status": "ACTIVE"
+    "status": "IN_TRIP"
   },
   {
     "id": 3,
     "vehicleNumber": "DHAKA-METRO-BA-77-8899",
-    "company": "Square Pharma",
+    "company": "Square Hospitals",
     "type": "Microbus",
     "brand": "Toyota",
     "model": "Noah",
     "status": "MAINTENANCE"
+  },
+  {
+    "id": 4,
+    "vehicleNumber": "DHAKA-METRO-GHA-12-3456",
+    "company": "Square Health",
+    "type": "Ambulance",
+    "brand": "Nissan",
+    "model": "Caravan",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": 5,
+    "vehicleNumber": "DHAKA-METRO-DHA-98-7654",
+    "company": "Square Textiles",
+    "type": "Executive Sedan",
+    "brand": "Honda",
+    "model": "Civic",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": 6,
+    "vehicleNumber": "DHAKA-METRO-JA-55-6677",
+    "company": "Square Pharmaceuticals",
+    "type": "Delivery Van",
+    "brand": "Isuzu",
+    "model": "N-Series",
+    "status": "IN_TRIP"
+  },
+  {
+    "id": 7,
+    "vehicleNumber": "DHAKA-METRO-HA-33-4455",
+    "company": "Square Hospitals",
+    "type": "Ambulance",
+    "brand": "Mercedes-Benz",
+    "model": "Sprinter",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": 8,
+    "vehicleNumber": "DHAKA-METRO-KA-88-9900",
+    "company": "Square Health",
+    "type": "Microbus",
+    "brand": "Toyota",
+    "model": "HiAce Commuter",
+    "status": "MAINTENANCE"
   }
 ]
-

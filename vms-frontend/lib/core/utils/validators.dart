@@ -10,8 +10,13 @@ class Validators {
     if (value == null || value.trim().isEmpty) {
       return 'Vehicle number is required';
     }
-    if (value.trim().length < 5) {
+    final clean = value.trim().toUpperCase();
+    if (clean.length < 5) {
       return 'Vehicle number must be at least 5 characters';
+    }
+    final regex = RegExp(r'^[A-Z0-9-]+$');
+    if (!regex.hasMatch(clean)) {
+      return 'Must contain only uppercase letters, numbers, and hyphens';
     }
     return null;
   }
@@ -33,4 +38,3 @@ class Validators {
     return null;
   }
 }
-

@@ -97,3 +97,4 @@ SquareHealth-VMS/
 - [x] Verified official Spring Boot layered directory layout on disk.
 - [x] Documented architectural rationale in [`readme_folderstructure.md`](../readme_folderstructure.md).
 - [x] Synchronized monorepo directory tree in master [`README.md`](../README.md).
+

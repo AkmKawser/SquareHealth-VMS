@@ -15,7 +15,31 @@ This specification formalizes the visual tokens, component hierarchy, client-sid
 
 ---
 
-## 2. Design System Tokens & Visual Standards
+## 2. Graphical Demonstration of UI Screens
+
+The following visual demo showcases the exact layout, responsive components, color palette, and interactive modal dialogs implemented in the Flutter Web presentation layer:
+
+![SquareHealth-VMS UI Prototype Graphical Demo](ui_prototype_demo.png)
+
+### Key Visual Interfaces Displayed Above:
+1. **Executive Fleet Dashboard (`DashboardScreen.dart`)**:
+   - Deep navy sidebar navigation rail with active tab highlights.
+   - 4 High-contrast executive KPI cards: Total Fleet (24), Available (16), In Trip (5), Maintenance (3).
+   - Real-time calculated fleet capacity & readiness ratio progress bars.
+2. **Fleet Vehicle Registry (`VehicleListScreen.dart`)**:
+   - Live multi-attribute search bar and status filter chips (`All Statuses`, `Available`, `In Trip`, `Maintenance`).
+   - Dynamic contextual vehicle category icons (ambulance cross, freight truck, minibus, sedan).
+   - Color-coded `StatusBadge` pills and inline action buttons (Edit, Delete with confirmation modal).
+3. **Vehicle Registration Modal Dialog (`VehicleFormDialog.dart`)**:
+   - High-visibility `409 Conflict` duplicate prevention alert banner.
+   - License plate text input with strict regex enforcement (`^[A-Z0-9-]+$`).
+   - Clean dropdown selectors for Operating Company, Vehicle Type, and Initial Fleet Status.
+4. **Corporate Authentication Portal (`LoginScreen.dart`)**:
+   - Square Health branded sign-in card with instant demo credential helper (`admin` / `Password123!`).
+
+---
+
+## 3. Design System Tokens & Visual Standards
 
 The UI strictly adheres to the **Stark Group Material 3 Enterprise Design System**:
 
@@ -32,7 +56,7 @@ The UI strictly adheres to the **Stark Group Material 3 Enterprise Design System
 
 ---
 
-## 3. Component Architecture & Screen Specifications
+## 4. Component Architecture & Screen Specifications
 
 ```mermaid
 flowchart TD
@@ -55,7 +79,7 @@ flowchart TD
 
 ---
 
-### 3.1 Authentication Screen (`LoginScreen`)
+### 4.1 Authentication Screen (`LoginScreen`)
 * **Path**: [`vms-frontend/lib/features/auth/presentation/login_screen.dart`](../vms-frontend/lib/features/auth/presentation/login_screen.dart)
 * **Visual Elements**:
   * Centered responsive card (max width 420px) on light slate background.
@@ -67,7 +91,7 @@ flowchart TD
 
 ---
 
-### 3.2 Responsive Navigation Shell (`AppShell`)
+### 4.2 Responsive Navigation Shell (`AppShell`)
 * **Path**: [`vms-frontend/lib/shared/widgets/app_shell.dart`](../vms-frontend/lib/shared/widgets/app_shell.dart)
 * **Visual Elements**:
   * Fixed-width dark navy `NavigationRail` with corporate logo mark and destination tabs (Dashboard, Vehicles, Maintenance, Drivers).
@@ -76,7 +100,7 @@ flowchart TD
 
 ---
 
-### 3.3 Executive Dashboard (`DashboardScreen`)
+### 4.3 Executive Dashboard (`DashboardScreen`)
 * **Path**: [`vms-frontend/lib/features/dashboard/presentation/dashboard_screen.dart`](../vms-frontend/lib/features/dashboard/presentation/dashboard_screen.dart)
 * **Visual Elements**:
   * **4 Primary Metric Cards**:
@@ -90,7 +114,7 @@ flowchart TD
 
 ---
 
-### 3.4 Fleet Registry & Management (`VehicleListScreen`)
+### 4.4 Fleet Registry & Management (`VehicleListScreen`)
 * **Path**: [`vms-frontend/lib/features/vehicles/presentation/vehicle_list_screen.dart`](../vms-frontend/lib/features/vehicles/presentation/vehicle_list_screen.dart)
 * **Visual Elements**:
   * Header toolbar with title, subtext, "Refresh" button, and "+ Register Vehicle" primary action button.
@@ -106,7 +130,7 @@ flowchart TD
 
 ---
 
-### 3.5 Vehicle Registration & Modification Modal (`VehicleFormDialog`)
+### 4.5 Vehicle Registration & Modification Modal (`VehicleFormDialog`)
 * **Path**: [`vms-frontend/lib/features/vehicles/presentation/vehicle_form_dialog.dart`](../vms-frontend/lib/features/vehicles/presentation/vehicle_form_dialog.dart)
 * **Form Inputs & Validations**:
   1. *Vehicle License Plate Number*:
@@ -126,7 +150,7 @@ flowchart TD
 
 ---
 
-## 4. In-Memory Mock Repository & Service Specification
+## 5. In-Memory Mock Repository & Service Specification
 
 * **Path**: [`vms-frontend/lib/features/vehicles/services/vehicle_service.dart`](../vms-frontend/lib/features/vehicles/services/vehicle_service.dart)
 * **Capabilities**:
@@ -137,10 +161,11 @@ flowchart TD
 
 ---
 
-## 5. Verification Checklist
+## 6. Verification Checklist
 
 - [x] Client-side regex pattern `^[A-Z0-9-]+$` verified on input fields.
 - [x] All 8 mock fleet vehicles render properly in browser.
 - [x] Status badge visual variants verified for `AVAILABLE`, `IN_TRIP`, and `MAINTENANCE`.
 - [x] In-memory duplicate license plate collision produces HTTP 409 error banner.
 - [x] Responsive layout adapts cleanly across window resizing.
+

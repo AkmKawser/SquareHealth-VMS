@@ -32,3 +32,4 @@ flowchart LR
 1. **For Frontend Developers**: Consult [`API_SPECIFICATION.md`](./API_SPECIFICATION.md) and [`STEP_3_UI_PROTOTYPE_SPECIFICATION.md`](./STEP_3_UI_PROTOTYPE_SPECIFICATION.md) to understand models, DTO keys, and UI validation rules.
 2. **For Backend Developers**: Consult [`API_SPECIFICATION.md`](./API_SPECIFICATION.md) and [`STEP_1_REQUIREMENTS_SPECIFICATION.md`](./STEP_1_REQUIREMENTS_SPECIFICATION.md) to build REST endpoints, DTOs, and duplicate vehicle constraints.
 3. **For Quality Assurance (QA)**: Use the acceptance criteria and status code tables to construct automated unit, integration, and E2E test suites.
+

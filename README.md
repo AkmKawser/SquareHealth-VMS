@@ -148,7 +148,11 @@ SquareHealth-VMS/
 │   └── Notebook.md                      # Complete story and tech breakdown for a 10-year-old
 ├── readme_folderstructure.md            # Detailed framework-specific & merged folder documentation
 ├── specifications/                      # Centralized technical specification repository
-│   ├── specifications/STEP_3_SPECIFICATION.md             # Centralized REST API data contracts & DTO schemas                 # Centralized REST API data contracts & DTO schemas
+│   ├── README.md                        # Master specification catalog & index
+│   ├── STEP_1_REQUIREMENTS_SPECIFICATION.md
+│   ├── STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md
+│   ├── STEP_3_SPECIFICATION.md          # Centralized REST API data contracts & UI prototype
+│   └── STEP_4_DATABASE_SPECIFICATION.md # Relational schema, ER diagram & Flyway migrations
 └── Any Project Skill.docx               # Step-by-step project blueprint
 ```
 
@@ -169,4 +173,9 @@ SquareHealth-VMS/
   - Mock datasets created at [`assets/mock_data/vehicles_mock.json`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/assets/mock_data/vehicles_mock.json) covering all domain states.
   - Client presentation layer (theme, responsive AppShell, forms with regex validation) verified in browser.
   - Detailed technical blueprint and engineering rationale documented in [`Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Any%20Project%20Skill.docx).
+- **Step-4: Database Architecture, Relational Schema & Migration Engine**
+  - Relational persistence architecture, ER diagram, and Data Dictionary formalized in [`STEP_4_DATABASE_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/specifications/STEP_4_DATABASE_SPECIFICATION.md).
+  - Storage-level invariants enforced: `UNIQUE(vehicle_number)`, check constraints on lifecycle statuses, and B-Tree performance indexes.
+  - Version-controlled migration pipeline configured using Flyway with executable DDL (`V1__initial_schema.sql`) and baseline seed data (`V2__seed_baseline_data.sql`).
+  - Documented in [`Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Any%20Project%20Skill.docx) with engineering rationale.
 

@@ -11,6 +11,7 @@ Welcome to the centralized specification repository for the **SquareHealth-VMS**
 | [`STEP_1_REQUIREMENTS_SPECIFICATION.md`](./STEP_1_REQUIREMENTS_SPECIFICATION.md) | **Step-1: Requirements** | Multi-source ingestion pipeline, audio-to-speech transcription protocol, and bracketed citation standards (`[Source: ...]`). | **Approved** |
 | [`STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md`](./STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md) | **Step-2: Folder Structure** | Unified monorepo topology, official Flutter & Spring Boot layered architectures, and module isolation rules. | **Approved** |
 | [`STEP_3_SPECIFICATION.md`](./STEP_3_SPECIFICATION.md) | **Step-3: Data Contracts, Mocks & UI Prototype** | Canonical REST API contracts, DTO schemas, regex validation rules, `ErrorResponseDto` envelope, in-memory mock repository, responsive Flutter Web prototype, and high-resolution graphical UI demo. | **Approved** |
+| [`STEP_4_DATABASE_SPECIFICATION.md`](./STEP_4_DATABASE_SPECIFICATION.md) | **Step-4: Database & Migrations** | Relational schema, ER diagram, Data Dictionary, storage invariants (`UNIQUE`, `CHECK`), B-Tree indexes, and Flyway DDL/DML scripts. | **Approved** |
 
 ---
 
@@ -20,7 +21,7 @@ Welcome to the centralized specification repository for the **SquareHealth-VMS**
 flowchart LR
     S1["SPEC-01: Requirements\n(SRS & Citations)"] --> S2["SPEC-02: Folder Structure\n(Monorepo Topology)"]
     S2 --> S3["SPEC-03: Contracts & UI Prototype\n(API DTOs, Mocks & Flutter UI)"]
-    S3 -.-> S4["SPEC-04: Database Schema\n(PostgreSQL & Flyway - Next)"]
+    S3 --> S4["SPEC-04: Database Schema\n(PostgreSQL & Flyway Migrations)"]
     S4 -.-> S5["SPEC-05: Spring Boot Engine\n(Services & REST Controllers)"]
 ```
 

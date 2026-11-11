@@ -1638,3 +1638,45 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 ### Assistant Response
 *(See full conversational response delivered to user below)*
 
+
+## User Message #28
+**Timestamp:** 2026-11-12T05:13:23Z
+> NOW write about step-4
+
+### Agent Strategic Reasoning & Thinking Process
+1. **Architectural Objective**:
+   - The user mandated formalizing and documenting **Step-4: Database Architecture, Relational Schema & Migration Engine** in full technical detail across all master project artifacts:
+     1. In master project roadmap [`Any Project Skill.docx`](../Any%20Project%20Skill.docx).
+     2. In dedicated technical specification [`specifications/STEP_4_DATABASE_SPECIFICATION.md`](../specifications/STEP_4_DATABASE_SPECIFICATION.md).
+     3. Updating [`specifications/README.md`](../specifications/README.md) and [`README.md`](../README.md).
+2. **Deep Technical Architecture for Step-4**:
+   - **Entity-Relationship (ER) Architecture**: Modeled normalized relational entities (`companies`, `vehicles`, `drivers`, `maintenance_logs`, `users`, `audit_logs`) mapped to Step-3 DTO contracts with foreign key referential integrity (`ON DELETE RESTRICT`).
+   - **Relational Data Dictionary**: Detailed column definitions, synthetic sequence primary keys (`BIGSERIAL`), foreign keys, and audit timestamps.
+   - **Storage-Level Invariants**:
+     - `UNIQUE(vehicle_number)`: Enforces license plate uniqueness at the database engine level to prevent concurrency race conditions.
+     - `CHECK (status IN ('AVAILABLE', 'IN_TRIP', 'MAINTENANCE'))`: Restricts lifecycle state to valid domain enums.
+     - `CHECK (vehicle_number ~ '^[A-Z0-9-]+$')`: Enforces uppercase alphanumeric formatting.
+   - **Performance Indexes**: Defined B-Tree indexes on `status`, `company_id`, composite `(company_id, status)`, and `varchar_pattern_ops` for fast substring matching.
+   - **Flyway Migration Engine**:
+     - `V1__initial_schema.sql`: Full DDL creation script.
+     - `V2__seed_baseline_data.sql`: DML seed script populating Square subsidiaries and the 8 mock-validated vehicles from Step-3.
+   - **Engineering Rationale**: Grounding the database schema in Step-3's frozen contracts eliminates schema drift and database migrations rework during backend construction.
+3. **Verification & Repository Sync**:
+   - Updated `Any Project Skill.docx` with Step-4 heading and 5 technical subsections.
+   - Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (all 44 repository markdown files passed 100%).
+   - Staged, committed, and pushed changes to GitHub `origin/main` (Universal Rule 3).
+
+### Tools Executed
+| Tool Name | Purpose |
+|---|---|
+| `write_file` | Created `scripts/add_step4_docx.py` to insert Step-4 into `Any Project Skill.docx` |
+| `run_command` | Executed `add_step4_docx.py` |
+| `write_file` | Created [`specifications/STEP_4_DATABASE_SPECIFICATION.md`](../specifications/STEP_4_DATABASE_SPECIFICATION.md) |
+| `edit_file` | Updated `specifications/README.md` catalog with Step-4 |
+| `edit_file` | Updated `README.md` directory tree and completed phases with Step-4 |
+| `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (44 files passed) |
+| `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
+
+### Assistant Response
+*(See full conversational response delivered to user below)*
+

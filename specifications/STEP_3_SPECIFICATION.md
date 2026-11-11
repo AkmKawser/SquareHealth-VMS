@@ -341,3 +341,4 @@ flowchart TD
 - [x] In-memory duplicate license plate collision produces HTTP 409 error banner.
 - [x] Responsive layout adapts cleanly across window resizing.
 - [x] Canonical REST API DTO schemas match backend Java models.
+

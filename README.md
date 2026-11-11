@@ -7,7 +7,7 @@ A full-stack, enterprise-ready Vehicle Management System developed with **Flutte
 ## Project Structure Overview
 
 ```
-SquiareHealth-VMS/
+SquareHealth-VMS/
 ├── 1.Requirement_Gathering/             # Multi-source requirement ingestion pipeline & SRS
 │   ├── Document/                        # Source Word specifications
 │   ├── UdemyScrapper/                   # Scraped course curriculum (7 sections)
@@ -44,9 +44,9 @@ SquiareHealth-VMS/
 - **Step-1: Requirement Gathering**
   - Architecture for requirement gathering documented and visualized.
   - Audio file (`002 - Session  Weekly Support 01...flac`) transcribed into Markdown (`002 - Session  Weekly Support 01...md`).
-  - Exhaustive consolidated requirements document created at [REQUIREMENTS.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquiareHealth-VMS/1.Requirement_Gathering/REQUIREMENTS.md) with every requirement citing its source in brackets `[Source: ...]`.
+  - Exhaustive consolidated requirements document created at [REQUIREMENTS.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/REQUIREMENTS.md) with every requirement citing its source in brackets `[Source: ...]`.
 - **Step-2: Folder Structure**
   - Official Flutter Web (frontend) and Spring Boot (backend) folder structures analyzed from official documentation.
   - Merged into a unified monorepo folder structure and created on disk.
-  - Comprehensive explanation and architectural rationale documented in [readme_folderstructure.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquiareHealth-VMS/readme_folderstructure.md).
+  - Comprehensive explanation and architectural rationale documented in [readme_folderstructure.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/readme_folderstructure.md).
 

@@ -148,7 +148,7 @@ vms-backend/
 The full-stack application adopts a **Clean Monorepo Layout** that unifies the requirements pipeline, the Flutter Web client, and the Spring Boot backend service while maintaining complete technical isolation between the stacks:
 
 ```text
-SquiareHealth-VMS/
+SquareHealth-VMS/
 │
 ├── 1.Requirement_Gathering/                             # Requirement Engineering Artifacts
 │   ├── Document/

@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "vehicleNumber": "DHAKA-METRO-GA-11-2233",
+    "company": "Square Health",
+    "type": "Ambulance",
+    "brand": "Toyota",
+    "model": "HiAce",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "vehicleNumber": "DHAKA-METRO-CHA-44-5566",
+    "company": "Stark Logistics",
+    "type": "Delivery Van",
+    "brand": "Hyundai",
+    "model": "Mighty",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 3,
+    "vehicleNumber": "DHAKA-METRO-BA-77-8899",
+    "company": "Square Pharma",
+    "type": "Microbus",
+    "brand": "Toyota",
+    "model": "Noah",
+    "status": "MAINTENANCE"
+  }
+]
+

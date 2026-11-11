@@ -111,7 +111,7 @@ SquareHealth-VMS/
 ├── 1.Requirement_Gathering/             # Multi-source requirement ingestion pipeline & SRS
 │   ├── Document/                        # Source Word specifications
 │   ├── UdemyScrapper/                   # Scraped course curriculum (7 sections)
-│   ├── YoutubeScrapper/                 # Audio files (.flac) & session transcripts (.md)
+│   ├── YoutubeScrapper/                 # Audio files (.mp3) & session transcripts (.md)
 │   ├── Requirement Gathering.png        # Ingestion architecture diagram
 │   └── REQUIREMENTS.md                  # Consolidated Single Software Requirements Specification
 ├── vms-frontend/                        # Flutter Web client (Feature-First Architecture)
@@ -143,7 +143,7 @@ SquareHealth-VMS/
 
 - **Step-1: Requirement Gathering**
   - Architecture for requirement gathering documented and visualized.
-  - Audio file (`002 - Session  Weekly Support 01...flac`) transcribed into Markdown (`002 - Session  Weekly Support 01...md`).
+  - Audio file (`002 - Session  Weekly Support 01...mp3`) transcribed into Markdown (`002 - Session  Weekly Support 01...md`).
   - Exhaustive consolidated requirements document created at [REQUIREMENTS.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/REQUIREMENTS.md) with every requirement citing its source in brackets `[Source: ...]`.
 - **Step-2: Folder Structure**
   - Official Flutter Web (frontend) and Spring Boot (backend) folder structures analyzed from official documentation.

@@ -323,14 +323,14 @@ You build the prototype first! This is called **Option 4: Contract + Prototype**
 
 ```
     Phase 3A: The Rulebook           Phase 3B: The Pretend Data           Phase 3C: The Interactive Screen
-   (API_SPECIFICATION.md)       -->     (vehicles_mock.json)        -->     (Flutter Web Prototype)
+   (specifications/API_SPECIFICATION.md)       -->     (vehicles_mock.json)        -->     (Flutter Web Prototype)
    "Signed contract between             "8 pretend ambulances &             "Clickable buttons, live search,
    Frontend & Backend teams"            medicine vans in memory"            modal forms & real-time badges"
 ```
 
 #### What We Built in Step 3:
 
-1. **The Contract ([`API_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/API_SPECIFICATION.md))**:
+1. **The Contract ([`specifications/API_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/specifications/API_SPECIFICATION.md))**:
    - We wrote down the exact name of every single field:
      - `vehicleNumber` (text with regex rule `^[A-Z0-9-]+$`)
      - `company` (text)

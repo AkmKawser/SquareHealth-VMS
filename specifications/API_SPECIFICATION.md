@@ -175,4 +175,3 @@ Retrieves aggregated executive KPIs for the fleet overview screen.
 ```
 
 ---
-

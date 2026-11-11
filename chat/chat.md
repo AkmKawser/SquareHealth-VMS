@@ -1532,3 +1532,41 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 ### Assistant Response
 *(See full conversational response delivered to user below)*
 
+
+## User Message #25
+**Timestamp:** 2026-11-11T21:54:40Z
+> You must make Specification files for each task. add specification for UI prototype. also for step 2 and 1. in a folder named specifications. also put the api sepcifciation there.
+
+### Agent Strategic Reasoning & Thinking Process
+1. **Architectural Objective**:
+   - The user mandated establishing a centralized `specifications/` repository directory housing comprehensive, formal technical specifications for each task completed so far:
+     - Relocate `API_SPECIFICATION.md` into `specifications/API_SPECIFICATION.md`.
+     - Step 1: Requirement Gathering specification (`specifications/STEP_1_REQUIREMENTS_SPECIFICATION.md`).
+     - Step 2: Unified Monorepo & Framework Folder Structure specification (`specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md`).
+     - Step 3: UI Prototype & Presentation Layer specification (`specifications/STEP_3_UI_PROTOTYPE_SPECIFICATION.md`).
+     - Master Catalog & Navigation Index (`specifications/README.md`).
+2. **Technical Depth & Traceability**:
+   - **Step-1 Specification (`SPEC-STEP-01`)**: Formulates multi-source knowledge asset ingestion, speech-to-text pipeline, bracketed citation standard (`[Source: ...]`), functional & non-functional requirements taxonomy, and core domain invariants.
+   - **Step-2 Specification (`SPEC-STEP-02`)**: Documents official Flutter Web (Feature-First) and Spring Boot (Layered) architectures, top-level monorepo topology, cross-boundary isolation rules, and DTO decoupling.
+   - **Step-3 UI Prototype Specification (`SPEC-STEP-03-UI`)**: Documents design tokens (Stark Group Navy, Electric Blue, Emerald Green), responsive `AppShell`, Dashboard metrics, Vehicle Registry, `VehicleFormDialog` with regex validation (`^[A-Z0-9-]+$`), and in-memory mock repository architecture.
+   - **API Specification (`API_SPECIFICATION.md`)**: Maintained canonical REST contracts, DTO schemas, and `ErrorResponseDto` envelope.
+3. **Repository Updates & Compliance**:
+   - Updated all Markdown hyperlinks in `README.md` and `notebook/Notebook.md` to reference `specifications/API_SPECIFICATION.md`.
+   - Executed single-pass rendering auditor `scripts/audit_rendering.py` with 100% pass across all 44 repository markdown files.
+   - Automated git commit and pushed to `origin/main` (Universal Rule 3).
+
+### Tools Executed
+| Tool Name | Purpose |
+|---|---|
+| `write_file` | Created `specifications/API_SPECIFICATION.md` |
+| `write_file` | Created `specifications/STEP_1_REQUIREMENTS_SPECIFICATION.md` |
+| `write_file` | Created `specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md` |
+| `write_file` | Created `specifications/STEP_3_UI_PROTOTYPE_SPECIFICATION.md` |
+| `write_file` | Created `specifications/README.md` master catalog |
+| `run_command` | Removed root `API_SPECIFICATION.md` and updated relative links |
+| `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (44 files passed) |
+| `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
+
+### Assistant Response
+*(See full conversational response delivered to user below)*
+

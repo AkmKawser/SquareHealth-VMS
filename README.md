@@ -4,6 +4,34 @@ A full-stack, enterprise-ready Vehicle Management System developed with **Flutte
 
 ---
 
+## System Architecture
+
+![SquareHealth-VMS System Architecture](architecture_diagram.jpg)
+
+### Architectural Layers
+
+1. **Client Layer (Flutter Web Frontend)**
+   - **Framework**: Flutter Web (Dart) with Material 3 Design System.
+   - **Modules**: Fleet Dashboard, Vehicle Registry, Driver Assignment, and Maintenance Logs.
+   - **Architecture**: Feature-First modular layered design (`core/`, `features/`, `shared/`, `web/`).
+
+2. **API & Business Logic Layer (Java Spring Boot)**
+   - **Framework**: Spring Boot 3 with Java 17/21.
+   - **Controllers**: REST APIs under `/api/v1/vehicles` and `/api/v1/auth`.
+   - **Business Validation**: Dedicated service layer with business rule enforcement (e.g. duplicate license plate / VIN prevention).
+   - **Data Access & Security**: Spring Data JPA ORM with Spring Security and CORS policies.
+
+3. **Data Layer (PostgreSQL Database)**
+   - **Engine**: Relational SQL (PostgreSQL / H2 in-memory for testing).
+   - **Entities**: Vehicles, Maintenance Logs, Drivers, and Users.
+
+4. **DevOps & Infrastructure**
+   - **Containerization**: Docker multi-stage containerization.
+   - **Repository Structure**: Decoupled Monorepo (`vms-frontend/` and `vms-backend/`).
+   - **Cloud Deployment**: Netlify for Flutter Web client and Render for Spring Boot backend service.
+
+---
+
 ## Project Structure Overview
 
 ```

@@ -66,7 +66,45 @@ A full-stack, enterprise-ready Vehicle Management System developed with **Flutte
 
 ---
 
-## Project Structure Overview
+## Request-Response Lifecycle Architecture
+
+The following diagrams illustrate the end-to-end communication sequence when a user triggers an action (e.g. creating a vehicle) from the Flutter Web client to the Java Spring Boot backend, through validation and persistence in PostgreSQL, and back to the reactive UI:
+
+### End-to-End Request Flow Sequence Diagram
+![SquareHealth-VMS Request Flow Sequence](request_flow_sequence.jpg)
+
+### Detailed Request-Response Technical Specification
+![SquareHealth-VMS Detailed Request Flow](request_flow_detailed_spec.png)
+
+### Step-by-Step Execution Lifecycle
+
+1. **User Action & Client Validation (Flutter Web)**:
+   - User submits form on `VehicleFormScreen`.
+   - `lib/core/utils/validators.dart` runs client-side format checks (license plate regex, bounds).
+   - Form data converts to `VehicleModel` and serialized via `toJson()`.
+2. **Network Transmission & Headers**:
+   - `ApiClient` attaches `Content-Type: application/json` and `Authorization: Bearer <JWT>`.
+   - Transmitted securely via HTTPS `POST /api/v1/vehicles`.
+3. **Gateway & Security Filtering (Spring Boot)**:
+   - `CorsConfig` checks request origin against allowed whitelist.
+   - `SecurityConfig` validates session / JWT token and populates `SecurityContextHolder`.
+4. **Controller Ingestion & DTO Validation**:
+   - `DispatcherServlet` routes payload to `VehicleController.createVehicle()`.
+   - Hibernate Validator verifies `@Valid @RequestBody VehicleRequestDto`.
+5. **Business Logic & Duplicate Rule Check (`VehicleServiceImpl`)**:
+   - Invokes `vehicleRepository.existsByVehicleNumber(dto.getVehicleNumber())`.
+   - If duplicate found: Throws `DuplicateVehicleException` -> `GlobalExceptionHandler` responds with `409 Conflict`.
+   - If unique: Proceeds to map DTO into JPA `Vehicle` entity.
+6. **Persistence & SQL Execution (PostgreSQL)**:
+   - `VehicleRepository.save(entity)` triggers Hibernate ORM.
+   - Connection acquired from HikariCP pool.
+   - Executes SQL `INSERT INTO vehicles (...) VALUES (...) RETURNING id`.
+7. **Response Serialization & UI Reactivity**:
+   - Entity mapped to `VehicleResponseDto` and returned with `HTTP 201 Created`.
+   - `ApiClient` receives JSON and deserializes via `VehicleModel.fromJson()`.
+   - Flutter state appends new record, closes modal dialog, and displays green SnackBar alert.
+
+---
 
 ```
 SquareHealth-VMS/

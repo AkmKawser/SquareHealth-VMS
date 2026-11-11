@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SquareHealth-VMS Request-Response Lifecycle</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #060b14;
+      color: #e2e8f0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      padding: 30px;
+      width: 2560px;
+      height: 1440px;
+      overflow: hidden;
+    }
+    
+    /* Top Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 28px;
+      background: linear-gradient(135deg, #0b1324 0%, #101d36 100%);
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+    .header p {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+    .header-badges {
+      display: flex;
+      gap: 10px;
+    }
+    .badge {
+      background: #152238;
+      border: 1px solid #233554;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+    .badge span { color: #38bdf8; font-weight: 700; }
+
+    /* Flow Layout: 4 Main Columns representing Lifecycles */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: 600px 320px 720px 800px;
+      gap: 20px;
+      height: 1280px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: #0b1324;
+      border-radius: 12px;
+      border: 1px solid #1e293b;
+      padding: 16px 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      position: relative;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #1a2740;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* Color styles */
+    .cyan { border-top: 3px solid #06b6d4; }
+    .cyan .step-number { background: #06b6d4; color: #060b14; }
+    .cyan .tag { background: rgba(6,182,212,0.15); color: #38bdf8; }
+
+    .blue { border-top: 3px solid #3b82f6; }
+    .blue .step-number { background: #3b82f6; color: #ffffff; }
+    .blue .tag { background: rgba(59,130,246,0.15); color: #60a5fa; }
+
+    .green { border-top: 3px solid #10b981; }
+    .green .step-number { background: #10b981; color: #060b14; }
+    .green .tag { background: rgba(16,185,129,0.15); color: #34d399; }
+
+    .purple { border-top: 3px solid #a855f7; }
+    .purple .step-number { background: #a855f7; color: #ffffff; }
+    .purple .tag { background: rgba(168,85,247,0.15); color: #c084fc; }
+
+    .amber { border-top: 3px solid #f59e0b; }
+    .amber .step-number { background: #f59e0b; color: #060b14; }
+    .amber .tag { background: rgba(245,158,11,0.15); color: #fbbf24; }
+
+    .tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .code-box {
+      background: #070d19;
+      border: 1px solid #17243b;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: 'Consolas', monospace;
+      font-size: 11px;
+      color: #93c5fd;
+      line-height: 1.45;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .code-box .kw { color: #f472b6; }
+    .code-box .str { color: #a7f3d0; }
+    .code-box .ann { color: #fbbf24; }
+    .code-box .cmt { color: #64748b; font-style: italic; }
+
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111d33;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 11.5px;
+    }
+    .info-item span:first-child { color: #cbd5e1; font-weight: 500; }
+    .info-item span:last-child { color: #38bdf8; font-family: 'Consolas', monospace; font-size: 10.5px; }
+
+    /* Middle Connector Column */
+    .network-pipe {
+      background: #091122;
+      border: 1px solid #1a2a47;
+      border-radius: 12px;
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      text-align: center;
+      height: 100%;
+    }
+    .pipe-arrow-down {
+      width: 100%;
+      background: linear-gradient(180deg, rgba(56,189,248,0.15) 0%, rgba(52,211,153,0.2) 100%);
+      border: 1px dashed #38bdf8;
+      border-radius: 10px;
+      padding: 16px 10px;
+    }
+    .pipe-arrow-up {
+      width: 100%;
+      background: linear-gradient(180deg, rgba(52,211,153,0.2) 0%, rgba(56,189,248,0.15) 100%);
+      border: 1px dashed #34d399;
+      border-radius: 10px;
+      padding: 16px 10px;
+    }
+    .pipe-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pipe-badge {
+      font-family: Consolas, monospace;
+      font-size: 10px;
+      background: #111e38;
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: #e2e8f0;
+      margin: 4px 0;
+      display: block;
+    }
+    .arrow-icon {
+      font-size: 20px;
+      color: #38bdf8;
+      margin: 8px 0;
+    }
+
+    /* Decision Branch */
+    .decision-block {
+      background: #13122b;
+      border: 1px solid #3b2a59;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 8px;
+    }
+    .decision-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+    .branch-pass { background: rgba(16,185,129,0.15); color: #34d399; }
+    .branch-fail { background: rgba(239,68,68,0.15); color: #f87171; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <div class="header">
+    <div>
+      <h1>SquareHealth-VMS — End-to-End Request & Response Flow Architecture</h1>
+      <p>Detailed Step-by-Step Lifecycle: How Frontend Connects with Backend, Validation, Database, and UI Reactivity</p>
+    </div>
+    <div class="header-badges">
+      <div class="badge">Payload: <span>JSON over HTTPS</span></div>
+      <div class="badge">Auth: <span>Bearer JWT Tokens</span></div>
+      <div class="badge">Validation: <span>Dual Client & Server-Side</span></div>
+      <div class="badge">Database: <span>ACID Relational SQL</span></div>
+    </div>
+  </div>
+
+  <!-- 4 Columns Grid -->
+  <div class="flow-grid">
+
+    <!-- COLUMN 1: CLIENT SIDE (FLUTTER WEB) -->
+    <div class="column">
+
+      <!-- Step 1: User Action -->
+      <div class="card cyan">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">1</div>
+            User Action & Form Input
+          </div>
+          <span class="tag">Flutter Web UI</span>
+        </div>
+        <p style="font-size: 11.5px; color: #94a3b8;">User fills in vehicle registration form on <code>VehicleFormScreen</code> and taps "Register Vehicle".</p>
+        <div class="code-box">
+          <span class="cmt">// Form Input State</span><br/>
+          VehicleNumber: <span class="str">"DHK-11-2024"</span><br/>
+          Brand: <span class="str">"Toyota"</span> | Model: <span class="str">"HiAce"</span><br/>
+          Year: <span class="kw">2024</span> | Status: <span class="str">"AVAILABLE"</span>
+        </div>
+      </div>
+
+      <!-- Step 2: Client Validation -->
+      <div class="card cyan">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">2</div>
+            Client-Side Form Validation
+          </div>
+          <span class="tag">validators.dart</span>
+        </div>
+        <div class="info-list">
+          <div class="info-item"><span>Empty Check</span><span>NotEmptyRule [PASS]</span></div>
+          <div class="info-item"><span>Plate Format Regex</span><span>^[A-Z0-9-]+$ [PASS]</span></div>
+          <div class="info-item"><span>Year Bound Check</span><span>1990 &lt;= year &lt;= 2026 [PASS]</span></div>
+        </div>
+      </div>
+
+      <!-- Step 3: DTO Serialization & Network Prep -->
+      <div class="card cyan">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">3</div>
+            Model Serialization & ApiClient
+          </div>
+          <span class="tag">core/network</span>
+        </div>
+        <div class="code-box">
+          <span class="cmt">// VehicleModel.toJson()</span><br/>
+          <span class="kw">final</span> jsonBody = model.toJson();<br/>
+          <span class="cmt">// ApiClient.post() attaches Headers</span><br/>
+          Headers[<span class="str">"Authorization"</span>] = <span class="str">"Bearer &lt;JWT&gt;"</span>;<br/>
+          Headers[<span class="str">"Content-Type"</span>] = <span class="str">"application/json"</span>;
+        </div>
+      </div>
+
+      <!-- Step 11: UI Update & State -->
+      <div class="card green" style="margin-top: auto;">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">11</div>
+            UI Reactivity & Success Toast
+          </div>
+          <span class="tag">State Mutation</span>
+        </div>
+        <p style="font-size: 11.5px; color: #94a3b8;">ApiClient returns deserialized <code>VehicleModel</code>. ViewState transitions to <code>Loaded</code>.</p>
+        <div class="info-list">
+          <div class="info-item"><span>State Update</span><span>VehicleList.add(newVehicle)</span></div>
+          <div class="info-item"><span>SnackBar Alert</span><span>"Vehicle Registered Successfully!"</span></div>
+          <div class="info-item"><span>Dialog Action</span><span>Navigator.pop() & Refresh Grid</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLUMN 2: NETWORK BOUNDARY -->
+    <div class="column">
+      <div class="network-pipe">
+        
+        <!-- Outgoing Request -->
+        <div class="pipe-arrow-down">
+          <div class="pipe-title">Outbound Request</div>
+          <div class="arrow-icon">⬇</div>
+          <span class="pipe-badge" style="background:#0284c7; color:#fff;">HTTPS POST</span>
+          <span class="pipe-badge">/api/v1/vehicles</span>
+          <span class="pipe-badge">TLS 1.3 / Port 443</span>
+          <span class="pipe-badge">Headers + JSON Body</span>
+        </div>
+
+        <div style="font-size: 11px; color: #64748b; font-style: italic;">
+          Cross-Origin Resource Sharing (CORS) Handshake & TLS Encryption
+        </div>
+
+        <!-- Incoming Response -->
+        <div class="pipe-arrow-up">
+          <div class="pipe-title">Inbound Response</div>
+          <div class="arrow-icon" style="color: #34d399;">⬆</div>
+          <span class="pipe-badge" style="background:#059669; color:#fff;">HTTP 201 CREATED</span>
+          <span class="pipe-badge">Content-Type: application/json</span>
+          <span class="pipe-badge">{ id: 42, number: "...", ... }</span>
+          <span class="pipe-badge">Latency ~28ms</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- COLUMN 3: BACKEND API & CONTROLLER TIER -->
+    <div class="column">
+
+      <!-- Step 4: Security & Filter Chain -->
+      <div class="card blue">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">4</div>
+            Spring Security & CORS Filter
+          </div>
+          <span class="tag">SecurityFilterChain</span>
+        </div>
+        <div class="info-list">
+          <div class="info-item"><span>CORS Validation</span><span>Origin: netlify.app [ALLOWED]</span></div>
+          <div class="info-item"><span>CSRF Protection</span><span>Disabled (Stateless REST)</span></div>
+          <div class="info-item"><span>JWT Authenticator</span><span>Validate Token & Extract Role</span></div>
+        </div>
+      </div>
+
+      <!-- Step 5: DispatcherServlet & Controller -->
+      <div class="card blue">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">5</div>
+            VehicleController Ingestion
+          </div>
+          <span class="tag">Controller Layer</span>
+        </div>
+        <div class="code-box">
+          <span class="ann">@PostMapping</span><br/>
+          <span class="kw">public</span> ResponseEntity&lt;VehicleResponseDto&gt; createVehicle(<br/>
+          &nbsp;&nbsp;<span class="ann">@Valid</span> <span class="ann">@RequestBody</span> VehicleRequestDto dto) {<br/>
+          &nbsp;&nbsp;<span class="cmt">// Spring validates @NotBlank, @NotNull</span><br/>
+          &nbsp;&nbsp;<span class="kw">return</span> ResponseEntity.status(<span class="str">HttpStatus.CREATED</span>)<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;.body(vehicleService.createVehicle(dto));<br/>
+          }
+        </div>
+      </div>
+
+      <!-- Step 10: Response Mapping & Serialization -->
+      <div class="card green" style="margin-top: auto;">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">10</div>
+            Response DTO & HTTP 201
+          </div>
+          <span class="tag">Jackson Serializer</span>
+        </div>
+        <div class="code-box">
+          <span class="cmt">// VehicleResponseDto JSON serialization</span><br/>
+          {<br/>
+          &nbsp;&nbsp;<span class="str">"id"</span>: <span class="kw">42</span>,<br/>
+          &nbsp;&nbsp;<span class="str">"vehicleNumber"</span>: <span class="str">"DHK-11-2024"</span>,<br/>
+          &nbsp;&nbsp;<span class="str">"status"</span>: <span class="str">"AVAILABLE"</span>,<br/>
+          &nbsp;&nbsp;<span class="str">"createdAt"</span>: <span class="str">"2026-11-11T22:04:00Z"</span><br/>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLUMN 4: SERVICE, ORM & DATABASE TIER -->
+    <div class="column">
+
+      <!-- Step 6: Business Validation Rule -->
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">6</div>
+            Business Service & Uniqueness Check
+          </div>
+          <span class="tag">VehicleServiceImpl</span>
+        </div>
+        <p style="font-size: 11.5px; color: #94a3b8;">Verifies fleet uniqueness before persisting:</p>
+        <div class="code-box">
+          <span class="kw">if</span> (vehicleRepository.existsByVehicleNumber(dto.getVehicleNumber())) {<br/>
+          &nbsp;&nbsp;<span class="kw">throw new</span> DuplicateVehicleException(<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Vehicle number already exists in fleet!"</span>);<br/>
+          }
+        </div>
+        
+        <div class="decision-block">
+          <div style="font-size: 10.5px; font-weight: 700; color: #cbd5e1;">UNPACKING OUTCOME:</div>
+          <div class="decision-row branch-fail">
+            <span>Already Exists?</span>
+            <span>GlobalExceptionHandler -> HTTP 409 CONFLICT</span>
+          </div>
+          <div class="decision-row branch-pass">
+            <span>Is Unique?</span>
+            <span>Proceed to Step 7 -> Insert Entity</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 7: JPA Entity Mapping & Repository -->
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">7</div>
+            Spring Data JPA Repository
+          </div>
+          <span class="tag">Data Access</span>
+        </div>
+        <div class="code-box">
+          Vehicle entity = dtoMapper.toEntity(dto);<br/>
+          <span class="cmt">// Persists entity inside @Transactional scope</span><br/>
+          Vehicle savedVehicle = vehicleRepository.save(entity);
+        </div>
+        <div class="info-list">
+          <div class="info-item"><span>ORM Provider</span><span>Hibernate 6.x</span></div>
+          <div class="info-item"><span>Connection Pool</span><span>HikariCP (Active: 1/10)</span></div>
+        </div>
+      </div>
+
+      <!-- Step 8 & 9: Database Engine & Transaction -->
+      <div class="card amber">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="step-number">8 & 9</div>
+            PostgreSQL Database Execution
+          </div>
+          <span class="tag">PostgreSQL 16</span>
+        </div>
+        <div class="code-box" style="color: #fde68a;">
+          <span class="kw">BEGIN TRANSACTION;</span><br/>
+          <span class="ann">INSERT INTO</span> vehicles (<br/>
+          &nbsp;&nbsp;vehicle_number, brand, model, manufacturing_year, status<br/>
+          ) <span class="ann">VALUES</span> (<br/>
+          &nbsp;&nbsp;<span class="str">'DHK-11-2024'</span>, <span class="str">'Toyota'</span>, <span class="str">'HiAce'</span>, <span class="kw">2024</span>, <span class="str">'AVAILABLE'</span><br/>
+          ) <span class="ann">RETURNING</span> id, created_at;<br/>
+          <span class="kw">COMMIT;</span> <span class="cmt">-- Transaction committed, ID #42 generated</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

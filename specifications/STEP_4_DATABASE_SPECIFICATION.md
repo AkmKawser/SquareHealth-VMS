@@ -330,3 +330,4 @@ SELECT setval('vehicles_id_seq', (SELECT MAX(id) FROM vehicles));
 3. **Format Integrity Test**: Attempting to insert `vehicle_number = 'dhaka metro ga 11'` must be rejected by check constraint `chk_vehicles_plate_format`.
 4. **Referential Integrity Test**: Deleting a company that currently has registered vehicles must be blocked with `ON DELETE RESTRICT`.
 5. **Idempotent Boot Test**: Flyway migration must execute cleanly on both clean local Docker containers and cloud PostgreSQL instances without manual intervention.
+

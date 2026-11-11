@@ -152,8 +152,12 @@ SquareHealth-VMS/
 │   ├── STEP_1_REQUIREMENTS_SPECIFICATION.md
 │   ├── STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md
 │   ├── STEP_3_SPECIFICATION.md          # Centralized REST API data contracts & UI prototype
-│   └── STEP_4_DATABASE_SPECIFICATION.md # Relational schema, ER diagram & Flyway migrations
-└── Any Project Skill.docx               # Step-by-step project blueprint
+│   ├── STEP_4_DATABASE_SPECIFICATION.md # Relational schema, ER diagram & Flyway migrations
+│   ├── STEP_5_BACKEND_SPECIFICATION.md  # Spring Boot architecture, JPA domain & REST controllers
+│   ├── STEP_6_INTEGRATION_SPECIFICATION.md # Full-stack client-server network wire-up
+│   ├── STEP_7_TESTING_SPECIFICATION.md  # Multi-tier testing pyramid & duplicate vehicle test
+│   └── STEP_8_DEPLOYMENT_SPECIFICATION.md # Cloud hosting (Netlify, Render, Neon) & CI/CD
+└── Any Project Skill.docx               # Step-by-step master project blueprint (Steps 1–8)
 ```
 
 ---

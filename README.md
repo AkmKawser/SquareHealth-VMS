@@ -157,10 +157,29 @@ SquareHealth-VMS/
 │   ├── STEP_6_INTEGRATION_SPECIFICATION.md # Full-stack client-server network wire-up
 │   ├── STEP_7_TESTING_SPECIFICATION.md  # Multi-tier testing pyramid & duplicate vehicle test
 │   └── STEP_8_DEPLOYMENT_SPECIFICATION.md # Cloud hosting (Netlify, Render, Neon) & CI/CD
+├── commands/                            # Developer CLI command guide & execution references
+│   └── README.md                        # Maven & Flutter CLI cheat sheet
 ├── Generic_Project_Template/           # Reusable generic engineering project templates
 │   ├── README.md                       # Blueprint guide & distinction matrix
 │   └── Any Project Skill.docx          # Step-by-step master project blueprint (Steps 1–8)
 ```
+
+---
+
+## 🛠️ Developer CLI Execution Guide
+
+Complete, step-by-step terminal commands for running, building, testing, and managing both the backend and frontend are documented in [`commands/README.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/commands/README.md).
+
+- **Run Backend Server (Spring Boot)**:
+  ```powershell
+  cd vms-backend
+  .\mvnw.cmd spring-boot:run
+  ```
+- **Run Frontend Client (Flutter Web)**:
+  ```powershell
+  cd vms-frontend
+  flutter run -d chrome
+  ```
 
 ---
 

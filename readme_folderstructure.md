@@ -280,6 +280,8 @@ SquareHealth-VMS/
 │   │                       └── service/
 │   │                           └── VehicleServiceTest.java
 │
+├── commands/                                                                 # Developer CLI command guide & execution references
+│   └── README.md                                                             # Maven & Flutter CLI cheat sheet
 ├── Generic_Project_Template/                                                 # Framework-agnostic universal project templates
 │   ├── README.md                                                             # Methodology guide & separation boundary
 │   └── Any Project Skill.docx                                                # Master 8-step universal engineering blueprint

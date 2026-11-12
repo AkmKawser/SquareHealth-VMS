@@ -1,9 +1,15 @@
 @echo off
-title SquareHealth-VMS Java Web Server
+title SquareHealth-VMS Backend Server (Spring Boot / Maven)
 echo =============================================================
-echo   SquareHealth-VMS Java Web Server (OpenJDK 21)
-echo   Local URL:  http://localhost:8080/
-echo   Server Engine: Java 21 Simple Web Server (jwebserver)
+echo   SquareHealth-VMS Java Spring Boot Backend Server
+echo   Engine: Spring Boot on OpenJDK 21 (Embedded Tomcat)
+echo   CLI:    Apache Maven (mvn / mvnw)
+echo   API:    http://localhost:8080/api/v1/vehicles
 echo =============================================================
-jwebserver -p 8080 -d "%CD%"
+cd vms-backend
+if exist mvnw.cmd (
+    call mvnw.cmd spring-boot:run
+) else (
+    call mvn spring-boot:run
+)
 pause

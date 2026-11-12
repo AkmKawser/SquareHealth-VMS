@@ -148,7 +148,7 @@ SquareHealth-VMS/
 │   └── Notebook.md                      # Complete story and tech breakdown for a 10-year-old
 ├── FOLDER_STRUCTURE.md            # Detailed framework-specific & merged folder documentation
 ├── specifications/                      # Centralized technical specification repository
-│   ├── README.md                        # Master specification catalog & index
+│   ├── SPECIFICATIONS_CATALOG.md        # Master specification catalog & index
 │   ├── STEP_1_REQUIREMENTS_SPECIFICATION.md
 │   ├── STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md
 │   ├── STEP_3_SPECIFICATION.md          # Centralized REST API data contracts & UI prototype
@@ -158,9 +158,11 @@ SquareHealth-VMS/
 │   ├── STEP_7_TESTING_SPECIFICATION.md  # Multi-tier testing pyramid & duplicate vehicle test
 │   └── STEP_8_DEPLOYMENT_SPECIFICATION.md # Cloud hosting (Netlify, Render, Neon) & CI/CD
 ├── commands/                            # Developer CLI command guide & execution references
-│   └── README.md                        # Maven & Flutter CLI cheat sheet
+│   └── COMMAND_GUIDE.md                 # Maven & Flutter CLI cheat sheet
+├── project status/                      # Project status & lifecycle implementation audit
+│   └── PROJECT_STATUS.md                # Completed vs remaining task breakdown across all 8 steps
 ├── Generic_Project_Template/           # Reusable generic engineering project templates
-│   ├── README.md                       # Blueprint guide & distinction matrix
+│   ├── TEMPLATE_GUIDELINE.md            # Blueprint guide & distinction matrix
 │   └── Any Project Skill.docx          # Step-by-step master project blueprint (Steps 1–8)
 ```
 

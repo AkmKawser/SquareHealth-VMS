@@ -157,8 +157,9 @@ SquareHealth-VMS/
 │   ├── STEP_6_INTEGRATION_SPECIFICATION.md # Full-stack client-server network wire-up
 │   ├── STEP_7_TESTING_SPECIFICATION.md  # Multi-tier testing pyramid & duplicate vehicle test
 │   └── STEP_8_DEPLOYMENT_SPECIFICATION.md # Cloud hosting (Netlify, Render, Neon) & CI/CD
-└── Generic_Project_Template/           # Reusable generic engineering project templates
-    └── Generic_Project_Template/Any Project Skill.docx           # Step-by-step master project blueprint (Steps 1–8)
+├── Generic_Project_Template/           # Reusable generic engineering project templates
+│   ├── README.md                       # Blueprint guide & distinction matrix
+│   └── Any Project Skill.docx          # Step-by-step master project blueprint (Steps 1–8)
 ```
 
 ---
@@ -177,10 +178,10 @@ SquareHealth-VMS/
   - Centralized API data contract and DTO JSON schemas defined to eliminate schema drift and AI field hallucination.
   - Mock datasets created at [`assets/mock_data/vehicles_mock.json`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/assets/mock_data/vehicles_mock.json) covering all domain states.
   - Client presentation layer (theme, responsive AppShell, forms with regex validation) verified in browser.
-  - Detailed technical blueprint and engineering rationale documented in [`Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Any%20Project%20Skill.docx).
+  - Detailed technical blueprint and engineering rationale documented in [`Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Generic_Project_Template/Any%20Project%20Skill.docx).
 - **Step-4: Database Architecture, Relational Schema & Migration Engine**
   - Relational persistence architecture, ER diagram, and Data Dictionary formalized in [`STEP_4_DATABASE_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/specifications/STEP_4_DATABASE_SPECIFICATION.md).
   - Storage-level invariants enforced: `UNIQUE(vehicle_number)`, check constraints on lifecycle statuses, and B-Tree performance indexes.
   - Version-controlled migration pipeline configured using Flyway with executable DDL (`V1__initial_schema.sql`) and baseline seed data (`V2__seed_baseline_data.sql`).
-  - Documented in [`Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Any%20Project%20Skill.docx) with engineering rationale.
+  - Documented in [`Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Generic_Project_Template/Any%20Project%20Skill.docx) with engineering rationale.
 

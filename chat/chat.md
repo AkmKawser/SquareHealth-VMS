@@ -1830,3 +1830,48 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 ### Assistant Response
 *(See full conversational response delivered to user below)*
 
+
+
+## User Message #33
+**Timestamp:** 2026-11-12T11:33:32Z
+> specification should always be specific to our current project. but the genreic project template should be generic. update everything accordingly.
+
+### Agent Strategic Reasoning & Thinking Process
+1. **Architectural Boundary & Invariant Alignment**:
+   - The user mandated a strict separation of concerns across documentation:
+     - **Generic_Project_Template/**: Must remain **100% generic, reusable, and framework-agnostic**, without any specific framework, vendor, or project-specific names.
+     - **specifications/**: Must remain **100% concrete and specific to our current project** (SquareHealth-VMS, covering Flutter Web, Spring Boot 3.3, Java 21, PostgreSQL 16, Flyway, Dio, and Docker).
+2. **Audit & Sanitization of Generic Project Template (Generic_Project_Template/)**:
+   - Scanned Generic_Project_Template/Any Project Skill.docx using regex word boundaries.
+   - Replaced residual term Docker in Paragraph 34 with containerized.
+   - Neutralized monitoring phrasing in Paragraphs 59 and 60 to universal utomated liveness probes and liveness and status monitoring.
+   - Verified that zero framework or project-specific terms remain across the entire document.
+   - Created Generic_Project_Template/README.md defining the purpose, 8-step lifecycle flow, and architectural distinction matrix.
+3. **Audit & Reinforcement of Project Specifications (specifications/)**:
+   - Reviewed all 8 technical specifications (STEP_1 through STEP_8) and specifications/README.md.
+   - Reinforced in specifications/README.md the explicit **Project Specificity Invariant** tying all specifications directly to SquareHealth-VMS.
+   - Verified that all specifications concretely specify SquareHealth-VMS domain entities (ehicles, 	rips, maintenance_logs), Spring Boot packages (com.starkgroup.vms), PostgreSQL 16 schemas, Flyway migrations, and Flutter Web presentation.
+4. **Link & Documentation Synchronization**:
+   - Updated file links in README.md and 
+eadme_folderstructure.md pointing to Generic_Project_Template/Any Project Skill.docx and Generic_Project_Template/README.md.
+   - Executed single-pass rendering auditor scripts/audit_rendering.py --all (all 49 files passed with 0 errors).
+   - Staged, committed, and pushed changes to GitHub origin/main (Universal Rule 3).
+
+### Tools Executed
+| Tool Name | Purpose |
+|---|---|
+| 
+un_command | Inspected Generic_Project_Template/Any Project Skill.docx and replaced residual terms |
+| write_file | Created Generic_Project_Template/README.md documenting universal template scope |
+| edit_file | Updated specifications/README.md with Project Specificity Invariant |
+| 
+un_command | Synchronized links and trees in README.md and 
+eadme_folderstructure.md |
+| 
+un_command | Executed single-pass rendering auditor scripts/audit_rendering.py --all (49 files passed) |
+| 
+un_command | Staged, committed, and pushed changes to GitHub origin/main |
+
+### Assistant Response
+*(See full conversational response delivered to user below)*
+

@@ -1,6 +1,11 @@
 # SquareHealth-VMS — Centralized Engineering Specifications
 
-Welcome to the centralized specification repository for the **SquareHealth-VMS** platform. Every technical phase, contract, and presentation standard is formalized here to ensure zero schema drift, strict architectural compliance, and complete engineering traceability.
+Welcome to the centralized specification repository for the **SquareHealth-VMS** (Square Health & Stark Group Logistics Vehicle Management System) platform. Every technical phase, contract, and presentation standard is formalized here to ensure zero schema drift, strict architectural compliance, and complete engineering traceability.
+
+> [!IMPORTANT]
+> **Project Specificity Invariant**: All specifications in this directory are **100% concrete and specific to SquareHealth-VMS** — implementing Spring Boot 3.3, Java 21, PostgreSQL 16, Flutter Web (Dart 3.x), Dio REST client, and Docker containerization.
+> 
+> For the universal, framework-agnostic engineering blueprint applicable to any arbitrary software project, refer to [`Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Generic_Project_Template/Any%20Project%20Skill.docx).
 
 ---
 

@@ -70,3 +70,4 @@ public class DashboardStatsDto {
         this.fuelAlerts = fuelAlerts;
     }
 }
+

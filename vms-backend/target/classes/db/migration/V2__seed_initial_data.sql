@@ -32,3 +32,4 @@ ON CONFLICT (id) DO NOTHING;
 SELECT setval('companies_id_seq', (SELECT MAX(id) FROM companies));
 SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
 SELECT setval('vehicles_id_seq', (SELECT MAX(id) FROM vehicles));
+

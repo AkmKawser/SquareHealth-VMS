@@ -117,3 +117,4 @@ CREATE TABLE IF NOT EXISTS telemetry_events (
 );
 
 CREATE INDEX IF NOT EXISTS idx_telemetry_vehicle_time ON telemetry_events(vehicle_id, recorded_at DESC);
+

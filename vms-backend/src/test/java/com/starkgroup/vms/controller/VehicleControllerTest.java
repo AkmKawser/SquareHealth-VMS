@@ -95,3 +95,4 @@ class VehicleControllerTest {
                 .andExpect(status().isBadRequest());
     }
 }
+

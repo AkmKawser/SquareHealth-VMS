@@ -42,3 +42,4 @@ jobs:
         run: |
           cd vms-backend
           ./mvnw clean package -DskipTests
+

@@ -58,3 +58,4 @@ public class LoginResponseDto {
         this.companyId = companyId;
     }
 }
+

@@ -1,4 +1,4 @@
-# SquareHealth-VMS — Chat Session History
+# StarkGroup-VMS — Chat Session History
 **Conversation ID:** 3130df11-06d0-4871-8671-ef32ee67614b  **Workspace:** C:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS  **AI Assistant:** Antigravity (Gemini 3.8 Flash)  **Generated Date:** 2026-11-11
 
 > [!IMPORTANT]
@@ -55,7 +55,7 @@
 | run_command | Check image size |
 | run_command | Check venv packages |
 | run_command | List packages in venv |
-| read_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\1.Requirement_Gathering\Requirement Gathering.pn |
+| read_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\1.Requirement_Gathering\Requirement Gathering.pn |
 | run_command | Read full session md |
 | run_command | Read UdemyScrapper full course summary |
 | run_command | Check headings of course md |
@@ -67,46 +67,46 @@
 | run_command | Search keywords in kickoff class |
 | run_command | Copy audio transcript to YoutubeScrapper md |
 | run_command | Verify YoutubeScrapper contents |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\1.Requirement_Gathering\REQUIREMENTS.md |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\1.Requirement_Gathering\REQUIREMENTS.md |
 | run_command | Check development tools |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\FOLDER_STRUCTURE.md |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\FOLDER_STRUCTURE.md |
 | run_command | Create folder structure |
 | run_command | Write foundational files |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\pubspec.yaml |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\analysis_options.yaml |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\.gitignore |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\web\index.html |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\web\manifest.json |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\assets\mock_data\vehicles_mock.json |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\lib\core\constants\api_constants.da |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\lib\core\constants\app_colors.dart |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\lib\core\theme\app_theme.dart |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\lib\features\vehicles\data\vehicle_ |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\lib\shared\widgets\status_badge.dar |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\lib\main.dart |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\lib\features\vehicles\presentation\ |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\pom.xml |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\.gitignore |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\resources\application.prope |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\resources\application-dev.p |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\Vms |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\ent |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\rep |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\dto |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\dto |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\dto |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\exc |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\exc |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\exc |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\exc |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\ser |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\ser |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\con |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\main\java\com\starkgroup\vms\con |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\test\java\com\starkgroup\vms\Vms |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-backend\src\test\java\com\starkgroup\vms\ser |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\lib\shared\widgets\app_shell.dart |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\README.md |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\pubspec.yaml |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\analysis_options.yaml |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\.gitignore |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\web\index.html |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\web\manifest.json |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\assets\mock_data\vehicles_mock.json |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\lib\core\constants\api_constants.da |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\lib\core\constants\app_colors.dart |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\lib\core\theme\app_theme.dart |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\lib\features\vehicles\data\vehicle_ |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\lib\shared\widgets\status_badge.dar |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\lib\main.dart |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\lib\features\vehicles\presentation\ |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\pom.xml |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\.gitignore |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\resources\application.prope |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\resources\application-dev.p |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\Vms |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\ent |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\rep |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\dto |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\dto |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\dto |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\exc |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\exc |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\exc |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\exc |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\ser |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\ser |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\con |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\main\java\com\starkgroup\vms\con |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\test\java\com\starkgroup\vms\Vms |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-backend\src\test\java\com\starkgroup\vms\ser |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\vms-frontend\lib\shared\widgets\app_shell.dart |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\StarkGroup-VMS\README.md |
 | run_command | Verify folder structure on disk |
 
 </details>
@@ -199,7 +199,7 @@ The chat file includes:
 | run_command | Remove all .gitignore files permanently |
 | run_command | Verify zero .gitignore files remain in workspace |
 | run_command | Check git configuration and credentials |
-| run_command | Create GitHub remote repository `AkmKawser/SquareHealth-VMS` via API |
+| run_command | Create GitHub remote repository `AkmKawser/StarkGroup-VMS` via API |
 | run_command | Initialize Git repository on `main` branch and configure Git LFS |
 | run_command | Stage all 93 workspace files |
 | run_command | Create initial Git commit |
@@ -312,7 +312,7 @@ The chat file includes:
 </details>
 
 #### Final Turn Output:
-- Generated a high-resolution, professional architecture diagram image for SquareHealth-VMS: [`architecture_diagram.jpg`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/architecture_diagram.jpg).
+- Generated a high-resolution, professional architecture diagram image for StarkGroup-VMS: [`architecture_diagram.jpg`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/architecture_diagram.jpg).
 - Visualized all four core layers:
   1. **Client Layer (Flutter Web)**: Material 3 UI, Fleet Dashboard, Vehicle Registry, Driver Assignment, Maintenance Logs.
   2. **API & Business Logic Layer (Java Spring Boot)**: REST Controllers (`/api/v1/vehicles`), Business Validation Service (Duplicate VIN/Plate validation), Spring Data JPA ORM, Spring Security.
@@ -337,7 +337,7 @@ The chat file includes:
 |---|---|
 | invoke_subagent | Launch `Detailed Architecture Illustrator` subagent for 4-tier visual blueprint |
 | write_file | Create `scripts/render_architecture.html` high-density technical diagram specification |
-| manage_subagents | Collect generated AI visual blueprint `squarehealth_vms_architecture_blueprint_1794403759443.jpg` |
+| manage_subagents | Collect generated AI visual blueprint `starkgroup_vms_architecture_blueprint_1794403759443.jpg` |
 | read_file | Verify generated visual blueprint image |
 | run_command | Copy visual blueprint to `architecture_blueprint.jpg` |
 | run_command | Spin up local lightweight HTTP daemon for rendering engine |
@@ -378,7 +378,7 @@ The chat file includes:
 |---|---|
 | invoke_subagent | Launch `Request Flow Illustrator` subagent for 5-swimlane request lifecycle diagram |
 | write_file | Create `scripts/render_request_flow.html` high-density request-response specification |
-| manage_subagents | Collect generated AI request-response visual diagram `squarehealth_vms_request_lifecycle_1794413121871.jpg` |
+| manage_subagents | Collect generated AI request-response visual diagram `starkgroup_vms_request_lifecycle_1794413121871.jpg` |
 | read_file | Inspect and verify visual request lifecycle diagram |
 | run_command | Copy visual flow diagram to `request_flow_sequence.jpg` |
 | run_command | Spin up local lightweight HTTP daemon on port 54322 |
@@ -1285,10 +1285,10 @@ All changes have been audited and synchronized to GitHub `origin/main`.
 
 ### Agent Strategic Reasoning & Thinking Process
 1. **Request Deconstruction & Location Audit**:
-   - The user requested confirming and placing the image file directly in the main `SquareHealth-VMS` project folder.
+   - The user requested confirming and placing the image file directly in the main `StarkGroup-VMS` project folder.
    - Audited the root directory `C:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS` to verify the physical location and accessibility of [`ai_pair_programming_architecture.png`](../ai_pair_programming_architecture.png) and all associated architecture diagrams.
 2. **Filesystem Verification**:
-   - Confirmed that [`ai_pair_programming_architecture.png`](../ai_pair_programming_architecture.png) (233 KB) is stored directly in the top-level root folder of `SquareHealth-VMS`.
+   - Confirmed that [`ai_pair_programming_architecture.png`](../ai_pair_programming_architecture.png) (233 KB) is stored directly in the top-level root folder of `StarkGroup-VMS`.
    - Verified that all 6 system architecture diagrams are placed at the root level for immediate inspection via Windows File Explorer, VS Code, or web browsers.
    - Identified Microsoft Word temporary lock file (`~$y Project Skill.docx`), indicating the user is actively inspecting the updated `.docx` document.
 3. **Audit & Synchronization**:
@@ -1301,14 +1301,14 @@ All changes have been audited and synchronized to GitHub `origin/main`.
 
 | Tool | Purpose / Target |
 |---|---|
-| run_command | List and verify all image files in `SquareHealth-VMS` root directory |
+| run_command | List and verify all image files in `StarkGroup-VMS` root directory |
 | run_command | Check workspace git status and active Word lock files |
 | write_file | Append User Message #20 adhering to deep logging protocol in `chat/chat.md` |
 
 </details>
 
 #### Full Unabridged Assistant Response:
-The image file **[`ai_pair_programming_architecture.png`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/ai_pair_programming_architecture.png)** is located directly in the root **`SquareHealth-VMS`** project directory:
+The image file **[`ai_pair_programming_architecture.png`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/ai_pair_programming_architecture.png)** is located directly in the root **`StarkGroup-VMS`** project directory:
 
 ```
 C:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\
@@ -1403,13 +1403,13 @@ Proving the data requirements visually on mock data prevents costly database sch
 
 ### Agent Strategic Reasoning & Thinking Process
 1. **Architectural Objective**:
-   - The user requested the immediate implementation of **Step-3** for the SquareHealth-VMS project based on the finalized **Option 4: Data Contracts, Mock Repository & UI Prototype (Contract + Prototype)** as documented in [Any Project Skill.docx](../Any%20Project%20Skill.docx).
+   - The user requested the immediate implementation of **Step-3** for the StarkGroup-VMS project based on the finalized **Option 4: Data Contracts, Mock Repository & UI Prototype (Contract + Prototype)** as documented in [Any Project Skill.docx](../Any%20Project%20Skill.docx).
    - Step-3 decouples frontend development from backend delays, establishes binding DTO contracts, and creates a fully interactive mock-driven prototype.
 2. **Phase 1: Centralized API Data Contracts & DTO Schemas**:
    - Authored [API_SPECIFICATION.md](../API_SPECIFICATION.md) defining canonical REST endpoints (/api/v1/auth/login, /api/v1/vehicles, /api/v1/vehicles/{id}, /api/v1/dashboard/stats).
    - Specified JSON request and response payloads, validation rules (e.g. `^[A-Z0-9-]+$` for vehicle license numbers), and standardized ErrorResponseDto envelope for 400, 401, 404, and 409 status codes.
 3. **Phase 2: Comprehensive Mock Dataset**:
-   - Expanded [ms-frontend/assets/mock_data/vehicles_mock.json](../vms-frontend/assets/mock_data/vehicles_mock.json) with 8 realistic enterprise fleet records covering all operational statuses (AVAILABLE, IN_TRIP, MAINTENANCE) across corporate entities (Square Health, Square Pharmaceuticals, Square Hospitals, Square Textiles).
+   - Expanded [ms-frontend/assets/mock_data/vehicles_mock.json](../vms-frontend/assets/mock_data/vehicles_mock.json) with 8 realistic enterprise fleet records covering all operational statuses (AVAILABLE, IN_TRIP, MAINTENANCE) across corporate entities (Stark Group, Stark Industries, Stark Medical, Stark Logistics).
 4. **Phase 3: Service Layer & In-Memory CRUD**:
    - Enhanced [VehicleService](../vms-frontend/lib/features/vehicles/services/vehicle_service.dart) to seamlessly support both offline mock prototyping and production HTTP networking via ApiClient.
    - Implemented in-memory search, status filtering, vehicle creation with duplicate license plate detection (409 Conflict), updates, deletions, and aggregated dashboard KPI computation (getDashboardStats()).
@@ -1583,7 +1583,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
      - View 1: Executive Fleet Dashboard (`DashboardScreen.dart`) with dark navy navigation rail, 4 executive KPI cards (Total Fleet, Available, In Trip, Maintenance), and readiness/utilization progress bars.
      - View 2: Fleet Vehicle Registry (`VehicleListScreen.dart`) with search bar, status filter chips (`All Statuses`, `Available`, `In Trip`, `Maintenance`), vehicle cards with ambulance/truck/sedan avatars, status badges, and action buttons.
      - View 3: Vehicle Registration Modal Dialog (`VehicleFormDialog.dart`) showing regex validation, dropdowns, and duplicate license plate `409 Conflict` alert banner.
-     - View 4: Corporate Authentication Portal (`LoginScreen.dart`) with Square Health branding and one-click demo credentials (`admin` / `Password123!`).
+     - View 4: Corporate Authentication Portal (`LoginScreen.dart`) with Stark Group branding and one-click demo credentials (`admin` / `Password123!`).
    - Served on local HTTP port 8899 and captured pixel-perfect full-screen graphic via Playwright: [`specifications/ui_prototype_demo.png`](../specifications/ui_prototype_demo.png) (and mirrored at root).
 3. **Specification Integration**:
    - Injected the graphical demo image and detailed breakdown directly into [`specifications/STEP_3_UI_PROTOTYPE_SPECIFICATION.md`](../specifications/STEP_3_UI_PROTOTYPE_SPECIFICATION.md) under Section 2.
@@ -1761,7 +1761,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 ### Agent Strategic Reasoning & Thinking Process
 1. **Repository Security & Privacy**:
    - The user mandated setting the GitHub repository to **private**.
-   - Extracted credentials via Git Credential Manager, executed a secure `PATCH` call to the GitHub REST API (`https://api.github.com/repos/AkmKawser/SquareHealth-VMS`) with payload `{"private": true}`, and verified that `private: true` is active on GitHub.
+   - Extracted credentials via Git Credential Manager, executed a secure `PATCH` call to the GitHub REST API (`https://api.github.com/repos/AkmKawser/StarkGroup-VMS`) with payload `{"private": true}`, and verified that `private: true` is active on GitHub.
 2. **Generic Project Guideline Overhaul (`Generic_Project_Template/Any Project Skill.docx`)**:
    - The user noted that `Any Project Skill.docx` is meant to be a universal, framework-agnostic engineering guideline for ANY project, and must never contain framework-specific names (such as Spring Boot, Flutter, Dart, Java, PostgreSQL, etc.).
    - Completely refactored `Generic_Project_Template/Any Project Skill.docx`:
@@ -1840,7 +1840,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 1. **Architectural Boundary & Invariant Alignment**:
    - The user mandated a strict separation of concerns across documentation:
      - **Generic_Project_Template/**: Must remain **100% generic, reusable, and framework-agnostic**, without any specific framework, vendor, or project-specific names.
-     - **specifications/**: Must remain **100% concrete and specific to our current project** (SquareHealth-VMS, covering Flutter Web, Spring Boot 3.3, Java 21, PostgreSQL 16, Flyway, Dio, and Docker).
+     - **specifications/**: Must remain **100% concrete and specific to our current project** (StarkGroup-VMS, covering Flutter Web, Spring Boot 3.3, Java 21, PostgreSQL 16, Flyway, Dio, and Docker).
 2. **Audit & Sanitization of Generic Project Template (Generic_Project_Template/)**:
    - Scanned Generic_Project_Template/Any Project Skill.docx using regex word boundaries.
    - Replaced residual term Docker in Paragraph 34 with containerized.
@@ -1849,8 +1849,8 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
    - Created Generic_Project_Template/TEMPLATE_GUIDELINE.md defining the purpose, 8-step lifecycle flow, and architectural distinction matrix.
 3. **Audit & Reinforcement of Project Specifications (specifications/)**:
    - Reviewed all 8 technical specifications (STEP_1 through STEP_8) and specifications/SPECIFICATIONS_CATALOG.md.
-   - Reinforced in specifications/SPECIFICATIONS_CATALOG.md the explicit **Project Specificity Invariant** tying all specifications directly to SquareHealth-VMS.
-   - Verified that all specifications concretely specify SquareHealth-VMS domain entities (ehicles, 	rips, maintenance_logs), Spring Boot packages (com.starkgroup.vms), PostgreSQL 16 schemas, Flyway migrations, and Flutter Web presentation.
+   - Reinforced in specifications/SPECIFICATIONS_CATALOG.md the explicit **Project Specificity Invariant** tying all specifications directly to StarkGroup-VMS.
+   - Verified that all specifications concretely specify StarkGroup-VMS domain entities (ehicles, 	rips, maintenance_logs), Spring Boot packages (com.starkgroup.vms), PostgreSQL 16 schemas, Flyway migrations, and Flutter Web presentation.
 4. **Link & Documentation Synchronization**:
    - Updated file links in README.md and 
 eadme_folderstructure.md pointing to Generic_Project_Template/Any Project Skill.docx and Generic_Project_Template/TEMPLATE_GUIDELINE.md.
@@ -1919,7 +1919,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 > what is the local server for this project? also whats the name of the cli tool?
 
 ### Agent Strategic Reasoning & Thinking Process
-1. **Clarifying Server Topology & CLI Tools for SquareHealth-VMS**:
+1. **Clarifying Server Topology & CLI Tools for StarkGroup-VMS**:
    - The user asked two key technical questions:
      1. What is the local server for this project?
      2. What is the name of the CLI tool?
@@ -2349,6 +2349,44 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 | `write_file` | Updated `.vscode/settings.json` with `"java.dependency.enableDependencyCheckup": false` |
 | `run_command` | Updated global `$env:APPDATA\Code\User\settings.json` |
 | `write_file` | Appended User Message #46 turn to `chat/chat.md` |
+| `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (51 files passed) |
+| `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
+
+### Assistant Response
+*(See full conversational response delivered to user below)*
+
+
+## User Message #47
+**Timestamp:** 2026-11-13T03:14:20Z
+> The project title is not squarehealth -vms. its StarkGroup-VMS. i named the repository title for some other purpose. so change every where where you used squarehealth vms name.
+
+### Agent Strategic Reasoning & Thinking Process
+1. **Scope Analysis**:
+   - The user clarified that the official project title is **StarkGroup-VMS** (Stark Group Vehicle Management System).
+   - The git repository title was named `SquareHealth-VMS` for an external purpose, which must remain as the working directory and remote URL, while every functional occurrence of the project name, UI headers, descriptions, schemas, mock data, and documentation must be refactored to Stark Group / StarkGroup-VMS.
+2. **Comprehensive Refactoring Across 37 Files**:
+   - **Documentation & Specs**: `README.md`, `FOLDER_STRUCTURE.md`, `commands/COMMAND_GUIDE.md`, `project status/PROJECT_STATUS.md`, `specifications/SPECIFICATIONS_CATALOG.md`, `specifications/STEP_1` through `STEP_8`, `Generic_Project_Template/TEMPLATE_GUIDELINE.md`, `1.Requirement_Gathering/REQUIREMENTS.md`, `notebook/Notebook.md`.
+   - **Frontend UI & Assets**: `vms-frontend/pubspec.yaml`, `vms-frontend/web/index.html`, `vms-frontend/web/manifest.json`, `vms-frontend/lib/main.dart` (App title), `vms-frontend/lib/shared/widgets/app_shell.dart`, `vms-frontend/lib/features/auth/presentation/login_screen.dart`, `vms-frontend/lib/features/vehicles/presentation/vehicle_form_dialog.dart`, `vms-frontend/assets/mock_data/vehicles_mock.json`, and frontend unit tests.
+   - **Backend Engine & Migrations**: `vms-backend/pom.xml`, `V1__init_schema.sql`, `V2__seed_initial_data.sql`, `VehicleControllerTest.java`, `VehicleServiceTest.java`.
+   - **CI/CD & Render Specs**: `.github/workflows/ci.yml`, `scripts/render_*.html`.
+3. **Verification & Build Validation**:
+   - Executed `.\mvnw.cmd clean test` in `vms-backend`: **12/12 unit and integration tests passed** with zero failures.
+   - Re-packaged executable fat JAR `vms-backend/target/vms-backend-0.0.1-SNAPSHOT.jar`.
+4. **Audit & Synchronization**:
+   - Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (all 51 files passed 100% with 0 errors).
+   - Staged, committed, and pushed changes to GitHub `origin/main` (Universal Rule 3).
+
+### Tools Executed
+| Tool Name | Purpose |
+|---|---|
+| `run_command` | Identified all 37 files containing SquareHealth / Square Health references |
+| `write_file` | Authored script to perform systematic renaming while preserving disk paths and remote URLs |
+| `run_command` | Executed title rename script across 37 codebase and specification files |
+| `edit_file` | Updated remaining Netlify deployment origin references in `STEP_8_DEPLOYMENT_SPECIFICATION.md` |
+| `run_command` | Cleaned up temporary rename and verification scripts |
+| `run_command` | Executed `mvn clean test` verifying 12/12 tests passing with updated Stark Group entities |
+| `run_command` | Packaged updated fat JAR via `mvn package -DskipTests` |
+| `write_file` | Appended User Message #47 turn to `chat/chat.md` |
 | `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (51 files passed) |
 | `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
 

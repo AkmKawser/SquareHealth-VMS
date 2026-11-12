@@ -1,4 +1,4 @@
-# SquareHealth-VMS & Stark Group Fleet Management System
+# StarkGroup-VMS & Stark Group Fleet Management System
 ## Unified Software Requirements Specification (SRS)
 
 ---
@@ -67,7 +67,7 @@ flowchart TD
 ## 3. Comprehensive Project Requirements Specification
 
 ### 3.1 Business Context & Problem Statement
-- **Organizational Background**: Stark Group (and SquareHealth VMS) operates a diverse corporate fleet including private executive cars, employee transport microbuses, emergency ambulances, and logistics delivery vans. `[Source: Document - Projecet Requirements DataV.docx; Udemy - Section 01 / 01_Welcome to Stark Group.md]`
+- **Organizational Background**: Stark Group (and Stark Group VMS) operates a diverse corporate fleet including private executive cars, employee transport microbuses, emergency ambulances, and logistics delivery vans. `[Source: Document - Projecet Requirements DataV.docx; Udemy - Section 01 / 01_Welcome to Stark Group.md]`
 - **Current Problem**: Fleet information is maintained manually in fragmented spreadsheets. Adding a vehicle, looking up details, updating status, or verifying documents requires repeatedly cross-referencing multiple files. This leads to duplicate vehicle records, expired legal documents, untracked maintenance costs, and administrative inefficiency. `[Source: Udemy - Section 01 / 01_Welcome to Stark Group.md]`
 - **Business Goal**: Build a responsive, reliable, and secure full-stack Vehicle Management System (VMS) replacing spreadsheets with a single source of truth backed by a persistent relational database. `[Source: Document - Projecet Requirements DataV.docx; Udemy - Section 01 / 02_What You Will Build.md]`
 
@@ -95,7 +95,7 @@ flowchart TD
 #### FR-02: Vehicle Master Data Fields
 Every vehicle record in the system must strictly maintain the following attributes:
 1. `vehicleNumber` (String, Unique, Required, e.g., "DHAKA-METRO-GA-11-2233") `[Source: Udemy - Section 02 / 06_[Hands-on] Build the VMS UIUX.md; Udemy - Section 03 / 05_[Hands-on] Build the Vehicle Backend.md]`
-2. `company` (String, Required, e.g., "Square Health", "Stark Logistics", "Apex Pharma") `[Source: Udemy - Section 02 / 06_[Hands-on] Build the VMS UIUX.md; Udemy - Section 03 / 05_[Hands-on] Build the Vehicle Backend.md]`
+2. `company` (String, Required, e.g., "Stark Group", "Stark Logistics", "Apex Pharma") `[Source: Udemy - Section 02 / 06_[Hands-on] Build the VMS UIUX.md; Udemy - Section 03 / 05_[Hands-on] Build the Vehicle Backend.md]`
 3. `type` (String, Required, e.g., "Sedan", "Microbus", "Ambulance", "Delivery Van", "Pickup") `[Source: Udemy - Section 01 / 01_Welcome to Stark Group.md; Udemy - Section 02 / 06_[Hands-on] Build the VMS UIUX.md]`
 4. `brand` (String, Required, e.g., "Toyota", "Nissan", "Hyundai", "Mercedes") `[Source: Udemy - Section 02 / 06_[Hands-on] Build the VMS UIUX.md; Udemy - Section 03 / 05_[Hands-on] Build the Vehicle Backend.md]`
 5. `model` (String, Required, e.g., "HiAce", "Corolla", "Grand Starex") `[Source: Udemy - Section 02 / 06_[Hands-on] Build the VMS UIUX.md; Udemy - Section 03 / 05_[Hands-on] Build the Vehicle Backend.md]`
@@ -180,7 +180,7 @@ Every vehicle record in the system must strictly maintain the following attribut
 ---
 
 ### 3.5 UI/UX Design System Guidelines
-- **Visual Identity**: Clean, corporate, and distraction-free Stark Group / Square Health design language. `[Source: Udemy - Section 02 / 05_Stark Group Design Guideline.md]`
+- **Visual Identity**: Clean, corporate, and distraction-free Stark Group / Stark Group design language. `[Source: Udemy - Section 02 / 05_Stark Group Design Guideline.md]`
 - **Color Palette**:
   - Background: Crisp Light Gray / Slate (`#F8FAFC` / `#FFFFFF`).
   - Primary / Branding: Deep Navy (`#0F172A` / `#1E3A8A`) and Corporate Blue (`#2563EB`).

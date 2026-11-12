@@ -38,7 +38,7 @@ class VehicleServiceTest {
     void setUp() {
         sampleDto = new VehicleRequestDto(
                 "DHAKA-METRO-GA-11-2233",
-                "Square Health",
+                "Stark Group",
                 "Ambulance",
                 "Toyota",
                 "HiAce",
@@ -73,7 +73,7 @@ class VehicleServiceTest {
         assertNotNull(response);
         assertEquals(1L, response.getId());
         assertEquals("DHAKA-METRO-GA-11-2233", response.getVehicleNumber());
-        assertEquals("Square Health", response.getCompany());
+        assertEquals("Stark Group", response.getCompany());
         verify(vehicleRepository, times(1)).save(any(Vehicle.class));
     }
 
@@ -130,7 +130,7 @@ class VehicleServiceTest {
 
         VehicleRequestDto updateDto = new VehicleRequestDto(
                 "DHAKA-METRO-GA-11-2233",
-                "Square Health Updated",
+                "Stark Group Updated",
                 "Ambulance",
                 "Toyota",
                 "HiAce",
@@ -140,7 +140,7 @@ class VehicleServiceTest {
         VehicleResponseDto result = vehicleService.updateVehicle(1L, updateDto);
 
         assertNotNull(result);
-        assertEquals("Square Health Updated", result.getCompany());
+        assertEquals("Stark Group Updated", result.getCompany());
     }
 
     @Test

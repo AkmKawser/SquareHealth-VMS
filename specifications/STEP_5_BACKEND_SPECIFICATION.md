@@ -6,12 +6,12 @@
 |---|---|
 | **Specification ID** | `SPEC-STEP-05` |
 | **Title** | Spring Boot Backend Architecture, JPA Domain Layer & REST API Engine |
-| **System** | SquareHealth-VMS (Vehicle Management System) |
+| **System** | StarkGroup-VMS (Vehicle Management System) |
 | **Target Phase** | Phase 5 (Server Engine & Business Logic Implementation) |
 | **Status** | Approved Specification |
 
 ### Purpose
-This specification formalizes the **Java Spring Boot Backend Architecture**, the **JPA Domain Entity Model**, the **Business Service Layer**, the **REST API Controllers**, and the **Centralized Exception Handling** for the SquareHealth-VMS platform.
+This specification formalizes the **Java Spring Boot Backend Architecture**, the **JPA Domain Entity Model**, the **Business Service Layer**, the **REST API Controllers**, and the **Centralized Exception Handling** for the StarkGroup-VMS platform.
 
 ---
 

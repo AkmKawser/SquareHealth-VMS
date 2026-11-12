@@ -6,7 +6,7 @@ void main() {
     final sampleJson = {
       'id': 1,
       'vehicleNumber': 'DHA-GA-11-2045',
-      'company': 'Square Health',
+      'company': 'Stark Group',
       'type': 'Ambulance',
       'brand': 'Toyota',
       'model': 'HiAce Emergency ICU',
@@ -18,7 +18,7 @@ void main() {
 
       expect(vehicle.id, 1);
       expect(vehicle.vehicleNumber, 'DHA-GA-11-2045');
-      expect(vehicle.company, 'Square Health');
+      expect(vehicle.company, 'Stark Group');
       expect(vehicle.type, 'Ambulance');
       expect(vehicle.brand, 'Toyota');
       expect(vehicle.model, 'HiAce Emergency ICU');

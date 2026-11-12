@@ -6,12 +6,12 @@
 |---|---|
 | **Specification ID** | `SPEC-STEP-04` |
 | **Title** | Relational Database Architecture, DDL Schema & Migration Pipeline Specification |
-| **System** | SquareHealth-VMS (Vehicle Management System) |
+| **System** | StarkGroup-VMS (Vehicle Management System) |
 | **Target Phase** | Phase 4 (Persistent Storage & Data Integrity Foundation) |
 | **Status** | Approved Specification |
 
 ### Purpose
-This specification formalizes the **Relational Database Topology**, the **Data Dictionary**, **Storage-Level Constraint Invariants**, and the **Version-Controlled Flyway Migration Pipeline** for the PostgreSQL database underpinning the SquareHealth-VMS platform.
+This specification formalizes the **Relational Database Topology**, the **Data Dictionary**, **Storage-Level Constraint Invariants**, and the **Version-Controlled Flyway Migration Pipeline** for the PostgreSQL database underpinning the StarkGroup-VMS platform.
 
 ---
 
@@ -30,7 +30,7 @@ erDiagram
     COMPANIES {
         bigint id PK
         varchar code UK "e.g. SQ-HEALTH"
-        varchar name "Square Health"
+        varchar name "Stark Group"
         varchar contact_email
         boolean is_active
         timestamp created_at
@@ -111,7 +111,7 @@ Represents the operating subsidiaries within the Square conglomerate.
 |---|---|---|---|
 | `id` | `BIGSERIAL` | `PRIMARY KEY` | Unique synthetic identifier. |
 | `code` | `VARCHAR(30)` | `NOT NULL, UNIQUE` | Unique corporate code (e.g., `SQ-HEALTH`). |
-| `name` | `VARCHAR(100)` | `NOT NULL` | Registered entity name (e.g., `Square Health`). |
+| `name` | `VARCHAR(100)` | `NOT NULL` | Registered entity name (e.g., `Stark Group`). |
 | `contact_email` | `VARCHAR(100)` | `NOT NULL` | Fleet coordinator email. |
 | `is_active` | `BOOLEAN` | `NOT NULL DEFAULT true` | Soft-deletion and operational status flag. |
 | `created_at` | `TIMESTAMP WITH TIME ZONE` | `NOT NULL DEFAULT CURRENT_TIMESTAMP` | Audit timestamp. |
@@ -224,7 +224,7 @@ db/migration/
 
 ```sql
 -- Flyway Migration: V1__initial_schema.sql
--- Description: Create baseline schema for SquareHealth-VMS
+-- Description: Create baseline schema for StarkGroup-VMS
 
 CREATE TABLE companies (
     id BIGSERIAL PRIMARY KEY,
@@ -300,11 +300,11 @@ CREATE INDEX idx_maintenance_vehicle_id ON maintenance_logs (vehicle_id);
 -- Description: Seed initial corporate subsidiaries and mock-validated fleet assets
 
 INSERT INTO companies (id, code, name, contact_email) VALUES
-(1, 'SQ-HEALTH', 'Square Health', 'transport@squarehealth.com.bd'),
-(2, 'SQ-PHARMA', 'Square Pharmaceuticals', 'logistics@squarepharma.com.bd'),
-(3, 'SQ-HOSP', 'Square Hospitals', 'ambulance@squarehospital.com'),
-(4, 'SQ-TEXT', 'Square Textiles', 'fleet@squaretextiles.com.bd'),
-(5, 'SQ-TOIL', 'Square Toiletries', 'supply@squaretoiletries.com.bd');
+(1, 'SQ-HEALTH', 'Stark Group', 'transport@starkgroup.com'),
+(2, 'SQ-PHARMA', 'Stark Industries', 'logistics@squarepharma.com.bd'),
+(3, 'SQ-HOSP', 'Stark Medical', 'ambulance@squarehospital.com'),
+(4, 'SQ-TEXT', 'Stark Logistics', 'fleet@squaretextiles.com.bd'),
+(5, 'SQ-TOIL', 'Stark Aerospace', 'supply@squaretoiletries.com.bd');
 
 INSERT INTO vehicles (id, vehicle_number, company_id, type, brand, model, status) VALUES
 (1, 'DHAKA-METRO-GA-11-2233', 1, 'Ambulance', 'Toyota', 'HiAce', 'AVAILABLE'),

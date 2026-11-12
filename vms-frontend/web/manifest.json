@@ -1,11 +1,11 @@
 {
-  "name": "Square Health VMS",
+  "name": "Stark Group VMS",
   "short_name": "VMS",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0F172A",
   "theme_color": "#1E3A8A",
-  "description": "Vehicle Management System for Stark Group & Square Health",
+  "description": "Vehicle Management System for Stark Group & Stark Group",
   "orientation": "portrait-primary",
   "prefer_related_applications": false
 }

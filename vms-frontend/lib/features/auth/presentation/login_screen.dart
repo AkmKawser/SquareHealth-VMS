@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 16),
                       const Center(
                         child: Text(
-                          'Square Health VMS',
+                          'Stark Group VMS',
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,

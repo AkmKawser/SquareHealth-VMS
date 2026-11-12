@@ -1,5 +1,5 @@
 -- =============================================================================
--- SquareHealth-VMS: Database Initialization Migration (V1)
+-- StarkGroup-VMS: Database Initialization Migration (V1)
 -- Description: Core tables, foreign keys, constraints, and indexes
 -- =============================================================================
 

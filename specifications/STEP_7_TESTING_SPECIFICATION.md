@@ -6,7 +6,7 @@
 |---|---|
 | **Specification ID** | `SPEC-STEP-07` |
 | **Title** | Multi-Tier Automated Testing Architecture & Quality Assurance Gates |
-| **System** | SquareHealth-VMS (Vehicle Management System) |
+| **System** | StarkGroup-VMS (Vehicle Management System) |
 | **Target Phase** | Phase 7 (Verification & Quality Gates) |
 | **Status** | Approved Specification |
 
@@ -76,7 +76,7 @@ class VehicleServiceTest {
     void shouldCreateVehicle_WhenPlateIsUnique() {
         VehicleRequestDto dto = VehicleRequestDto.builder()
             .vehicleNumber("DHAKA-METRO-GA-11-2233")
-            .company("Square Health")
+            .company("Stark Group")
             .type("Ambulance")
             .brand("Toyota")
             .model("HiAce")
@@ -84,8 +84,8 @@ class VehicleServiceTest {
             .build();
 
         when(vehicleRepository.existsByVehicleNumberIgnoreCase("DHAKA-METRO-GA-11-2233")).thenReturn(false);
-        when(companyRepository.findByNameIgnoreCase("Square Health"))
-            .thenReturn(Optional.of(Company.builder().id(1L).name("Square Health").build()));
+        when(companyRepository.findByNameIgnoreCase("Stark Group"))
+            .thenReturn(Optional.of(Company.builder().id(1L).name("Stark Group").build()));
         when(vehicleRepository.save(any(Vehicle.class))).thenAnswer(inv -> {
             Vehicle v = inv.getArgument(0);
             v.setId(100L);
@@ -148,7 +148,7 @@ class VehicleControllerIntegrationTest {
         String jsonPayload = """
             {
               "vehicleNumber": "DHAKA-METRO-GA-11-2233",
-              "company": "Square Health",
+              "company": "Stark Group",
               "type": "Ambulance",
               "brand": "Toyota",
               "model": "HiAce",

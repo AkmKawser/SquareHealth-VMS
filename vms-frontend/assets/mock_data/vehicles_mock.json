@@ -2,7 +2,7 @@
   {
     "id": 1,
     "vehicleNumber": "DHAKA-METRO-GA-11-2233",
-    "company": "Square Health",
+    "company": "Stark Group",
     "type": "Ambulance",
     "brand": "Toyota",
     "model": "HiAce",
@@ -11,7 +11,7 @@
   {
     "id": 2,
     "vehicleNumber": "DHAKA-METRO-CHA-44-5566",
-    "company": "Square Pharmaceuticals",
+    "company": "Stark Industries",
     "type": "Delivery Van",
     "brand": "Hyundai",
     "model": "Mighty",
@@ -20,7 +20,7 @@
   {
     "id": 3,
     "vehicleNumber": "DHAKA-METRO-BA-77-8899",
-    "company": "Square Hospitals",
+    "company": "Stark Medical",
     "type": "Microbus",
     "brand": "Toyota",
     "model": "Noah",
@@ -29,7 +29,7 @@
   {
     "id": 4,
     "vehicleNumber": "DHAKA-METRO-GHA-12-3456",
-    "company": "Square Health",
+    "company": "Stark Group",
     "type": "Ambulance",
     "brand": "Nissan",
     "model": "Caravan",
@@ -38,7 +38,7 @@
   {
     "id": 5,
     "vehicleNumber": "DHAKA-METRO-DHA-98-7654",
-    "company": "Square Textiles",
+    "company": "Stark Logistics",
     "type": "Executive Sedan",
     "brand": "Honda",
     "model": "Civic",
@@ -47,7 +47,7 @@
   {
     "id": 6,
     "vehicleNumber": "DHAKA-METRO-JA-55-6677",
-    "company": "Square Pharmaceuticals",
+    "company": "Stark Industries",
     "type": "Delivery Van",
     "brand": "Isuzu",
     "model": "N-Series",
@@ -56,7 +56,7 @@
   {
     "id": 7,
     "vehicleNumber": "DHAKA-METRO-HA-33-4455",
-    "company": "Square Hospitals",
+    "company": "Stark Medical",
     "type": "Ambulance",
     "brand": "Mercedes-Benz",
     "model": "Sprinter",
@@ -65,7 +65,7 @@
   {
     "id": 8,
     "vehicleNumber": "DHAKA-METRO-KA-88-9900",
-    "company": "Square Health",
+    "company": "Stark Group",
     "type": "Microbus",
     "brand": "Toyota",
     "model": "HiAce Commuter",

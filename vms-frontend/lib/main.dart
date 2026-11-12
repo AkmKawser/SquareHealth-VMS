@@ -33,7 +33,7 @@ class _VmsAppState extends State<VmsApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Square Health VMS',
+      title: 'Stark Group VMS',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       home: _isAuthenticated

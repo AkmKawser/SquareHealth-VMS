@@ -6,12 +6,12 @@
 |---|---|
 | **Specification ID** | `SPEC-STEP-08` |
 | **Title** | Production Cloud Deployment, Containerization & CI/CD Pipeline Specification |
-| **System** | SquareHealth-VMS (Vehicle Management System) |
+| **System** | StarkGroup-VMS (Vehicle Management System) |
 | **Target Phase** | Phase 8 (Production Deployment & Delivery) |
 | **Status** | Approved Specification |
 
 ### Purpose
-This specification formalizes the **Production Cloud Infrastructure**, multi-stage **Containerization**, automated **GitHub Actions CI/CD Pipelines**, and **Health Monitoring** for worldwide delivery of the SquareHealth-VMS enterprise platform.
+This specification formalizes the **Production Cloud Infrastructure**, multi-stage **Containerization**, automated **GitHub Actions CI/CD Pipelines**, and **Health Monitoring** for worldwide delivery of the StarkGroup-VMS enterprise platform.
 
 ---
 
@@ -71,7 +71,7 @@ ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"
 
 ### GitHub Actions Pipeline (`.github/workflows/deploy.yml`)
 ```yaml
-name: SquareHealth-VMS CI/CD Pipeline
+name: StarkGroup-VMS CI/CD Pipeline
 
 on:
   push:
@@ -141,7 +141,7 @@ jobs:
 | `SPRING_DATASOURCE_USERNAME`| Backend | Database username | `vms_admin` |
 | `SPRING_DATASOURCE_PASSWORD`| Backend | Secure database password | `[Secret Store]` |
 | `JWT_SECRET_KEY` | Backend | HS256 HMAC Signing Key | `[512-bit Secret Store]` |
-| `CORS_ALLOWED_ORIGINS` | Backend | Frontend origin whitelist | `https://squarehealth-vms.netlify.app` |
+| `CORS_ALLOWED_ORIGINS` | Backend | Frontend origin whitelist | `https://starkgroup-vms.netlify.app` |
 
 ---
 
@@ -149,7 +149,7 @@ jobs:
 
 1. **Liveness & Readiness Probes**: `/actuator/health/liveness` and `/actuator/health/readiness` returning `{"status": "UP"}`.
 2. **Post-Deployment Smoke Test**:
-   - Verify `GET https://squarehealth-vms.netlify.app` returns `200 OK`.
+   - Verify `GET https://starkgroup-vms.netlify.app` returns `200 OK`.
    - Verify `GET https://vms-api.onrender.com/actuator/health` returns `{"status":"UP"}`.
    - Verify database Flyway migration status is current with zero pending scripts.
 

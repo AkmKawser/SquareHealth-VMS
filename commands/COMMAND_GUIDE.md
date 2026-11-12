@@ -1,6 +1,6 @@
-# SquareHealth-VMS — Developer CLI Command Guide
+# StarkGroup-VMS — Developer CLI Command Guide
 
-This guide documents the canonical, industry-standard Command Line Interface (CLI) commands to build, test, run, and manage both the **Java Spring Boot Backend** and **Flutter Web Frontend** for the SquareHealth-VMS platform.
+This guide documents the canonical, industry-standard Command Line Interface (CLI) commands to build, test, run, and manage both the **Java Spring Boot Backend** and **Flutter Web Frontend** for the StarkGroup-VMS platform.
 
 ---
 
@@ -100,7 +100,7 @@ Invoke-RestMethod -Uri "http://localhost:8080/api/v1/vehicles"
 # Create a sample vehicle record
 $body = @{
     vehicleNumber = "DHA-GA-11-2045"
-    company = "Square Health"
+    company = "Stark Group"
     type = "Ambulance"
     brand = "Toyota"
     model = "HiAce GL"

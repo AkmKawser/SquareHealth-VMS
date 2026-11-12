@@ -12,7 +12,7 @@
 	<artifactId>vms-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>vms-backend</name>
-	<description>Vehicle Management System Backend - Square Health and Stark Group</description>
+	<description>Vehicle Management System Backend - Stark Group and Stark Group</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>

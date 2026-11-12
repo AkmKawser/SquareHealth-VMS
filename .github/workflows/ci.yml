@@ -1,4 +1,4 @@
-name: SquareHealth-VMS Continuous Integration
+name: StarkGroup-VMS Continuous Integration
 
 on:
   push:

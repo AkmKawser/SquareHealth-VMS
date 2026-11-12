@@ -58,7 +58,7 @@ class VehicleService {
           VehicleModel(
             id: 1,
             vehicleNumber: 'DHA-GA-11-2045',
-            company: 'Square Health',
+            company: 'Stark Group',
             type: 'Ambulance',
             brand: 'Toyota',
             model: 'HiAce Emergency ICU',
@@ -76,7 +76,7 @@ class VehicleService {
           VehicleModel(
             id: 3,
             vehicleNumber: 'DHA-GA-12-9901',
-            company: 'Square Health',
+            company: 'Stark Group',
             type: 'Executive Sedan',
             brand: 'Toyota',
             model: 'Corolla Altis Hybrid',

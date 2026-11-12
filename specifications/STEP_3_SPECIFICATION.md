@@ -6,12 +6,12 @@
 |---|---|
 | **Specification ID** | `SPEC-STEP-03` |
 | **Title** | Centralized API Data Contracts, Mock Repository & Flutter Web UI Prototype |
-| **System** | SquareHealth-VMS (Vehicle Management System) |
+| **System** | StarkGroup-VMS (Vehicle Management System) |
 | **Target Phase** | Phase 3 (Contract & Prototype Validation) |
 | **Status** | Approved & Implemented |
 
 ### Purpose
-This specification unifies the **Centralized REST API Data Contracts & DTO Schemas**, the **Offline Mock Repository Engine**, and the **Interactive Flutter Web Presentation Layer & Design System** for the SquareHealth-VMS enterprise platform.
+This specification unifies the **Centralized REST API Data Contracts & DTO Schemas**, the **Offline Mock Repository Engine**, and the **Interactive Flutter Web Presentation Layer & Design System** for the StarkGroup-VMS enterprise platform.
 
 ---
 
@@ -19,7 +19,7 @@ This specification unifies the **Centralized REST API Data Contracts & DTO Schem
 
 The following visual demo showcases the exact layout, responsive components, color palette, and interactive modal dialogs implemented in the Flutter Web presentation layer:
 
-![SquareHealth-VMS UI Prototype Graphical Demo](ui_prototype_demo.png)
+![StarkGroup-VMS UI Prototype Graphical Demo](ui_prototype_demo.png)
 
 ### Key Visual Interfaces Displayed Above:
 1. **Executive Fleet Dashboard (`DashboardScreen.dart` - View 1)**:
@@ -35,7 +35,7 @@ The following visual demo showcases the exact layout, responsive components, col
    - License plate text input with strict regex enforcement (`^[A-Z0-9-]+$`).
    - Clean dropdown selectors for Operating Company, Vehicle Type, and Initial Fleet Status.
 4. **Corporate Authentication Portal (`LoginScreen.dart` - View 4)**:
-   - Square Health branded sign-in card with instant demo credential helper (`admin` / `Password123!`).
+   - Stark Group branded sign-in card with instant demo credential helper (`admin` / `Password123!`).
 
 ---
 
@@ -117,7 +117,7 @@ Retrieves a list of fleet vehicles with optional filtering.
   {
     "id": 1,
     "vehicleNumber": "DHAKA-METRO-GA-11-2233",
-    "company": "Square Health",
+    "company": "Stark Group",
     "type": "Ambulance",
     "brand": "Toyota",
     "model": "HiAce",
@@ -126,7 +126,7 @@ Retrieves a list of fleet vehicles with optional filtering.
   {
     "id": 2,
     "vehicleNumber": "DHAKA-METRO-CHA-44-5566",
-    "company": "Square Pharmaceuticals",
+    "company": "Stark Industries",
     "type": "Delivery Van",
     "brand": "Hyundai",
     "model": "Mighty",
@@ -255,7 +255,7 @@ flowchart TD
 * **Path**: [`vms-frontend/lib/features/auth/presentation/login_screen.dart`](../vms-frontend/lib/features/auth/presentation/login_screen.dart)
 * **Visual Elements**:
   * Centered responsive card (max width 420px) on light slate background.
-  * Square Health enterprise emblem and header typography.
+  * Stark Group enterprise emblem and header typography.
   * Username text field with `Validators.emailOrUsername`.
   * Password text field with visibility toggle and `Validators.password`.
   * Full-width "Sign In to Dashboard" button with simulated network latency indicator.
@@ -268,7 +268,7 @@ flowchart TD
 * **Visual Elements**:
   * Fixed-width dark navy `NavigationRail` with corporate logo mark and destination tabs (Dashboard, Vehicles, Maintenance, Drivers).
   * Sign-out icon button at bottom of navigation rail.
-  * Top navigation bar with active route title, environment pill badge ("Enterprise Web v1.0 (Step 3 Prototype)"), and operator profile avatar with designation ("Fleet Administrator - Square Health Logistics HQ").
+  * Top navigation bar with active route title, environment pill badge ("Enterprise Web v1.0 (Step 3 Prototype)"), and operator profile avatar with designation ("Fleet Administrator - Stark Group Logistics HQ").
 
 ---
 
@@ -310,7 +310,7 @@ flowchart TD
      * Validated against regex pattern: `^[A-Z0-9-]+$` via `Validators.vehicleNumber`.
      * Minimum 5 characters required.
   2. *Operating Company*:
-     * Dropdown selector: `Square Health`, `Square Pharmaceuticals`, `Square Hospitals`, `Square Textiles`, `Square Toiletries`.
+     * Dropdown selector: `Stark Group`, `Stark Industries`, `Stark Medical`, `Stark Logistics`, `Stark Aerospace`.
   3. *Vehicle Type*:
      * Dropdown selector: `Ambulance`, `Delivery Van`, `Microbus`, `Executive Sedan`, `Cargo Truck`.
   4. *Brand & Model*:

@@ -163,7 +163,7 @@ class AppShell extends StatelessWidget {
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                               ),
                               Text(
-                                'Square Health Logistics HQ',
+                                'Stark Group Logistics HQ',
                                 style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
                               ),
                             ],

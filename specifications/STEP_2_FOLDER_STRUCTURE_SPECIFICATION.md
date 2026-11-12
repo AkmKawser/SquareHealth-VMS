@@ -6,12 +6,12 @@
 |---|---|
 | **Specification ID** | `SPEC-STEP-02` |
 | **Title** | Unified Monorepo Topology & Framework Architecture Specification |
-| **System** | SquareHealth-VMS (Vehicle Management System) |
+| **System** | StarkGroup-VMS (Vehicle Management System) |
 | **Target Phase** | Phase 2 (Scaffolding & Structural Integrity) |
 | **Status** | Approved & Implemented |
 
 ### Purpose
-This specification formalizes the directory topology, architectural layering, and cross-boundary dependency rules for the SquareHealth-VMS monorepo, incorporating official Flutter Web and Java Spring Boot engineering standards.
+This specification formalizes the directory topology, architectural layering, and cross-boundary dependency rules for the StarkGroup-VMS monorepo, incorporating official Flutter Web and Java Spring Boot engineering standards.
 
 ---
 
@@ -37,7 +37,7 @@ In alignment with official Spring Framework conventions, enterprise REST service
 ## 3. Unified Monorepo Directory Topology
 
 ```
-SquareHealth-VMS/
+StarkGroup-VMS/
 ├── 1.Requirement_Gathering/             # Multi-source requirement ingestion pipeline & SRS
 │   ├── Document/                        # Source Word specifications
 │   ├── UdemyScrapper/                   # Scraped course curriculum (7 sections)

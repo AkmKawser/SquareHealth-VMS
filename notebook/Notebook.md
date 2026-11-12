@@ -1,4 +1,4 @@
-# 🚗 The Super Cool Square Health Vehicle Guide (Explain-to-a-10-Year-Old Edition)
+# 🚗 The Super Cool Stark Group Vehicle Guide (Explain-to-a-10-Year-Old Edition)
 
 > **Welcome, Young Engineer!**  
 > Imagine you have been hired as the Chief Commander of a giant fleet of ambulances, emergency medicine delivery vans, and doctor cars across Bangladesh. How do you make sure no car gets lost, every sick patient gets their medicine on time, and every ambulance has enough fuel and working tires?  
@@ -30,7 +30,7 @@
 
 ## Chapter 1: The Big Story — Why Are We Building This?
 
-Imagine you own a huge hospital group called **Square Health** in Bangladesh.
+Imagine you own a huge hospital group called **Stark Group** in Bangladesh.
 Every day, amazing things happen:
 - An ambulance needs to rush to pick up an injured grandfather.
 - A delivery van with boxes of life-saving medicine must drive from Dhaka to Chittagong before sunset.
@@ -192,7 +192,7 @@ Instead of writing a long messy paragraph, computers use **JSON** (JavaScript Ob
 {
   "id": 1,
   "vehicleNumber": "DHAKA-METRO-GA-11-2233",
-  "company": "Square Health",
+  "company": "Stark Group",
   "type": "Ambulance",
   "brand": "Toyota",
   "model": "HiAce",
@@ -286,7 +286,7 @@ Before a builder hammers a single nail into wood, what do they do? They look at 
      - `AVAILABLE`: In the parking lot, washed, tank full, ready to go!
      - `IN_TRIP`: Currently driving on a mission.
      - `MAINTENANCE`: At the repair shop.
-   - Operating companies include: **Square Health**, **Square Pharmaceuticals**, **Square Hospitals**, **Square Textiles**.
+   - Operating companies include: **Stark Group**, **Stark Industries**, **Stark Medical**, **Stark Logistics**.
 
 All of this was locked into a master document named [`REQUIREMENTS.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/REQUIREMENTS.md).
 
@@ -345,7 +345,7 @@ You build the prototype first! This is called **Option 4: Contract + Prototype**
      - 🚑 `DHAKA-METRO-GA-11-2233`: Toyota HiAce Ambulance (Ready!)
      - 🚚 `DHAKA-METRO-CHA-44-5566`: Hyundai Mighty Medicine Van (In Trip!)
      - 🚐 `DHAKA-METRO-BA-77-8899`: Toyota Noah Microbus (Under Repair!)
-     - Plus 5 more vehicles across Square Hospitals and Square Textiles!
+     - Plus 5 more vehicles across Stark Medical and Stark Logistics!
 
 3. **The In-Memory Brain ([`VehicleService.dart`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/lib/features/vehicles/services/vehicle_service.dart))**:
    - We taught Flutter how to store these cars in memory.
@@ -469,7 +469,7 @@ Whenever you hear software engineers use big, fancy words, open this dictionary 
 ## 🏆 Summary Checklist: You Are Now a Junior Software Architect!
 
 Now you know:
-- ✅ Why Square Health needs a Vehicle Management System.
+- ✅ Why Stark Group needs a Vehicle Management System.
 - ✅ How Flutter draws screens and how Spring Boot manages rules.
 - ✅ How PostgreSQL remembers every vehicle in a secure vault.
 - ✅ How HTTP and JSON act like walkie-talkies and folded secret notes.

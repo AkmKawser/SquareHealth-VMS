@@ -6,7 +6,7 @@
 |---|---|
 | **Specification ID** | `SPEC-STEP-06` |
 | **Title** | Full-Stack Client-Server Integration, Network Protocol & Live Wire-Up Specification |
-| **System** | SquareHealth-VMS (Vehicle Management System) |
+| **System** | StarkGroup-VMS (Vehicle Management System) |
 | **Target Phase** | Phase 6 (End-to-End Integration) |
 | **Status** | Approved Specification |
 

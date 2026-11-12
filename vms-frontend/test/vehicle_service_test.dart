@@ -30,7 +30,7 @@ void main() {
     test('Should create a new vehicle successfully', () async {
       final newVehicle = VehicleModel(
         vehicleNumber: 'CTG-METRO-KA-99-0011',
-        company: 'Square Health',
+        company: 'Stark Group',
         type: 'Ambulance',
         brand: 'Nissan',
         model: 'Urvan',
@@ -46,7 +46,7 @@ void main() {
     test('Should throw ApiException on duplicate vehicle creation', () async {
       final duplicateVehicle = VehicleModel(
         vehicleNumber: 'DHA-GA-11-2045',
-        company: 'Square Health',
+        company: 'Stark Group',
         type: 'Ambulance',
         brand: 'Toyota',
         model: 'HiAce',

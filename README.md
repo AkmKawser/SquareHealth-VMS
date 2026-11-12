@@ -1,4 +1,4 @@
-# SquareHealth-VMS (Stark Group Fleet Management System)
+# StarkGroup-VMS (Stark Group Fleet Management System)
 
 A full-stack, enterprise-ready Vehicle Management System developed with **Flutter Web**, **Java Spring Boot**, and **PostgreSQL/SQL Database**, paired with **Google Antigravity AI**.
 
@@ -18,13 +18,13 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
 ## System Architecture
 
 ### High-Level System Architecture
-![SquareHealth-VMS System Architecture](architecture_diagram.jpg)
+![StarkGroup-VMS System Architecture](architecture_diagram.jpg)
 
 ### Deep Technical Architecture Blueprint
-![SquareHealth-VMS Deep Technical Blueprint](architecture_detailed_spec.png)
+![StarkGroup-VMS Deep Technical Blueprint](architecture_detailed_spec.png)
 
 ### 4-Tier Visual Architecture Blueprint
-![SquareHealth-VMS Visual Blueprint](architecture_blueprint.jpg)
+![StarkGroup-VMS Visual Blueprint](architecture_blueprint.jpg)
 
 ### Architectural Layers in Detail
 
@@ -82,10 +82,10 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
 The following diagrams illustrate the end-to-end communication sequence when a user triggers an action (e.g. creating a vehicle) from the Flutter Web client to the Java Spring Boot backend, through validation and persistence in PostgreSQL, and back to the reactive UI:
 
 ### End-to-End Request Flow Sequence Diagram
-![SquareHealth-VMS Request Flow Sequence](request_flow_sequence.jpg)
+![StarkGroup-VMS Request Flow Sequence](request_flow_sequence.jpg)
 
 ### Detailed Request-Response Technical Specification
-![SquareHealth-VMS Detailed Request Flow](request_flow_detailed_spec.png)
+![StarkGroup-VMS Detailed Request Flow](request_flow_detailed_spec.png)
 
 ### Step-by-Step Execution Lifecycle
 
@@ -118,7 +118,7 @@ The following diagrams illustrate the end-to-end communication sequence when a u
 ---
 
 ```
-SquareHealth-VMS/
+StarkGroup-VMS/
 ├── 1.Requirement_Gathering/             # Multi-source requirement ingestion pipeline & SRS
 │   ├── Document/                        # Source Word specifications
 │   ├── UdemyScrapper/                   # Scraped course curriculum (7 sections)

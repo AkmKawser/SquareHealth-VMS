@@ -1,7 +1,7 @@
 # Full-Stack Vehicle Management System (VMS)
 ## Project Folder Structure Specification & Architecture Rationale
 
-This document details the project structure for the **SquareHealth-VMS (Stark Group Fleet Management System)** based on official architectural standards from both the **Flutter** (Frontend) and **Spring Boot** (Backend) official documentation, along with the unified/merged enterprise architecture and the engineering rationale behind every component.
+This document details the project structure for the **StarkGroup-VMS (Stark Group Fleet Management System)** based on official architectural standards from both the **Flutter** (Frontend) and **Spring Boot** (Backend) official documentation, along with the unified/merged enterprise architecture and the engineering rationale behind every component.
 
 ---
 
@@ -148,7 +148,7 @@ vms-backend/
 The full-stack application adopts a **Clean Monorepo Layout** that unifies the requirements pipeline, the Flutter Web client, and the Spring Boot backend service while maintaining complete technical isolation between the stacks:
 
 ```text
-SquareHealth-VMS/
+StarkGroup-VMS/
 │
 ├── 1.Requirement_Gathering/                             # Requirement Engineering Artifacts
 │   ├── Document/

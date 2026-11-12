@@ -6,12 +6,12 @@
 |---|---|
 | **Specification ID** | `SPEC-STEP-01` |
 | **Title** | Requirement Gathering, Audio Ingestion & Traceable SRS Protocol |
-| **System** | SquareHealth-VMS (Vehicle Management System) |
+| **System** | StarkGroup-VMS (Vehicle Management System) |
 | **Target Phase** | Phase 1 (Foundation & Scope Definition) |
 | **Status** | Approved & Implemented |
 
 ### Purpose
-This specification formalizes the exact engineering standards, automated pipeline steps, and citation conventions used to discover, transcribe, consolidate, and trace software requirements for the SquareHealth-VMS enterprise platform.
+This specification formalizes the exact engineering standards, automated pipeline steps, and citation conventions used to discover, transcribe, consolidate, and trace software requirements for the StarkGroup-VMS enterprise platform.
 
 ---
 
@@ -25,7 +25,7 @@ flowchart TD
         S1["Udemy Course Curriculum (7 Sections)"]
         S2["Session 001 Kickoff Class (Audio/Video)"]
         S3["Session 002 Weekly Support 01 (76-min Bangla MP3)"]
-        S4["Square Health Enterprise Requirements (SRS Docs)"]
+        S4["Stark Group Enterprise Requirements (SRS Docs)"]
     end
 
     subgraph Processing["⚙️ Automated Processing & Normalization"]
@@ -75,7 +75,7 @@ Requirement Statement + [Source: <Canonical Document or Session Name>]
 ### Citation Examples:
 * *"Each vehicle must have a globally unique license plate number formatted as `[A-Z0-9-]+`."* `[Source: 002 - Session Weekly Support 01.md]`
 * *"The system shall manage vehicles across three distinct operational states: `AVAILABLE`, `IN_TRIP`, and `MAINTENANCE`."* `[Source: Course Build a Full-Stack Web App with Flutter & Spring Boot_Full.md]`
-* *"Vehicles are distributed across corporate sister concerns including Square Health, Square Pharmaceuticals, and Square Hospitals."* `[Source: 001 - full-stack-AI-with-flutter-spring-boot kickoff Class.md]`
+* *"Vehicles are distributed across corporate sister concerns including Stark Group, Stark Industries, and Stark Medical."* `[Source: 001 - full-stack-AI-with-flutter-spring-boot kickoff Class.md]`
 
 ---
 

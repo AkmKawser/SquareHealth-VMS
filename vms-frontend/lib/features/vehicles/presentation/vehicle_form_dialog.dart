@@ -26,7 +26,7 @@ class _VehicleFormDialogState extends State<VehicleFormDialog> {
   late TextEditingController _brandController;
   late TextEditingController _modelController;
 
-  String _selectedCompany = 'Square Health';
+  String _selectedCompany = 'Stark Group';
   String _selectedType = 'Ambulance';
   String _selectedStatus = 'AVAILABLE';
 
@@ -34,11 +34,11 @@ class _VehicleFormDialogState extends State<VehicleFormDialog> {
   String? _errorMessage;
 
   final List<String> _companies = [
-    'Square Health',
-    'Square Pharmaceuticals',
-    'Square Hospitals',
-    'Square Textiles',
-    'Square Toiletries',
+    'Stark Group',
+    'Stark Industries',
+    'Stark Medical',
+    'Stark Logistics',
+    'Stark Aerospace',
   ];
 
   final List<String> _types = [

@@ -36,7 +36,7 @@ class VehicleControllerTest {
     @DisplayName("GET /api/v1/vehicles returns 200 and list")
     void shouldReturnAllVehicles() throws Exception {
         VehicleResponseDto dto = new VehicleResponseDto(
-                1L, "DHA-GA-11-2045", "Square Health", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
+                1L, "DHA-GA-11-2045", "Stark Group", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
         );
         when(vehicleService.getAllVehicles()).thenReturn(List.of(dto));
 
@@ -50,10 +50,10 @@ class VehicleControllerTest {
     @DisplayName("POST /api/v1/vehicles returns 201 Created on valid vehicle")
     void shouldCreateVehicle() throws Exception {
         VehicleRequestDto request = new VehicleRequestDto(
-                "DHA-GA-11-2045", "Square Health", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
+                "DHA-GA-11-2045", "Stark Group", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
         );
         VehicleResponseDto response = new VehicleResponseDto(
-                1L, "DHA-GA-11-2045", "Square Health", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
+                1L, "DHA-GA-11-2045", "Stark Group", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
         );
         when(vehicleService.createVehicle(any(VehicleRequestDto.class))).thenReturn(response);
 
@@ -69,7 +69,7 @@ class VehicleControllerTest {
     @DisplayName("POST /api/v1/vehicles returns 409 Conflict when duplicate license plate")
     void shouldReturn409WhenDuplicate() throws Exception {
         VehicleRequestDto request = new VehicleRequestDto(
-                "DHA-GA-11-2045", "Square Health", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
+                "DHA-GA-11-2045", "Stark Group", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
         );
         when(vehicleService.createVehicle(any(VehicleRequestDto.class)))
                 .thenThrow(new DuplicateVehicleException("Vehicle with number 'DHA-GA-11-2045' already exists."));
@@ -86,7 +86,7 @@ class VehicleControllerTest {
     @DisplayName("POST /api/v1/vehicles returns 400 Bad Request on blank field")
     void shouldReturn400WhenInvalid() throws Exception {
         VehicleRequestDto invalidRequest = new VehicleRequestDto(
-                "", "Square Health", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
+                "", "Stark Group", "Ambulance", "Toyota", "HiAce", "AVAILABLE"
         );
 
         mockMvc.perform(post("/api/v1/vehicles")

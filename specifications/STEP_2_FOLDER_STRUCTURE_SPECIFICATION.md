@@ -76,7 +76,7 @@ SquareHealth-VMS/
 │   └── Notebook.md                      # Comprehensive explain-to-a-10-year-old guide
 ├── chat/                                # Conversation logs & session history
 │   └── chat.md                          # Full transcript of user requests & agent actions
-├── readme_folderstructure.md            # Detailed framework-specific & merged folder documentation
+├── FOLDER_STRUCTURE.md            # Detailed framework-specific & merged folder documentation
 └── Generic_Project_Template/Any Project Skill.docx               # Step-by-step master project blueprint
 ```
 
@@ -95,6 +95,6 @@ SquareHealth-VMS/
 
 - [x] Verified official Flutter Web feature-first directory layout on disk.
 - [x] Verified official Spring Boot layered directory layout on disk.
-- [x] Documented architectural rationale in [`readme_folderstructure.md`](../readme_folderstructure.md).
-- [x] Synchronized monorepo directory tree in master [`README.md`](../README.md).
+- [x] Documented architectural rationale in [`FOLDER_STRUCTURE.md`](../FOLDER_STRUCTURE.md).
+- [x] Synchronized monorepo directory tree in master [`README.md`](../SPECIFICATIONS_CATALOG.md).
 

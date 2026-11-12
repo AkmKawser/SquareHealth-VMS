@@ -146,7 +146,7 @@ SquareHealth-VMS/
 │   └── chat.md                          # Full transcript of user requests & agent actions
 ├── notebook/                            # Kid-friendly comprehensive technology guide
 │   └── Notebook.md                      # Complete story and tech breakdown for a 10-year-old
-├── readme_folderstructure.md            # Detailed framework-specific & merged folder documentation
+├── FOLDER_STRUCTURE.md            # Detailed framework-specific & merged folder documentation
 ├── specifications/                      # Centralized technical specification repository
 │   ├── README.md                        # Master specification catalog & index
 │   ├── STEP_1_REQUIREMENTS_SPECIFICATION.md
@@ -168,7 +168,7 @@ SquareHealth-VMS/
 
 ## 🛠️ Developer CLI Execution Guide
 
-Complete, step-by-step terminal commands for running, building, testing, and managing both the backend and frontend are documented in [`commands/README.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/commands/README.md).
+Complete, step-by-step terminal commands for running, building, testing, and managing both the backend and frontend are documented in [`commands/COMMAND_GUIDE.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/commands/COMMAND_GUIDE.md).
 
 - **Run Backend Server (Spring Boot)**:
   ```powershell
@@ -192,7 +192,7 @@ Complete, step-by-step terminal commands for running, building, testing, and man
 - **Step-2: Folder Structure**
   - Official Flutter Web (frontend) and Spring Boot (backend) folder structures analyzed from official documentation.
   - Merged into a unified monorepo folder structure and created on disk.
-  - Comprehensive explanation and architectural rationale documented in [readme_folderstructure.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/readme_folderstructure.md).
+  - Comprehensive explanation and architectural rationale documented in [FOLDER_STRUCTURE.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/FOLDER_STRUCTURE.md).
 - **Step-3: Data Contracts, Mock Repository & UI Prototype**
   - Centralized API data contract and DTO JSON schemas defined to eliminate schema drift and AI field hallucination.
   - Mock datasets created at [`assets/mock_data/vehicles_mock.json`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/assets/mock_data/vehicles_mock.json) covering all domain states.

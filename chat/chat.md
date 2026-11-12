@@ -69,7 +69,7 @@
 | run_command | Verify YoutubeScrapper contents |
 | write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\1.Requirement_Gathering\REQUIREMENTS.md |
 | run_command | Check development tools |
-| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\readme_folderstructure.md |
+| write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\FOLDER_STRUCTURE.md |
 | run_command | Create folder structure |
 | run_command | Write foundational files |
 | write_file | c:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\vms-frontend\pubspec.yaml |
@@ -149,7 +149,7 @@ Both **Step-1** and **Step-2** specified in [Any Project Skill.docx](file:///c:/
      - **Backend**: [`pom.xml`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/pom.xml), [`application.properties`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/resources/application.properties), [`VmsApplication.java`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/VmsApplication.java), [`Vehicle.java`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/entity/Vehicle.java), [`VehicleRepository.java`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/repository/VehicleRepository.java), [`VehicleService.java`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/service/VehicleService.java) (with duplicate vehicle number enforcement), [`VehicleController.java`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/controller/VehicleController.java), DTOs, global exceptions, and unit tests.
 
 3. **Folder Structure Documentation**:
-   - Created [readme_folderstructure.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/readme_folderstructure.md) explaining the individual and merged folder structures, component responsibilities, and engineering rationale (decoupled lifecycles, separate Netlify/Render deployment, and scoped AI pair programming).
+   - Created [FOLDER_STRUCTURE.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/FOLDER_STRUCTURE.md) explaining the individual and merged folder structures, component responsibilities, and engineering rationale (decoupled lifecycles, separate Netlify/Render deployment, and scoped AI pair programming).
 
 ---
 
@@ -298,7 +298,7 @@ The chat file includes:
 | read_file | Read `README.md` project overview |
 | run_command | Check Python environment capabilities |
 | invoke_subagent | Launch `image-generator` subagent to generate architecture diagram |
-| read_file | Read `readme_folderstructure.md` architectural breakdown |
+| read_file | Read `FOLDER_STRUCTURE.md` architectural breakdown |
 | run_command | Inspect `Any Project Skill.docx` requirements |
 | manage_subagents | Receive generated high-resolution architecture diagram |
 | read_file | Inspect and verify generated `architecture_diagram.jpg` |
@@ -926,7 +926,7 @@ all tables, columns, and constraints from your Java JPA Entities (@Entity).
    - The user asked to inspect [`Any Project Skill.docx`](../Any%20Project%20Skill.docx) and propose logical, industry-standard ideas for `Step-3:`.
    - Inspection of `Any Project Skill.docx` confirmed:
      - `Step-1:` Requirement Gathering (Ingestion architecture, audio-to-speech, consolidated SRS with source citations).
-     - `Step-2:` Folder structure based on framework documentation, merged into a unified monorepo with architectural rationale in `readme_folderstructure.md`.
+     - `Step-2:` Folder structure based on framework documentation, merged into a unified monorepo with architectural rationale in `FOLDER_STRUCTURE.md`.
      - `Step-3:` Currently blank/unwritten.
 2. **Contextual Evaluation Against Project Roadmap**:
    - Evaluated the curriculum roadmap in `UdemyScrapper/01_The Story & Build Roadmap/03_How we will build with AI.md`:
@@ -958,7 +958,7 @@ all tables, columns, and constraints from your Java JPA Entities (@Entity).
 #### Full Unabridged Assistant Response:
 In [`Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Any%20Project%20Skill.docx), we have completed:
 - **Step-1: Requirement Gathering** (Multi-source ingestion pipeline, audio-to-speech, and single SRS with source brackets).
-- **Step-2: Folder Structure** (Official frontend & backend documentation analysis, merged monorepo creation, and `readme_folderstructure.md`).
+- **Step-2: Folder Structure** (Official frontend & backend documentation analysis, merged monorepo creation, and `FOLDER_STRUCTURE.md`).
 - **Step-3:** Currently blank (`Step-3: `).
 
 Based on the course curriculum roadmap ([`03_How we will build with AI.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/UdemyScrapper/01_The%20Story%20&%20Build%20Roadmap/03_How%20we%20will%20build%20with%20AI.md)) and enterprise full-stack software engineering standards, here are the **4 best architectural ideas for Step-3**:
@@ -1115,7 +1115,7 @@ Here is the in-depth architectural rationale explaining **why**:
 Step-1: Requirement Gathering (SRS, audio-to-speech, sources)
    │
    ▼
-Step-2: Architecture & Folder Structure (Monorepo, readme_folderstructure.md)
+Step-2: Architecture & Folder Structure (Monorepo, FOLDER_STRUCTURE.md)
    │
    ▼
 Step-3: [OPTION 4] Data Contracts, Mock Repository & UI Prototype
@@ -1159,7 +1159,7 @@ Step-6: Automated Testing, CI/CD & Deployment
 3. **Artifact Generation & Visual Blueprint**:
    - Implemented `scripts/render_ai_pair_programming.html` and captured an ultra-high-resolution architecture diagram image: [`ai_pair_programming_architecture.png`](../ai_pair_programming_architecture.png) using Playwright.
    - Inserted the full formatted text directly before paragraph 0 in [`Any Project Skill.docx`](../Any%20Project%20Skill.docx) using `python-docx`.
-   - Embedded the visual diagram and architecture summary into [`README.md`](../README.md).
+   - Embedded the visual diagram and architecture summary into [`README.md`](../SPECIFICATIONS_CATALOG.md).
 4. **Audit & Git Synchronization**:
    - Executed `scripts/audit_rendering.py` across all modified Markdown files to ensure 100% Zero-Failure compliance.
    - Staged, committed, and pushed all updated assets (document, diagram, HTML, and markdown) to remote `origin/main` (Rule 3).
@@ -1320,7 +1320,7 @@ C:\Users\USER\Documents\.MYGITHUB\SquareHealth-VMS\
 ├── request_flow_detailed_spec.png         (272 KB - Deep Request Flow Specification)
 ├── Any Project Skill.docx                 (Document with embedded graphical diagrams)
 ├── README.md                              (Main project documentation)
-└── readme_folderstructure.md              (Monorepo folder structure manual)
+└── FOLDER_STRUCTURE.md              (Monorepo folder structure manual)
 ```
 
 You can view it directly in Windows File Explorer, open it in any image viewer, or access it inside VS Code alongside `Any Project Skill.docx`.
@@ -1344,7 +1344,7 @@ You can view it directly in Windows File Explorer, open it in any image viewer, 
      4. *Engineering Rationale for Step-3 Placement*: Explaining why establishing data contracts and UI prototypes before physical databases prevents costly schema alterations and migrations.
 3. **Execution & Document Updating**:
    - Programmatically updated paragraph 27 in [`Any Project Skill.docx`](../Any%20Project%20Skill.docx) using `python-docx`, adding the bold title and 4 detailed subsection paragraphs.
-   - Synchronized the "Completed Phases" section in [`README.md`](../README.md) to formally record Step-3.
+   - Synchronized the "Completed Phases" section in [`README.md`](../SPECIFICATIONS_CATALOG.md) to formally record Step-3.
 4. **Audit & Git Synchronization**:
    - Ran `scripts/audit_rendering.py` confirming 100% Zero-Failure compliance.
    - Staged, committed, and pushed changes to remote `origin/main` (Rule 3).
@@ -1509,7 +1509,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
    - **Step-2 (Folder Structure)**:
      - Verified official Flutter Web (feature-first) and Spring Boot (layered) research.
      - Verified creation of merged monorepo folder layout on disk (`vms-frontend/`, `vms-backend/`, `1.Requirement_Gathering/`, `scripts/`, `chat/`, `notebook/`).
-     - Verified `readme_folderstructure.md` documenting both individual and merged structures and rationale.
+     - Verified `FOLDER_STRUCTURE.md` documenting both individual and merged structures and rationale.
      - *Result: 100% Complete.*
    - **Step-3 (Data Contracts, Mock Repository & UI Prototype)**:
      - Verified `API_SPECIFICATION.md` defining endpoints, JSON request/response DTOs, and `ErrorResponseDto` envelope.
@@ -1544,7 +1544,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
      - Step 1: Requirement Gathering specification (`specifications/STEP_1_REQUIREMENTS_SPECIFICATION.md`).
      - Step 2: Unified Monorepo & Framework Folder Structure specification (`specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md`).
      - Step 3: UI Prototype & Presentation Layer specification (`specifications/STEP_3_UI_PROTOTYPE_SPECIFICATION.md`).
-     - Master Catalog & Navigation Index (`specifications/README.md`).
+     - Master Catalog & Navigation Index (`specifications/SPECIFICATIONS_CATALOG.md`).
 2. **Technical Depth & Traceability**:
    - **Step-1 Specification (`SPEC-STEP-01`)**: Formulates multi-source knowledge asset ingestion, speech-to-text pipeline, bracketed citation standard (`[Source: ...]`), functional & non-functional requirements taxonomy, and core domain invariants.
    - **Step-2 Specification (`SPEC-STEP-02`)**: Documents official Flutter Web (Feature-First) and Spring Boot (Layered) architectures, top-level monorepo topology, cross-boundary isolation rules, and DTO decoupling.
@@ -1562,7 +1562,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 | `write_file` | Created `specifications/STEP_1_REQUIREMENTS_SPECIFICATION.md` |
 | `write_file` | Created `specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md` |
 | `write_file` | Created `specifications/STEP_3_UI_PROTOTYPE_SPECIFICATION.md` |
-| `write_file` | Created `specifications/README.md` master catalog |
+| `write_file` | Created `specifications/SPECIFICATIONS_CATALOG.md` master catalog |
 | `run_command` | Removed root `API_SPECIFICATION.md` and updated relative links |
 | `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (44 files passed) |
 | `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
@@ -1620,7 +1620,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 2. **Consolidation Execution**:
    - Merged the full REST API Specification (`API_SPECIFICATION.md`: architectural standards, `ErrorResponseDto` envelope, HTTP status code tables, auth endpoints, vehicle CRUD, dashboard stats, and regex validation rules) with the presentation layer specifications, design system tokens, in-memory mock repository architecture, and high-resolution graphical UI demo into a single master document: [`specifications/STEP_3_SPECIFICATION.md`](../specifications/STEP_3_SPECIFICATION.md).
    - Removed standalone `specifications/API_SPECIFICATION.md` and `specifications/STEP_3_UI_PROTOTYPE_SPECIFICATION.md`.
-   - Updated `specifications/README.md`, `README.md`, `notebook/Notebook.md`, and `specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md` to reference the unified Step 3 specification.
+   - Updated `specifications/SPECIFICATIONS_CATALOG.md`, `README.md`, `notebook/Notebook.md`, and `specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md` to reference the unified Step 3 specification.
 3. **Verification & Repository Sync**:
    - Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (all 43 repository markdown files passed 100%).
    - Staged, committed, and pushed changes to GitHub `origin/main` in adherence to Universal Rule 3.
@@ -1630,7 +1630,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 |---|---|
 | `write_file` | Created unified master specification [`specifications/STEP_3_SPECIFICATION.md`](../specifications/STEP_3_SPECIFICATION.md) |
 | `run_command` | Removed separate files merged into `STEP_3_SPECIFICATION.md` |
-| `write_file` | Updated `specifications/README.md` catalog |
+| `write_file` | Updated `specifications/SPECIFICATIONS_CATALOG.md` catalog |
 | `run_command` | Updated cross-references across `README.md`, `notebook/Notebook.md`, and `STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md` |
 | `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (43 files passed) |
 | `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
@@ -1648,7 +1648,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
    - The user mandated formalizing and documenting **Step-4: Database Architecture, Relational Schema & Migration Engine** in full technical detail across all master project artifacts:
      1. In master project roadmap [`Any Project Skill.docx`](../Any%20Project%20Skill.docx).
      2. In dedicated technical specification [`specifications/STEP_4_DATABASE_SPECIFICATION.md`](../specifications/STEP_4_DATABASE_SPECIFICATION.md).
-     3. Updating [`specifications/README.md`](../specifications/README.md) and [`README.md`](../README.md).
+     3. Updating [`specifications/SPECIFICATIONS_CATALOG.md`](../specifications/SPECIFICATIONS_CATALOG.md) and [`README.md`](../SPECIFICATIONS_CATALOG.md).
 2. **Deep Technical Architecture for Step-4**:
    - **Entity-Relationship (ER) Architecture**: Modeled normalized relational entities (`companies`, `vehicles`, `drivers`, `maintenance_logs`, `users`, `audit_logs`) mapped to Step-3 DTO contracts with foreign key referential integrity (`ON DELETE RESTRICT`).
    - **Relational Data Dictionary**: Detailed column definitions, synthetic sequence primary keys (`BIGSERIAL`), foreign keys, and audit timestamps.
@@ -1672,7 +1672,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 | `write_file` | Created `scripts/add_step4_docx.py` to insert Step-4 into `Any Project Skill.docx` |
 | `run_command` | Executed `add_step4_docx.py` |
 | `write_file` | Created [`specifications/STEP_4_DATABASE_SPECIFICATION.md`](../specifications/STEP_4_DATABASE_SPECIFICATION.md) |
-| `edit_file` | Updated `specifications/README.md` catalog with Step-4 |
+| `edit_file` | Updated `specifications/SPECIFICATIONS_CATALOG.md` catalog with Step-4 |
 | `edit_file` | Updated `README.md` directory tree and completed phases with Step-4 |
 | `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (44 files passed) |
 | `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
@@ -1702,7 +1702,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
    - Created [`specifications/STEP_6_INTEGRATION_SPECIFICATION.md`](../specifications/STEP_6_INTEGRATION_SPECIFICATION.md) (`SPEC-STEP-06`).
    - Created [`specifications/STEP_7_TESTING_SPECIFICATION.md`](../specifications/STEP_7_TESTING_SPECIFICATION.md) (`SPEC-STEP-07`).
    - Created [`specifications/STEP_8_DEPLOYMENT_SPECIFICATION.md`](../specifications/STEP_8_DEPLOYMENT_SPECIFICATION.md) (`SPEC-STEP-08`).
-   - Updated [`specifications/README.md`](../specifications/README.md) catalog and [`README.md`](../README.md) directory tree.
+   - Updated [`specifications/SPECIFICATIONS_CATALOG.md`](../specifications/SPECIFICATIONS_CATALOG.md) catalog and [`README.md`](../SPECIFICATIONS_CATALOG.md) directory tree.
 4. **Audit & Git Synchronization**:
    - Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (all 48 files passed 100% with 0 errors).
    - Staged, committed, and pushed changes to GitHub `origin/main` (Universal Rule 3).
@@ -1716,7 +1716,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 | `write_file` | Created `specifications/STEP_6_INTEGRATION_SPECIFICATION.md` |
 | `write_file` | Created `specifications/STEP_7_TESTING_SPECIFICATION.md` |
 | `write_file` | Created `specifications/STEP_8_DEPLOYMENT_SPECIFICATION.md` |
-| `write_file` | Updated `specifications/README.md` master index with all 8 specifications |
+| `write_file` | Updated `specifications/SPECIFICATIONS_CATALOG.md` master index with all 8 specifications |
 | `edit_file` | Updated `README.md` directory tree |
 | `edit_file` | Sanitized KaTeX syntax in `STEP_7_TESTING_SPECIFICATION.md` to pass rendering audit |
 | `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (48 files passed) |
@@ -1736,7 +1736,7 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 2. **Execution Steps**:
    - Created directory `Generic_Project_Template/` at root.
    - Executed `git mv "Any Project Skill.docx" "Generic_Project_Template/Any Project Skill.docx"` ensuring Git rename history is preserved.
-   - Updated documentation links and directory trees in `README.md`, `readme_folderstructure.md`, and `specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md`.
+   - Updated documentation links and directory trees in `README.md`, `FOLDER_STRUCTURE.md`, and `specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md`.
 3. **Verification & Audit**:
    - Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (all 48 files passed 100%).
    - Staged, committed, and pushed changes to GitHub `origin/main` in adherence to Universal Rule 3.
@@ -1846,14 +1846,14 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
    - Replaced residual term Docker in Paragraph 34 with containerized.
    - Neutralized monitoring phrasing in Paragraphs 59 and 60 to universal utomated liveness probes and liveness and status monitoring.
    - Verified that zero framework or project-specific terms remain across the entire document.
-   - Created Generic_Project_Template/README.md defining the purpose, 8-step lifecycle flow, and architectural distinction matrix.
+   - Created Generic_Project_Template/TEMPLATE_GUIDELINE.md defining the purpose, 8-step lifecycle flow, and architectural distinction matrix.
 3. **Audit & Reinforcement of Project Specifications (specifications/)**:
-   - Reviewed all 8 technical specifications (STEP_1 through STEP_8) and specifications/README.md.
-   - Reinforced in specifications/README.md the explicit **Project Specificity Invariant** tying all specifications directly to SquareHealth-VMS.
+   - Reviewed all 8 technical specifications (STEP_1 through STEP_8) and specifications/SPECIFICATIONS_CATALOG.md.
+   - Reinforced in specifications/SPECIFICATIONS_CATALOG.md the explicit **Project Specificity Invariant** tying all specifications directly to SquareHealth-VMS.
    - Verified that all specifications concretely specify SquareHealth-VMS domain entities (ehicles, 	rips, maintenance_logs), Spring Boot packages (com.starkgroup.vms), PostgreSQL 16 schemas, Flyway migrations, and Flutter Web presentation.
 4. **Link & Documentation Synchronization**:
    - Updated file links in README.md and 
-eadme_folderstructure.md pointing to Generic_Project_Template/Any Project Skill.docx and Generic_Project_Template/README.md.
+eadme_folderstructure.md pointing to Generic_Project_Template/Any Project Skill.docx and Generic_Project_Template/TEMPLATE_GUIDELINE.md.
    - Executed single-pass rendering auditor scripts/audit_rendering.py --all (all 49 files passed with 0 errors).
    - Staged, committed, and pushed changes to GitHub origin/main (Universal Rule 3).
 
@@ -1862,8 +1862,8 @@ eadme_folderstructure.md pointing to Generic_Project_Template/Any Project Skill.
 |---|---|
 | 
 un_command | Inspected Generic_Project_Template/Any Project Skill.docx and replaced residual terms |
-| write_file | Created Generic_Project_Template/README.md documenting universal template scope |
-| edit_file | Updated specifications/README.md with Project Specificity Invariant |
+| write_file | Created Generic_Project_Template/TEMPLATE_GUIDELINE.md documenting universal template scope |
+| edit_file | Updated specifications/SPECIFICATIONS_CATALOG.md with Project Specificity Invariant |
 | 
 un_command | Synchronized links and trees in README.md and 
 eadme_folderstructure.md |
@@ -2054,16 +2054,16 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 ### Agent Strategic Reasoning & Thinking Process
 1. **Developer CLI Documentation & Dedicated Folder**:
    - The user requested a separate folder containing a `.md` file that comprehensively documents the project commands and their practical usage.
-   - Created the dedicated directory `commands/` and authored `commands/README.md`.
-   - Structured `commands/README.md` to cover:
+   - Created the dedicated directory `commands/` and authored `commands/COMMAND_GUIDE.md`.
+   - Structured `commands/COMMAND_GUIDE.md` to cover:
      - **Quick Start: Full-Stack Local Launch**: Step-by-step terminal instructions for starting Spring Boot backend (`http://localhost:8080`) and Flutter Web frontend (`http://localhost:3000`).
      - **Java Spring Boot Backend Commands (`vms-backend/`)**: Maven Wrapper usage (`.\mvnw.cmd spring-boot:run` on Windows, `./mvnw spring-boot:run` on Linux/macOS), profile switching (`dev` H2 vs `prod` PostgreSQL), compilation (`clean compile`), packaging (`clean package`), unit/slice testing (`mvnw test`), and Flyway migrations (`mvnw flyway:migrate`).
      - **Flutter Web Frontend Commands (`vms-frontend/`)**: Dependency resolution (`flutter pub get`), Chrome execution (`flutter run -d chrome`), fixed port binding (`--web-port=3000`), analysis (`flutter analyze`), formatting (`dart format`), testing (`flutter test`), and release building (`flutter build web --release`).
      - **Database Commands**: Docker Compose PostgreSQL startup/teardown and interactive `psql` commands.
      - **Troubleshooting & FAQ**: Port 8080 conflict resolution and execution permissions.
 2. **Catalog & Project Synchronization**:
-   - Linked `commands/README.md` in root `README.md` and updated the directory tree.
-   - Updated `readme_folderstructure.md` to include `commands/`.
+   - Linked `commands/COMMAND_GUIDE.md` in root `README.md` and updated the directory tree.
+   - Updated `FOLDER_STRUCTURE.md` to include `commands/`.
 3. **Audit & Git Synchronization**:
    - Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (all 50 files passed 100% with 0 errors).
    - Staged, committed, and pushed changes to GitHub `origin/main` (Universal Rule 3).
@@ -2071,10 +2071,45 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 ### Tools Executed
 | Tool Name | Purpose |
 |---|---|
-| `write_file` | Created `commands/README.md` comprehensive CLI developer manual |
+| `write_file` | Created `commands/COMMAND_GUIDE.md` comprehensive CLI developer manual |
 | `edit_file` | Updated `README.md` directory tree and added CLI Guide section |
-| `edit_file` | Updated `readme_folderstructure.md` directory tree |
+| `edit_file` | Updated `FOLDER_STRUCTURE.md` directory tree |
 | `write_file` | Appended User Message #39 turn to `chat/chat.md` |
+| `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (50 files passed) |
+| `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
+
+### Assistant Response
+*(See full conversational response delivered to user below)*
+
+
+
+## User Message #40
+**Timestamp:** 2026-11-12T20:27:10Z
+> There should be only 1 readme.md file.other .md file name should be besed on the objective. update it
+
+### Agent Strategic Reasoning & Thinking Process
+1. **Enforcing the Single-README Invariant**:
+   - The user mandated that there must be **exactly 1 `README.md` file** in the entire repository (at the project root).
+   - Every other `.md` file must be named specifically according to its objective.
+2. **Surgical Renaming & Normalization**:
+   - Identified all files bearing `readme` in their name across the workspace:
+     - `readme_folderstructure.md` ➔ Renamed to **`FOLDER_STRUCTURE.md`** (describes the official framework and merged directory layout).
+     - `Generic_Project_Template/README.md` ➔ Renamed to **`Generic_Project_Template/TEMPLATE_GUIDELINE.md`** (describes the universal, framework-agnostic engineering template).
+     - `specifications/README.md` ➔ Renamed to **`specifications/SPECIFICATIONS_CATALOG.md`** (describes the catalog of 8 specifications and project specificity invariant).
+     - `commands/README.md` ➔ Renamed to **`commands/COMMAND_GUIDE.md`** (developer CLI manual).
+   - Preserved `README.md` at the root as the sole global entry point for the repository.
+3. **Reference Updates Across Workspace**:
+   - Scanned and updated cross-references in `README.md`, `FOLDER_STRUCTURE.md`, `chat/chat.md`, and `specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md`.
+4. **Audit & Git Synchronization**:
+   - Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (all 50 files passed 100% with 0 errors).
+   - Staged, committed, and pushed changes to GitHub `origin/main` (Universal Rule 3).
+
+### Tools Executed
+| Tool Name | Purpose |
+|---|---|
+| `run_command` | Executed Git renames (`git mv`) for all 4 secondary readme files |
+| `run_command` | Updated cross-references across all markdown documentation files |
+| `write_file` | Appended User Message #40 turn to `chat/chat.md` |
 | `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (50 files passed) |
 | `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
 

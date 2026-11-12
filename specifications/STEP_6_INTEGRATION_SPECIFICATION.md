@@ -108,3 +108,4 @@ When the backend returns an error envelope, Flutter Web parses the standard `Err
 - [x] Real-time search query sends debounced `GET /api/v1/vehicles?search=...` request.
 - [x] Status filter tab clicks send `GET /api/v1/vehicles?status=...` query parameter.
 - [x] Dashboard KPI cards compute metrics directly from live `/api/v1/dashboard/stats`.
+

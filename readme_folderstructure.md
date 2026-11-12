@@ -280,7 +280,7 @@ SquareHealth-VMS/
 │   │                       └── service/
 │   │                           └── VehicleServiceTest.java
 │
-├── Any Project Skill.docx                               # Master workflow specification
+├── Generic_Project_Template/Any Project Skill.docx                               # Master workflow specification
 ├── readme_folderstructure.md                            # Official & merged architecture manual
 └── README.md                                            # Project overview & quickstart
 ```

@@ -152,3 +152,4 @@ jobs:
    - Verify `GET https://squarehealth-vms.netlify.app` returns `200 OK`.
    - Verify `GET https://vms-api.onrender.com/actuator/health` returns `{"status":"UP"}`.
    - Verify database Flyway migration status is current with zero pending scripts.
+

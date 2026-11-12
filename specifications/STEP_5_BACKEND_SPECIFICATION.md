@@ -351,3 +351,4 @@ public class GlobalExceptionHandler {
 - [x] Missing mandatory fields or malformed license plates trigger `400 Bad Request`.
 - [x] All responses wrap in standardized `ErrorResponseDto` envelope.
 - [x] Swagger documentation generated and available at `/swagger-ui.html`.
+

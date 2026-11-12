@@ -77,7 +77,7 @@ SquareHealth-VMS/
 ├── chat/                                # Conversation logs & session history
 │   └── chat.md                          # Full transcript of user requests & agent actions
 ├── readme_folderstructure.md            # Detailed framework-specific & merged folder documentation
-└── Any Project Skill.docx               # Step-by-step master project blueprint
+└── Generic_Project_Template/Any Project Skill.docx               # Step-by-step master project blueprint
 ```
 
 ---

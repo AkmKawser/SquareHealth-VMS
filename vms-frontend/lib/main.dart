@@ -19,7 +19,7 @@ class VmsApp extends StatefulWidget {
 }
 
 class _VmsAppState extends State<VmsApp> {
-  final VehicleService _vehicleService = VehicleService();
+  final VehicleService _vehicleService = VehicleService(useMock: false);
   bool _isAuthenticated = true; // Default true for direct prototype inspection, toggleable
   int _currentTabIndex = 0;
 

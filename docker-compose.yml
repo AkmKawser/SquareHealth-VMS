@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vms-postgres
+    environment:
+      POSTGRES_DB: vms_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vms_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  vms-backend:
+    build:
+      context: ./vms-backend
+      dockerfile: Dockerfile
+    container_name: vms-backend-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vms_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgrespassword
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  vms-frontend:
+    build:
+      context: ./vms-frontend
+      dockerfile: Dockerfile
+    container_name: vms-frontend-web
+    depends_on:
+      - vms-backend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

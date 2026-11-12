@@ -22,6 +22,10 @@ public class VehicleRequestDto {
     @NotBlank(message = "Status is required")
     private String status;
 
+    private Integer fuelLevel = 100;
+    private String assignedDriver;
+    private String department;
+
     public VehicleRequestDto() {
     }
 
@@ -32,6 +36,19 @@ public class VehicleRequestDto {
         this.brand = brand;
         this.model = model;
         this.status = status;
+    }
+
+    public VehicleRequestDto(String vehicleNumber, String company, String type, String brand, String model, String status,
+                             Integer fuelLevel, String assignedDriver, String department) {
+        this.vehicleNumber = vehicleNumber;
+        this.company = company;
+        this.type = type;
+        this.brand = brand;
+        this.model = model;
+        this.status = status;
+        this.fuelLevel = fuelLevel;
+        this.assignedDriver = assignedDriver;
+        this.department = department;
     }
 
     public String getVehicleNumber() {
@@ -81,5 +98,28 @@ public class VehicleRequestDto {
     public void setStatus(String status) {
         this.status = status;
     }
-}
 
+    public Integer getFuelLevel() {
+        return fuelLevel;
+    }
+
+    public void setFuelLevel(Integer fuelLevel) {
+        this.fuelLevel = fuelLevel;
+    }
+
+    public String getAssignedDriver() {
+        return assignedDriver;
+    }
+
+    public void setAssignedDriver(String assignedDriver) {
+        this.assignedDriver = assignedDriver;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+}

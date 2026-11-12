@@ -33,6 +33,24 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<VehicleResponseDto> searchVehicles(String search, String status) {
+        return vehicleRepository.findAll().stream()
+                .filter(v -> {
+                    boolean matchStatus = (status == null || status.isBlank() || status.equalsIgnoreCase("ALL") || v.getStatus().equalsIgnoreCase(status));
+                    boolean matchSearch = (search == null || search.isBlank() ||
+                            v.getVehicleNumber().toLowerCase().contains(search.toLowerCase()) ||
+                            v.getModel().toLowerCase().contains(search.toLowerCase()) ||
+                            (v.getAssignedDriver() != null && v.getAssignedDriver().toLowerCase().contains(search.toLowerCase())) ||
+                            v.getCompany().toLowerCase().contains(search.toLowerCase()) ||
+                            v.getDepartment().toLowerCase().contains(search.toLowerCase()));
+                    return matchStatus && matchSearch;
+                })
+                .map(this::mapToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public VehicleResponseDto getVehicleById(Long id) {
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with id: " + id));
@@ -51,7 +69,10 @@ public class VehicleServiceImpl implements VehicleService {
                 requestDto.getType(),
                 requestDto.getBrand(),
                 requestDto.getModel(),
-                requestDto.getStatus()
+                requestDto.getStatus(),
+                requestDto.getFuelLevel(),
+                requestDto.getAssignedDriver(),
+                requestDto.getDepartment()
         );
 
         Vehicle saved = vehicleRepository.save(vehicle);
@@ -75,6 +96,9 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setBrand(requestDto.getBrand());
         vehicle.setModel(requestDto.getModel());
         vehicle.setStatus(requestDto.getStatus());
+        if (requestDto.getFuelLevel() != null) vehicle.setFuelLevel(requestDto.getFuelLevel());
+        if (requestDto.getAssignedDriver() != null) vehicle.setAssignedDriver(requestDto.getAssignedDriver());
+        if (requestDto.getDepartment() != null) vehicle.setDepartment(requestDto.getDepartment());
 
         Vehicle updated = vehicleRepository.save(vehicle);
         return mapToResponseDto(updated);
@@ -96,8 +120,10 @@ public class VehicleServiceImpl implements VehicleService {
                 vehicle.getType(),
                 vehicle.getBrand(),
                 vehicle.getModel(),
-                vehicle.getStatus()
+                vehicle.getStatus(),
+                vehicle.getFuelLevel(),
+                vehicle.getAssignedDriver(),
+                vehicle.getDepartment()
         );
     }
 }
-

@@ -9,6 +9,9 @@ public class VehicleResponseDto {
     private String brand;
     private String model;
     private String status;
+    private Integer fuelLevel;
+    private String assignedDriver;
+    private String department;
 
     public VehicleResponseDto() {
     }
@@ -21,6 +24,23 @@ public class VehicleResponseDto {
         this.brand = brand;
         this.model = model;
         this.status = status;
+        this.fuelLevel = 100;
+        this.assignedDriver = "Unassigned";
+        this.department = "General Logistics";
+    }
+
+    public VehicleResponseDto(Long id, String vehicleNumber, String company, String type, String brand, String model,
+                              String status, Integer fuelLevel, String assignedDriver, String department) {
+        this.id = id;
+        this.vehicleNumber = vehicleNumber;
+        this.company = company;
+        this.type = type;
+        this.brand = brand;
+        this.model = model;
+        this.status = status;
+        this.fuelLevel = fuelLevel;
+        this.assignedDriver = assignedDriver;
+        this.department = department;
     }
 
     public Long getId() {
@@ -78,5 +98,28 @@ public class VehicleResponseDto {
     public void setStatus(String status) {
         this.status = status;
     }
-}
 
+    public Integer getFuelLevel() {
+        return fuelLevel;
+    }
+
+    public void setFuelLevel(Integer fuelLevel) {
+        this.fuelLevel = fuelLevel;
+    }
+
+    public String getAssignedDriver() {
+        return assignedDriver;
+    }
+
+    public void setAssignedDriver(String assignedDriver) {
+        this.assignedDriver = assignedDriver;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+}

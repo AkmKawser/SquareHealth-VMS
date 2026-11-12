@@ -9,6 +9,8 @@ public interface VehicleService {
 
     List<VehicleResponseDto> getAllVehicles();
 
+    List<VehicleResponseDto> searchVehicles(String search, String status);
+
     VehicleResponseDto getVehicleById(Long id);
 
     VehicleResponseDto createVehicle(VehicleRequestDto requestDto);
@@ -17,4 +19,3 @@ public interface VehicleService {
 
     void deleteVehicle(Long id);
 }
-

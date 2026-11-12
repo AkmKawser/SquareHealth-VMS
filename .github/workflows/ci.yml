@@ -1,0 +1,44 @@
+name: SquareHealth-VMS Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  audit-and-test:
+    name: Verify Markdown, Audit & Backend Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python for Rendering Audit
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Zero-Failure Markdown & Rendering Audit
+        run: python -B scripts/audit_rendering.py --all
+
+      - name: Set up Java 21 (Eclipse Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Make Maven Wrapper Executable
+        run: chmod +x vms-backend/mvnw
+
+      - name: Run Spring Boot Unit & Integration Tests
+        run: |
+          cd vms-backend
+          ./mvnw test
+
+      - name: Package Spring Boot Application JAR
+        run: |
+          cd vms-backend
+          ./mvnw clean package -DskipTests

@@ -22,7 +22,12 @@ public class VehicleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<VehicleResponseDto>> getAllVehicles() {
+    public ResponseEntity<List<VehicleResponseDto>> getAllVehicles(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String status) {
+        if (search != null || status != null) {
+            return ResponseEntity.ok(vehicleService.searchVehicles(search, status));
+        }
         return ResponseEntity.ok(vehicleService.getAllVehicles());
     }
 
@@ -50,4 +55,3 @@ public class VehicleController {
         return ResponseEntity.noContent().build();
     }
 }
-

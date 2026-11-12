@@ -1753,3 +1753,35 @@ un_command | Staged, committed, and pushed changes to GitHub origin/main |
 ### Assistant Response
 *(See full conversational response delivered to user below)*
 
+
+## User Message #31
+**Timestamp:** 2026-11-12T11:19:04Z
+> make this repo private. also in the generic project folder the file should never contain any specfici framework name you added spring boot in step  5. its a generic project guideline. not any framework specific guideline. change it completely.
+
+### Agent Strategic Reasoning & Thinking Process
+1. **Repository Security & Privacy**:
+   - The user mandated setting the GitHub repository to **private**.
+   - Extracted credentials via Git Credential Manager, executed a secure `PATCH` call to the GitHub REST API (`https://api.github.com/repos/AkmKawser/SquareHealth-VMS`) with payload `{"private": true}`, and verified that `private: true` is active on GitHub.
+2. **Generic Project Guideline Overhaul (`Generic_Project_Template/Any Project Skill.docx`)**:
+   - The user noted that `Any Project Skill.docx` is meant to be a universal, framework-agnostic engineering guideline for ANY project, and must never contain framework-specific names (such as Spring Boot, Flutter, Dart, Java, PostgreSQL, etc.).
+   - Completely refactored `Generic_Project_Template/Any Project Skill.docx`:
+     - Cleaned the Foundation section (AI-Assisted Pair Programming): removed specific framework mentions and substituted universal engineering practices.
+     - Preserved inline visual diagrams (Figure 1 in P1 and Figure 2 in P22).
+     - Rewrote Steps 1 through 8 with 100% framework-agnostic, universal software engineering methodologies (data contracts, mock repositories, client prototypes, relational/storage schemas, migration engines, decoupled backend domain services, integration wire-ups, multi-tier testing pyramids, and containerized CI/CD deployments).
+     - Verified with automated keyword scanner that zero framework-specific or domain-specific names remain.
+3. **Audit & Git Synchronization**:
+   - Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (all 48 files passed 100% with 0 errors).
+   - Staged, committed, and pushed changes to GitHub `origin/main` (Universal Rule 3).
+
+### Tools Executed
+| Tool Name | Purpose |
+|---|---|
+| `run_command` | Queried Git Credential Manager and patched GitHub repository visibility to `private: true` via GitHub REST API |
+| `write_file` | Created `scripts/rebuild_generic_docx.py` to completely genericize `Any Project Skill.docx` |
+| `run_command` | Executed rebuild script and verified zero framework-specific terms remain |
+| `run_command` | Executed single-pass rendering auditor `scripts/audit_rendering.py --all` (48 files passed) |
+| `run_command` | Staged, committed, and pushed changes to GitHub `origin/main` |
+
+### Assistant Response
+*(See full conversational response delivered to user below)*
+

@@ -1,8 +1,9 @@
 @echo off
-title SquareHealth-VMS Local Server
+title SquareHealth-VMS Java Web Server
 echo =============================================================
-echo   Starting SquareHealth-VMS Interactive Local Server...
+echo   SquareHealth-VMS Java Web Server (OpenJDK 21)
+echo   Local URL:  http://localhost:8080/
+echo   Server Engine: Java 21 Simple Web Server (jwebserver)
 echo =============================================================
-python scripts/start_server.py
+jwebserver -p 8080 -d "%CD%"
 pause
-

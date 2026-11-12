@@ -38,3 +38,4 @@ flowchart TD
 |---|---|---|---|
 | [`Generic_Project_Template/`](.) | **Universal** | **100% Framework-Agnostic** | Reusable for ANY project (no vendor/framework names). |
 | [`specifications/`](../specifications/) | **Project-Specific** | **100% SquareHealth-VMS Specific** | Formal specifications for SquareHealth-VMS (Spring Boot 3.3, Java 21, PostgreSQL 16, Flutter Web, Dio, Docker). |
+

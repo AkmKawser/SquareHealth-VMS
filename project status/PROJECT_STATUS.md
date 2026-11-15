@@ -34,7 +34,7 @@ Total Engineering Steps: 8
 
 ### ✅ Step-1: Requirement Gathering & Multi-Source Ingestion Pipeline
 - **Specification**: [`STEP_1_REQUIREMENTS_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/specifications/STEP_1_REQUIREMENTS_SPECIFICATION.md)
-- **Artifacts**: [`REQUIREMENTS.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/REQUIREMENTS.md), [`Requirement Gathering.png`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/Requirement%20Gathering.png), audio transcripts.
+- **Artifacts**: Dedicated Comprehensive Requirements [`requirements/PROJECT_REQUIREMENTS.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/requirements/PROJECT_REQUIREMENTS.md), Ingestion SRS [`REQUIREMENTS.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/REQUIREMENTS.md), [`Requirement Gathering.png`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/Requirement%20Gathering.png), audio transcripts.
 
 ### ✅ Step-2: Clean Monorepo Architecture & Directory Scaffolding
 - **Specification**: [`STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/specifications/STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md) & [`FOLDER_STRUCTURE.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/FOLDER_STRUCTURE.md)

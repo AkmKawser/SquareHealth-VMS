@@ -169,6 +169,9 @@ StarkGroup-VMS/
 │   ├── Requirement Gathering.png                        # Requirement gathering flow diagram
 │   └── REQUIREMENTS.md                                  # Consolidated Single SRS Specification
 │
+├── requirements/                                        # Dedicated Requirements Specification Folder
+│   └── PROJECT_REQUIREMENTS.md                          # Exhaustive Functional & Non-Functional Requirements
+│
 ├── vms-frontend/                                        # Frontend Project (Flutter Web)
 │   ├── .gitignore
 │   ├── pubspec.yaml

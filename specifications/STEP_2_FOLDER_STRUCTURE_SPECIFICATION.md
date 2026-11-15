@@ -38,12 +38,12 @@ In alignment with official Spring Framework conventions, enterprise REST service
 
 ```
 StarkGroup-VMS/
-├── 1.Requirement_Gathering/             # Multi-source requirement ingestion pipeline & SRS
+├── Data_Ingestion/                      # Multi-source requirement ingestion pipeline & raw datasets
 │   ├── Document/                        # Source Word specifications
 │   ├── UdemyScrapper/                   # Scraped course curriculum (7 sections)
 │   ├── YoutubeScrapper/                 # Audio files (.mp3) & session transcripts (.md)
 │   ├── Requirement Gathering.png        # Ingestion architecture diagram
-│   └── REQUIREMENTS.md                  # Consolidated Single Software Requirements Specification
+│   └── DataIngestiion.md                # Consolidated Single Ingestion Specification
 ├── specifications/                      # Centralized technical specification repository
 │   ├── README.md                        # Master specification catalog & index
 │   ├── specifications/STEP_3_SPECIFICATION.md             # Canonical REST API data contracts & DTO schemas

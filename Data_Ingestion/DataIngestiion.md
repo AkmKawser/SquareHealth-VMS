@@ -28,7 +28,7 @@ flowchart TD
     end
 
     subgraph Target ["Consolidated Output"]
-        OUT["Single Comprehensive Requirements File: REQUIREMENTS.md"]
+        OUT["Single Consolidated Ingestion File: DataIngestiion.md"]
     end
 
     S1 --> F2
@@ -49,17 +49,17 @@ flowchart TD
 1. **Sources Ingested**:
    - **Udemy Curriculum**: 7 full modules comprising 28 hands-on lecture guides, Antigravity AI prompts, design rules, and verification checklists.
    - **YouTube Live & Kickoff Sessions**: Kickoff Class transcript (`001 - full-stack-AI-with-flutter-spring-boot kickoff Class.md`) and Live TA Weekly Support Session audio/transcript (`002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.mp3` / `.md`).
-   - **Document Specification**: Formal Course & Product Launch Specification (`1.Requirement_Gathering/Document/Projecet Requirements DataV.docx`).
+   - **Document Specification**: Formal Course & Product Launch Specification (`Data_Ingestion/Document/Projecet Requirements DataV.docx`).
 2. **Audio-to-Speech Pipeline**:
-   - Audio file: `1.Requirement_Gathering/YoutubeScrapper/002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.mp3`.
-   - Converted to text/markdown format: `1.Requirement_Gathering/YoutubeScrapper/002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.md`.
+   - Audio file: `Data_Ingestion/YoutubeScrapper/002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.mp3`.
+   - Converted to text/markdown format: `Data_Ingestion/YoutubeScrapper/002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.md`.
 
 ---
 
 ## 2. Audio-to-Speech Conversion Record
 
-- **Source Audio File**: `1.Requirement_Gathering/YoutubeScrapper/002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.mp3` `[Source: YouTube Scrapper - Session Weekly Support 01]`
-- **Target Transcript File**: `1.Requirement_Gathering/YoutubeScrapper/002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.md` `[Source: Audio-to-Speech Pipeline / YouTube Transcript Scrapper]`
+- **Source Audio File**: `Data_Ingestion/YoutubeScrapper/002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.mp3` `[Source: YouTube Scrapper - Session Weekly Support 01]`
+- **Target Transcript File**: `Data_Ingestion/YoutubeScrapper/002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.md` `[Source: Audio-to-Speech Pipeline / YouTube Transcript Scrapper]`
 - **Content Extracted**: Live troubleshooting and instructional walkthrough by instructors Naimul Haque Sagar & Chayan Mistry covering Spring Boot project initialization, Maven dependencies (`spring-boot-starter-web`, `spring-boot-starter-data-jpa`, MySQL driver, validation), port configuration, layered architecture (`controller`, `service`, `repository`, `entity`, `dto`), database connectivity troubleshooting in Antigravity, and REST API conventions (HTTP 200, 201, 400, 404, 409).
 
 ---

@@ -36,7 +36,7 @@ flowchart TD
     end
 
     subgraph Output["📄 Single Source of Truth"]
-        R1["REQUIREMENTS.md (Consolidated SRS with Bracketed Citations)"]
+        R1["DataIngestiion.md (Consolidated Ingestion with Bracketed Citations)"]
         R2["Requirement Gathering.png (Visual Ingestion Flow)"]
     end
 
@@ -52,7 +52,7 @@ flowchart TD
 ## 3. Audio Ingestion & Speech-to-Text Protocol
 
 ### 3.1 Audio Ingestion Standards
-1. **Audio Capture**: Long-form lecture recordings (e.g., Session `002 - Session Weekly Support 01...mp3`) stored in `1.Requirement_Gathering/YoutubeScrapper/`.
+1. **Audio Capture**: Long-form lecture recordings (e.g., Session `002 - Session Weekly Support 01...mp3`) stored in `Data_Ingestion/YoutubeScrapper/`.
 2. **Git LFS Enforcement**: Large audio binaries (`*.mp3`) tracked via Git LFS in `.gitattributes` to prevent repository bloat.
 3. **Phonetic & Dialect Normalization**: Bengali/Bangla colloquial audio containing technical English terms (e.g., *"primary key"*, *"database"*, *"mock"*, *"status"*, *"license plate"*) parsed with contextual phonetic mappings.
 
@@ -66,7 +66,7 @@ Every transcribed audio file must produce a structured Markdown document (`.md`)
 
 ## 4. Traceability & Citation Standard
 
-Every requirement statement in the consolidated [`REQUIREMENTS.md`](../1.Requirement_Gathering/REQUIREMENTS.md) must adhere to the **Bracketed Citation Standard**:
+Every requirement statement in the consolidated [`DataIngestiion.md`](../Data_Ingestion/DataIngestiion.md) must adhere to the **Bracketed Citation Standard**:
 
 ```text
 Requirement Statement + [Source: <Canonical Document or Session Name>]
@@ -103,7 +103,7 @@ Requirement Statement + [Source: <Canonical Document or Session Name>]
 
 ## 7. Deliverables & Artifact Checklist
 
-- [x] High-resolution ingestion architecture diagram: [`Requirement Gathering.png`](../1.Requirement_Gathering/Requirement%20Gathering.png)
-- [x] Complete transcribed Markdown lecture: [`002 - Session  Weekly Support 01...md`](../1.Requirement_Gathering/YoutubeScrapper/002%20-%20Session%20%20Weekly%20Support%2001%20%20%20Full-Stack%20Web%20Development%20with%20Flutter%20&%20Spring%20Boot.md)
-- [x] Consolidated traceable requirements specification: [`REQUIREMENTS.md`](../1.Requirement_Gathering/REQUIREMENTS.md)
+- [x] High-resolution ingestion architecture diagram: [`Requirement Gathering.png`](../Data_Ingestion/Requirement%20Gathering.png)
+- [x] Complete transcribed Markdown lecture: [`002 - Session  Weekly Support 01...md`](../Data_Ingestion/YoutubeScrapper/002%20-%20Session%20%20Weekly%20Support%2001%20%20%20Full-Stack%20Web%20Development%20with%20Flutter%20&%20Spring%20Boot.md)
+- [x] Consolidated traceable requirements specification: [`DataIngestiion.md`](../Data_Ingestion/DataIngestiion.md)
 - [x] Git LFS configuration for binary audio media: [`.gitattributes`](../.gitattributes)

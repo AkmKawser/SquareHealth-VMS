@@ -150,7 +150,7 @@ The full-stack application adopts a **Clean Monorepo Layout** that unifies the r
 ```text
 StarkGroup-VMS/
 │
-├── 1.Requirement_Gathering/                             # Requirement Engineering Artifacts
+├── Data_Ingestion/                                      # Multi-Source Ingestion Artifacts & Raw Datasets
 │   ├── Document/
 │   │   └── Projecet Requirements DataV.docx             # Original Word requirement document
 │   ├── UdemyScrapper/                                   # 7 Course curriculum modules & guides
@@ -167,7 +167,7 @@ StarkGroup-VMS/
 │   │   ├── 002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.flac
 │   │   └── 002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.md
 │   ├── Requirement Gathering.png                        # Requirement gathering flow diagram
-│   └── REQUIREMENTS.md                                  # Consolidated Single SRS Specification
+│   └── DataIngestiion.md                                # Consolidated Single Ingestion Specification
 │
 ├── requirements/                                        # Dedicated Requirements Specification Folder
 │   └── PROJECT_REQUIREMENTS.md                          # Exhaustive Functional & Non-Functional Requirements

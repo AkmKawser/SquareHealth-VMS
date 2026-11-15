@@ -119,12 +119,12 @@ The following diagrams illustrate the end-to-end communication sequence when a u
 
 ```
 StarkGroup-VMS/
-├── 1.Requirement_Gathering/             # Multi-source requirement ingestion pipeline & SRS
+├── Data_Ingestion/                      # Multi-source requirement ingestion pipeline & normalized data
 │   ├── Document/                        # Source Word specifications
 │   ├── UdemyScrapper/                   # Scraped course curriculum (7 sections)
 │   ├── YoutubeScrapper/                 # Audio files (.mp3) & session transcripts (.md)
 │   ├── Requirement Gathering.png        # Ingestion architecture diagram
-│   └── REQUIREMENTS.md                  # Consolidated Single Software Requirements Specification
+│   └── DataIngestiion.md                # Consolidated Single Ingestion Specification
 ├── requirements/                        # Dedicated Project Requirements Specification
 │   └── PROJECT_REQUIREMENTS.md          # Comprehensive Functional & Non-Functional Requirements
 ├── vms-frontend/                        # Flutter Web client (Feature-First Architecture)
@@ -192,7 +192,7 @@ Complete, step-by-step terminal commands for running, building, testing, and man
 - **Step-1: Requirement Gathering**
   - Architecture for requirement gathering documented and visualized.
   - Audio file (`002 - Session  Weekly Support 01...mp3`) transcribed into Markdown (`002 - Session  Weekly Support 01...md`).
-  - Exhaustive consolidated requirements document created at [REQUIREMENTS.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/1.Requirement_Gathering/REQUIREMENTS.md) with every requirement citing its source in brackets `[Source: ...]`.
+  - Exhaustive consolidated requirements document created at [DataIngestiion.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Data_Ingestion/DataIngestiion.md) with every requirement citing its source in brackets `[Source: ...]`.
   - Dedicated, enterprise Functional and Non-Functional Requirements (FR & NFR) specification authored at [`requirements/PROJECT_REQUIREMENTS.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/requirements/PROJECT_REQUIREMENTS.md).
 - **Step-2: Folder Structure**
   - Official Flutter Web (frontend) and Spring Boot (backend) folder structures analyzed from official documentation.

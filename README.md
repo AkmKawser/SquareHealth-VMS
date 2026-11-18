@@ -1,6 +1,11 @@
-# StarkGroup-VMS (Stark Group Fleet Management System)
+# SquareHealth-VMS (Stark Group Fleet Management System)
 
-A full-stack, enterprise-ready Vehicle Management System developed with **Flutter Web**, **Java Spring Boot**, and **PostgreSQL/SQL Database**, paired with **Google Antigravity AI**.
+A full-stack, enterprise-ready Vehicle Management System developed with **Flutter Web**, **Java Spring Boot**, and **PostgreSQL / MySQL**, paired with **Google Antigravity AI**.
+
+### Core Documentation & Blueprints
+- **[System Requirements & UML Diagrams](System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md)** — Complete SRS (FR-01–FR-10, NFRs, capacity estimation) and behavioral/structural UML blueprints (Use Case, Sequence, State Machine, Activity, Class, Component, Deployment).
+- **[Technology Stack](System_Requirements/Technology%20Stack/Technology%20Stack.md)** — Full-stack breakdown across Flutter Web (`Riverpod`, `Retrofit`, `Dio`, `json_serializable`, `shadcn_ui`, `infinite_scroll_pagination`, `hive_ce`), Spring Boot (`Java 21`, `JPA/Hibernate`, `Bean Validation`, `Lombok`, `Flyway`, `DataSeeder`), PostgreSQL/MySQL/H2, Docker, Netlify, and Render.
+- **[Consolidated Data Ingestion](System_Requirements/Data_Ingestion/DataIngestiion.md)** — Multi-source requirements gathered from Udemy curriculum, YouTube Live/Support sessions (01–02), `Projecet Requirements DataV.docx`, `Assignment-2.png`, and the `SampleProject` archives.
 
 ---
 
@@ -32,38 +37,40 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
    - **Framework**: Flutter Web 3.x (Dart) compiling to WebAssembly / CanvasKit for 60fps responsive desktop web experiences.
    - **Styling**: Stark Group Material 3 Design System (`#0A192F` Deep Navy, `#3B82F6` Electric Blue, `#10B981` Emerald).
    - **Feature-First Architecture**:
-     - `features/dashboard`: Fleet KPI cards, fleet utilization metrics, alert banners.
-     - `features/vehicles`: Paginated vehicle registry table, status chips (Available, Maintenance, In-Trip), modal CRUD forms.
-     - `features/drivers`: Driver license records, shift assignments, status management.
-     - `features/maintenance`: Periodic maintenance logs, service costs, odometer trackers.
-     - `features/documents`: Vehicle registration certificates, fitness licenses, insurance expiry tracking.
-     - `features/auth`: Corporate login, session persistence, secure token storage.
+     - `features/dashboard`: Fleet KPI cards, readiness ratios, graphical statistics, and alert banners.
+     - `features/vehicles`: Server-side paginated/sorted/searchable vehicle registry (`PagedResponse`), status chips (`AVAILABLE`, `ACTIVE` / `IN_USE`, `MAINTENANCE`, `INACTIVE`), modal CRUD forms.
+     - `features/drivers`: Full Driver CRUD, CDL license records, dynamic driver assignment & reassignment.
+     - `features/maintenance`: Maintenance logging (`date`, `type`, `cost`, `vendor`, `notes`, `odometer`) and per-vehicle maintenance history timeline.
+     - `features/documents`: Multipart upload for vehicle photos & legal documents (Registration, Tax Token, Insurance, Fitness, Route Permit) with `VALID` / `EXPIRING_SOON` / `EXPIRED` tracking.
+     - `features/auth`: Corporate login, RBAC, session persistence, and secure JWT token storage.
    - **Core & Networking**:
-     - `ApiClient`: Centralized HTTP REST client with Bearer JWT injection and timeout interceptors.
-     - `VehicleModel`: Bidirectional JSON serialization (`fromJson`/`toJson`) and immutability.
+     - `ApiClient` / `Retrofit + Dio`: Centralized HTTP REST client with `json_serializable` models, Bearer JWT injection, timeout interceptors, and `hive_ce` local caching.
      - `Mock Data Fallback`: `assets/mock_data/vehicles_mock.json` allowing independent frontend verification without a live backend.
 
 2. **API & Business Logic Layer (Java Spring Boot)**
-   - **Framework**: Spring Boot 3.2.x on Java 17/21.
+   - **Framework**: Spring Boot 3.2.x / 4.x on Java 21.
    - **REST API Endpoints**:
-     - `GET /api/v1/vehicles`: Paginated retrieval of vehicles mapped to `VehicleResponseDto`.
-     - `POST /api/v1/vehicles`: Creation of new vehicle with `@Valid` payload validation.
+     - `GET /api/v1/vehicles`: Server-side paginated (`page`, `size`), sorted, searchable, and filterable retrieval mapped to `PagedResponse<VehicleResponseDto>`.
+     - `POST /api/v1/vehicles`: Creation of new vehicle with `@Valid` payload validation and `DataSeeder` startup seeding (20 sample records on empty DB).
      - `GET /api/v1/vehicles/{id}`: Retrieval of specific vehicle details.
      - `PUT /api/v1/vehicles/{id}`: Update of existing vehicle attributes.
-     - `DELETE /api/v1/vehicles/{id}`: Soft/hard removal returning HTTP 204.
+     - `DELETE /api/v1/vehicles/{id}`: Removal returning HTTP 204.
+     - `POST /api/v1/vehicles/{id}/documents` & `GET/POST /api/v1/vehicles/{id}/maintenance`: Multipart document uploads, expiry tracking, and per-vehicle maintenance history.
+     - `/api/v1/drivers` & `PUT /api/v1/vehicles/{id}/driver`: Driver CRUD and assign/change driver endpoints.
      - `POST /api/v1/auth/login`: Authentication returning JWT bearer token.
    - **Business Rules Enforcement**:
-     - `VehicleServiceImpl`: Enforces uniqueness on vehicle registration number via `vehicleRepository.existsByVehicleNumber(dto.getVehicleNumber())`. Throws `DuplicateVehicleException` on collision.
+     - `VehicleServiceImpl`: Enforces uniqueness on vehicle registration number via `vehicleRepository.existsByVehicleNumberIgnoreCase(dto.getVehicleNumber())`. Throws `DuplicateVehicleException` on collision.
    - **Error Handling & Security**:
-     - `GlobalExceptionHandler` (`@RestControllerAdvice`): Uniform error envelope (`ErrorResponseDto`) returning standard HTTP 400, 404, and 409 responses.
+     - `GlobalExceptionHandler` (`@RestControllerAdvice`): Uniform RFC 7807 error envelope (`ErrorResponseDto`) returning standard HTTP 400, 404, and 409 responses.
      - `CorsConfig` & `SecurityConfig`: Cross-Origin controls for Netlify frontend origin and stateless REST security.
 
-3. **Data Layer (PostgreSQL Relational Database)**
-   - **Persistence Provider**: Spring Data JPA with Hibernate ORM and HikariCP connection pool.
+3. **Data Layer (PostgreSQL / MySQL Relational Database)**
+   - **Persistence Provider**: Spring Data JPA with Hibernate ORM, Flyway migrations (`db/migration/`), and HikariCP connection pool (PostgreSQL 16 in production/Docker; MySQL supported for local dev; H2 for tests).
    - **Relational Schema**:
-     - `vehicles`: `id` (PK), `vehicle_number` (UNIQUE NOT NULL), `brand`, `model`, `manufacturing_year`, `status`, `daily_rate`, `created_at`, `updated_at`.
-     - `drivers`: `id` (PK), `full_name`, `license_number` (UNIQUE), `phone`, `status`.
-     - `maintenance_logs`: `id` (PK), `vehicle_id` (FK referencing `vehicles.id`), `service_type`, `cost`, `service_date`, `description`.
+     - `vehicles`: `id` (PK), `vehicle_number` (UNIQUE NOT NULL), `company`, `vehicle_type`, `brand`, `model`, `manufacturing_year`, `color`, `fuel_type`, `seating_capacity`, `status`, `driver_name`, `driver_phone`, `created_at`, `updated_at`.
+     - `drivers`: `id` (PK), `full_name`, `license_number` (UNIQUE), `license_expiry_date`, `phone`, `active`.
+     - `vehicle_documents`: `id` (PK), `vehicle_id` (FK), `document_type`, `file_url`, `expiry_date`, `expiry_status`.
+     - `maintenance_logs`: `id` (PK), `vehicle_id` (FK referencing `vehicles.id`), `maintenance_type`, `service_cost`, `service_date`, `workshop_vendor`, `notes`.
      - `users`: `id` (PK), `username` (UNIQUE), `password_hash`, `role`.
 
 4. **DevOps, Testing & Cloud Infrastructure**
@@ -118,15 +125,18 @@ The following diagrams illustrate the end-to-end communication sequence when a u
 ---
 
 ```
-StarkGroup-VMS/
-├── Data_Ingestion/                      # Multi-source requirement ingestion pipeline & normalized data
-│   ├── Document/                        # Source Word specifications
-│   ├── UdemyScrapper/                   # Scraped course curriculum (7 sections)
-│   ├── YoutubeScrapper/                 # Audio files (.mp3) & session transcripts (.md)
-│   ├── Requirement Gathering.png        # Ingestion architecture diagram
-│   └── DataIngestiion.md                # Consolidated Single Ingestion Specification
-├── requirements/                        # Dedicated Project Requirements Specification
-│   └── PROJECT_REQUIREMENTS.md          # Comprehensive Functional & Non-Functional Requirements
+SquareHealth-VMS/
+├── System_Requirements/                 # Unified System Requirements, Tech Stack & Ingestion
+│   ├── Data_Ingestion/                  # Multi-source requirement ingestion pipeline & normalized data
+│   │   ├── Document&Images/             # Source Word specs (Projecet Requirements DataV.docx, Assignment-2.png)
+│   │   ├── SampleProject/               # Reference archives (stark-vms-backend.zip, stark_vms-frontend.zip)
+│   │   ├── UdemyScrapper/               # Scraped course curriculum (7 sections)
+│   │   ├── YoutubeScrapper/             # Audio files (.mp3) & session transcripts (.md)
+│   │   ├── Data_Ingestion.png           # Ingestion architecture diagram
+│   │   └── DataIngestiion.md            # Consolidated Single Ingestion Specification
+│   ├── Technology Stack/                # Complete end-to-end technology stack specification
+│   │   └── Technology Stack.md          # Frontend, Backend, DB, Security, Testing & DevOps stack
+│   └── System Requirements and UML Diagrams.md  # Full SRS & UML Blueprints (FR-01–FR-10, NFRs, UML)
 ├── vms-frontend/                        # Flutter Web client (Feature-First Architecture)
 │   ├── lib/
 │   │   ├── core/                        # Theme, constants, networking, utilities
@@ -144,27 +154,30 @@ StarkGroup-VMS/
 │   │   ├── exception/                   # Global exception handling
 │   │   └── config/                      # CORS & Security configs
 │   └── src/test/java/                   # Unit (Mockito) & Integration (MockMvc) test suite
-├── commands/                            # Developer CLI command guide & execution references
-│   └── COMMAND_GUIDE.md                 # Maven & Flutter CLI cheat sheet
-├── notebook/                            # Kid-friendly comprehensive technology guide
-│   └── Notebook.md                      # Complete story and tech breakdown for a 10-year-old
 ├── AI_Pair_Programming/                 # Dedicated AI Agent Pair-Programming & Meta-Specifications
-│   ├── chat/                            # Conversation logs & prompt session history (chat.md)
-│   ├── Generic_Project_Template/        # Reusable framework-agnostic blueprints & skill docs
-│   ├── requirements/                    # Dedicated project requirements specifications
-│   ├── specifications/                  # Centralized technical engineering specifications (Steps 1–8)
+│   ├── chat/                            # Conversation logs & prompt session history
 │   ├── project status/                  # Implementation audit across all 8 steps
+│   ├── query/
+│   │   ├── commands/                    # Maven & Flutter CLI cheat sheet (COMMAND_GUIDE.md)
+│   │   ├── Generic_Project_Template/    # Reusable framework-agnostic blueprints & skill docs
+│   │   ├── notebook/                    # Kid-friendly comprehensive technology guide
+│   │   └── specifications/              # Centralized technical engineering specifications (Steps 1–8)
 │   ├── scripts/                         # Rendering scripts & zero-failure audit tool
 │   ├── FOLDER_STRUCTURE.md              # Detailed architecture manual
 │   └── *.png / *.jpg                    # Visual blueprints & flow sequence diagrams
+└── docker-compose.yml                   # Multi-container orchestration (PostgreSQL 16, Backend, Frontend)
 ```
 
 ---
 
 ## 🛠️ Developer CLI Execution Guide
 
-Complete, step-by-step terminal commands for running, building, testing, and managing both the backend and frontend are documented in [`commands/COMMAND_GUIDE.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/commands/COMMAND_GUIDE.md).
+Complete, step-by-step terminal commands for running, building, testing, and managing both the backend and frontend are documented in [`AI_Pair_Programming/query/commands/COMMAND_GUIDE.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/commands/COMMAND_GUIDE.md).
 
+- **Run Full Stack with Docker Compose**:
+  ```powershell
+  docker compose up --build
+  ```
 - **Run Backend Server (Spring Boot)**:
   ```powershell
   cd vms-backend
@@ -181,22 +194,21 @@ Complete, step-by-step terminal commands for running, building, testing, and man
 ## Completed Phases
 
 - **Step-1: Requirement Gathering**
-  - Architecture for requirement gathering documented and visualized.
-  - Audio file (`002 - Session  Weekly Support 01...mp3`) transcribed into Markdown (`002 - Session  Weekly Support 01...md`).
-  - Exhaustive consolidated requirements document created at [DataIngestiion.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Data_Ingestion/DataIngestiion.md) with every requirement citing its source in brackets `[Source: ...]`.
-  - Dedicated, enterprise Functional and Non-Functional Requirements (FR & NFR) specification authored at [`requirements/PROJECT_REQUIREMENTS.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/requirements/PROJECT_REQUIREMENTS.md).
+  - Architecture for requirement gathering documented and visualized (`System_Requirements/Data_Ingestion/Data_Ingestion.png`).
+  - Session audio files transcribed into Markdown (`002 - Session  Weekly Support 01 Transcript.md`, `003 - session_weekly_support_02 Transcript.md`).
+  - Exhaustive consolidated requirements document created at [`System_Requirements/Data_Ingestion/DataIngestiion.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Data_Ingestion/DataIngestiion.md) with every requirement citing its source in brackets `[Source: ...]`.
+  - Unified SRS & UML Blueprints authored at [`System_Requirements/System Requirements and UML Diagrams.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md) and Technology Stack documented at [`System_Requirements/Technology Stack/Technology Stack.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Technology%20Stack/Technology%20Stack.md).
 - **Step-2: Folder Structure**
   - Official Flutter Web (frontend) and Spring Boot (backend) folder structures analyzed from official documentation.
   - Merged into a unified monorepo folder structure and created on disk.
-  - Comprehensive explanation and architectural rationale documented in [FOLDER_STRUCTURE.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/FOLDER_STRUCTURE.md).
+  - Comprehensive explanation and architectural rationale documented in [`AI_Pair_Programming/FOLDER_STRUCTURE.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/FOLDER_STRUCTURE.md).
 - **Step-3: Data Contracts, Mock Repository & UI Prototype**
   - Centralized API data contract and DTO JSON schemas defined to eliminate schema drift and AI field hallucination.
-  - Mock datasets created at [`assets/mock_data/vehicles_mock.json`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/assets/mock_data/vehicles_mock.json) covering all domain states.
+  - Mock datasets created at [`vms-frontend/assets/mock_data/vehicles_mock.json`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/assets/mock_data/vehicles_mock.json) covering all domain states.
   - Client presentation layer (theme, responsive AppShell, forms with regex validation) verified in browser.
-  - Detailed technical blueprint and engineering rationale documented in [`Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Generic_Project_Template/Any%20Project%20Skill.docx).
+  - Detailed technical blueprint and engineering rationale documented in [`AI_Pair_Programming/query/Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/Generic_Project_Template/Any%20Project%20Skill.docx).
 - **Step-4: Database Architecture, Relational Schema & Migration Engine**
-  - Relational persistence architecture, ER diagram, and Data Dictionary formalized in [`STEP_4_DATABASE_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/specifications/STEP_4_DATABASE_SPECIFICATION.md).
+  - Relational persistence architecture, ER diagram, and Data Dictionary formalized in [`AI_Pair_Programming/query/specifications/STEP_4_DATABASE_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/specifications/STEP_4_DATABASE_SPECIFICATION.md).
   - Storage-level invariants enforced: `UNIQUE(vehicle_number)`, check constraints on lifecycle statuses, and B-Tree performance indexes.
   - Version-controlled migration pipeline configured using Flyway with executable DDL (`V1__initial_schema.sql`) and baseline seed data (`V2__seed_baseline_data.sql`).
-  - Documented in [`Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/Generic_Project_Template/Any%20Project%20Skill.docx) with engineering rationale.
 

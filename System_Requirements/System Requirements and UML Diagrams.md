@@ -83,13 +83,13 @@ SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System eng
 
 ### 2.2 In-Scope Capabilities
 - **Fleet Ownership & Operating Entity Classification**: Categorizing and filtering fleet assets by operating company or division (e.g., "Stark Group", "Stark Logistics", "Apex Pharma") with full search and filter capabilities.
-- **Vehicle Master Lifecycle**: Full CRUD lifecycle operations for 5 vehicle categories (Ambulances, Delivery Vans, Microbuses, Executive Sedans, Cargo Trucks).
+- **Vehicle Master Lifecycle & Server-Side Querying**: Full CRUD lifecycle operations for corporate fleet categories (`CAR`, `SUV`, `VAN`, `MICROBUS`, `BUS`, `TRUCK`, `PICKUP`, `MOTORCYCLE`, plus specialized medical `AMBULANCE`), with server-side search (by vehicle number, brand, model, driver), multi-criteria filtering, sorting, and pagination (`PagedResponse`), plus initial `DataSeeder` (20 mock vehicles on empty DB).
 - **Core Invariant Enforcement**: Triple-tier duplicate vehicle license plate detection and rejection returning RFC 7807 HTTP 409 Conflict envelopes.
-- **Executive Fleet Analytics**: Real-time aggregate KPI metrics and readiness distribution ratios.
-- **Driver Management & Single-Active Assignment**: Certified driver licensing records and mutual exclusivity invariants on active routes.
-- **Compliance & Expiry Monitoring**: Automatic alert tracking for Registration Certificates, Tax Tokens, Fitness Certificates, Route Permits, and Insurance Policies.
-- **Maintenance & Fuel Workflows**: Preventative maintenance scheduling, workshop expense tracking, odometer monitoring, and low fuel alerting (threshold <= 20%).
-- **Dual-Mode Networking**: Decoupled Flutter Web presentation with in-memory offline mock fallback (`useMock: true/false`).
+- **Executive Fleet Analytics**: Real-time aggregate KPI metrics, graphical charts, and readiness distribution ratios.
+- **Driver Management (CRUD) & Assignment**: Full CRUD for certified driver profiles and dynamic assign/change/unassign workflows with mutual exclusivity invariants on active routes.
+- **Document Upload & Compliance Expiry Monitoring**: Multipart upload for vehicle photos and legal documents (Registration Certificates, Tax Tokens, Insurance Policies, Fitness Certificates, Route Permits) with automatic `VALID` / `EXPIRING_SOON` / `EXPIRED` status tracking.
+- **Maintenance & Per-Vehicle Service History**: Maintenance logging (`date`, `type`, `cost`, `vendor`, `notes`, `odometer`), per-vehicle service history timelines, and low fuel alerting (threshold <= 20%).
+- **Dual-Mode & Responsive/Adaptive Networking**: Decoupled Flutter Web presentation (Retrofit + Dio, Riverpod, `shadcn_ui`, `infinite_scroll_pagination`, `hive_ce`) with responsive/adaptive layouts and in-memory offline mock fallback (`useMock: true/false`).
 
 ### 2.3 Out-of-Scope Capabilities
 - Physical on-board OBD-II hardware GPS satellite tracking device manufacturing or firmware programming.
@@ -139,26 +139,31 @@ SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System eng
 
 ---
 
-### FR-03: Vehicle Master Data CRUD Engine
-- **Workflow & Trigger**: An authorized Fleet Manager creates, inspects, modifies, or retires a corporate vehicle via `VehicleFormDialog` or REST endpoints (`/api/v1/vehicles`).
-- **Mandatory Attributes**:
-  - `id`: Database-assigned 64-bit primary key.
+### FR-03: Vehicle Master Data CRUD Engine, Search, Filter, Sort & Pagination
+- **Workflow & Trigger**: An authorized Fleet Manager creates, inspects, searches, filters, sorts, modifies, or retires a corporate vehicle via `VehicleFormDialog`/`VehicleFormScreen` or REST endpoints (`/api/v1/vehicles` or `/api/vehicles`).
+- **Mandatory & Extended Attributes**:
+  - `id`: Database-assigned 64-bit primary key (`Long`).
   - `vehicleNumber`: Unique alphanumeric license plate string (e.g., `"DHAKA-METRO-GA-11-2233"`).
   - `company`: Operating entity or corporate division string (e.g., `"Stark Group"`, `"Stark Logistics"`, `"Apex Pharma"`).
-  - `type`: Vehicle category (`"Ambulance"`, `"Delivery Van"`, `"Microbus"`, `"Executive Sedan"`, `"Cargo Truck"`).
+  - `vehicleType`: Enum (`CAR`, `SUV`, `VAN`, `MICROBUS`, `BUS`, `TRUCK`, `PICKUP`, `MOTORCYCLE`, `AMBULANCE`).
   - `brand`: Manufacturer name (`"Toyota"`, `"Hyundai"`, `"Nissan"`, `"Mercedes-Benz"`, `"Isuzu"`).
-  - `model`: Specific model designation (`"HiAce Emergency ICU"`, `"Mighty"`, `"Sprinter"`).
-  - `status`: Operational state (`"AVAILABLE"`, `"IN_TRIP"`, `"MAINTENANCE"`).
+  - `model`: Specific model designation (`"Corolla"`, `"HiAce Emergency ICU"`, `"Mighty"`, `"Sprinter"`).
+  - `manufacturingYear`: Integer (`>= 1900`, nullable).
+  - `color`: Exterior vehicle color string (nullable).
+  - `fuelType`: Enum (`PETROL`, `DIESEL`, `OCTANE`, `CNG`, `LPG`, `HYBRID`, `ELECTRIC`).
+  - `seatingCapacity`: Positive integer passenger capacity (nullable).
+  - `status`: Operational state (`"AVAILABLE"`, `"ACTIVE"` / `"IN_USE"`, `"MAINTENANCE"`, `"INACTIVE"`, `"RETIRED"`).
   - `fuelLevel`: Integer percentage (`0` to `100`).
-  - `assignedDriver`: Name or ID of assigned certified driver (nullable).
+  - `driverName` / `driverPhone` / `assignedDriverId`: Assigned certified driver reference and contact (nullable).
   - `department`: Internal cost center department (e.g., `"Emergency Response Hub"`).
-- **CRUD Specifications**:
-  - `GET /api/v1/vehicles`: Returns paginated, searchable array of `VehicleResponseDto`.
+- **CRUD & Server-Side Query Specifications**:
+  - `GET /api/v1/vehicles?page=0&size=10&sort=createdAt,desc&search=...&status=...&vehicleType=...&company=...&expiryStatus=...`: Returns a `PagedResponse<VehicleResponseDto>` (`content`, `hasNext`, `totalElements`) supporting server-side full-text search (by `vehicleNumber`, `brand`, `model`, `driverName`), multi-criteria filtering, sorting, and pagination.
   - `GET /api/v1/vehicles/{id}`: Returns detailed vehicle metadata; throws `ResourceNotFoundException` (HTTP 404) if missing.
   - `POST /api/v1/vehicles`: Validates inputs (`@Valid`), executes duplicate check, persists entity, and returns HTTP 201 Created with assigned ID.
   - `PUT /api/v1/vehicles/{id}`: Updates existing attributes with dirty-checking; validates license plate uniqueness if modified. Returns HTTP 200 OK.
   - `DELETE /api/v1/vehicles/{id}`: Checks referential integrity; returns HTTP 204 No Content upon removal.
-- **Post-conditions**: Database state reflects the modification; client updates state and displays notification.
+  - **Startup Data Seeding**: On application boot, `DataSeeder` checks `vehicleRepository.count() == 0` and populates 20 realistic sample fleet records so fresh environments are immediately testable.
+- **Post-conditions**: Database state reflects the modification; client updates Riverpod/Provider state, invalidates/refreshes paginated cache, and displays notification.
 
 ---
 
@@ -185,48 +190,52 @@ SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System eng
 ### FR-05: Executive Analytics Dashboard & Fleet Statistics
 - **Workflow & Trigger**: An Administrator views the dashboard (`/api/v1/dashboard/stats`).
 - **System Behavior & Output**:
-  - Computes real-time aggregate fleet counters:
+  - Computes real-time aggregate fleet counters and graphical statistics:
     - `totalVehicles`: Total registered fleet assets.
     - `availableVehicles`: Count of vehicles ready for immediate dispatch (`AVAILABLE`).
-    - `activeVehicles`: Count of vehicles currently on the road (`IN_TRIP` / `ACTIVE`).
+    - `activeVehicles`: Count of vehicles currently active / on the road (`ACTIVE` / `IN_USE` / `IN_TRIP`).
+    - `inactiveVehicles`: Count of parked/deactivated vehicles (`INACTIVE`).
     - `maintenanceVehicles`: Count of vehicles in workshop repair (`MAINTENANCE`).
+    - `expiringSoonDocuments` / `expiredDocuments`: Counts of compliance documents requiring renewal.
     - `fleetEfficiency`: Average fleet fuel efficiency standard (12.4 km/L).
     - `fuelAlerts`: Total vehicles operating with low fuel reserves (<= 20%).
-  - Dynamically calculates the Fleet Readiness Ratio bar (percentage of total fleet ready).
-- **Post-conditions**: Reactively refreshes whenever a vehicle is created, updated, or removed.
+  - Dynamically calculates the Fleet Readiness Ratio bar and renders interactive graphical charts (status distribution, company breakdown, monthly maintenance cost trends).
+- **Post-conditions**: Reactively refreshes whenever a vehicle, document, or maintenance log is created, updated, or removed.
 
 ---
 
-### FR-06: Driver Management & Single-Active-Assignment Invariant
-- **Workflow & Trigger**: A dispatcher assigns a driver to a vehicle for a designated shift or route.
+### FR-06: Driver Management (CRUD) & Driver Assignment / Reassignment
+- **Workflow & Trigger**: An authorized operator creates/edits/deletes driver profiles (`/api/v1/drivers`) or assigns/changes a driver for a specific vehicle (`/api/v1/vehicles/{id}/driver`).
 - **Pre-conditions**: Driver must possess an active, unexpired Commercial Driver License (CDL).
 - **System Behavior & Output**:
-  - Maintains driver profile: Full Name, License Number, License Expiry Date, Phone, Emergency Contact, Medical Clearance Status.
-  - **Mutual Exclusivity Invariant**: A driver cannot be simultaneously assigned to more than one vehicle currently marked `IN_TRIP`.
-- **Error Handling**: Attempting to assign an already-dispatched driver returns HTTP 400 Bad Request (`"Driver is already assigned to active transit vehicle"`).
+  - **Driver CRUD (`/api/v1/drivers`)**: Full Create, Read (paginated & searchable), Update, and Delete operations for driver profiles: Full Name, National ID, License Number, License Expiry Date, Phone, Emergency Contact, Medical Clearance Status, and Active status.
+  - **Driver Assignment & Reassignment**: Allows assigning an available driver to a vehicle, changing (reassigning) the current driver to another certified driver, or unassigning a driver.
+  - **Mutual Exclusivity Invariant**: A driver cannot be simultaneously assigned to more than one vehicle currently marked `ACTIVE` / `IN_USE`.
+- **Error Handling**: Attempting to assign an already-dispatched driver or a driver with an expired license returns HTTP 400 Bad Request (`"Driver is already assigned to active transit vehicle"`).
 
 ---
 
-### FR-07: Vehicle Compliance & Document Expiry Tracking
-- **Workflow & Trigger**: Automatic daily batch job and on-demand UI inspection of legal vehicle documents.
-- **Tracked Compliance Documents**:
-  1. Vehicle Registration Certificate
-  2. Annual Road Tax Token
-  3. Government Motor Vehicle Fitness Certificate
-  4. Commercial Route Permit
-  5. Comprehensive Commercial Insurance Policy
+### FR-07: Document Upload & Vehicle Compliance Expiry Tracking
+- **Workflow & Trigger**: User uploads vehicle photos or legal documents via `multipart/form-data` (`POST /api/v1/vehicles/{id}/documents`), alongside an automatic daily batch job and on-demand UI inspection of legal vehicle documents.
+- **Tracked Compliance Documents & Media**:
+  1. Vehicle Registration Certificate (`REGISTRATION`)
+  2. Annual Road Tax Token (`TAX_TOKEN`)
+  3. Comprehensive Commercial Insurance Policy (`INSURANCE`)
+  4. Government Motor Vehicle Fitness Certificate (`FITNESS`)
+  5. Commercial Route Permit (`ROUTE_PERMIT`)
+  6. Vehicle Photo / Picture (`VEHICLE_PHOTO`)
 - **Traffic-Light Expiry Alert Logic**:
   - `VALID` (Green badge): Expiry date is > 30 calendar days in the future.
   - `EXPIRING_SOON` (Amber badge): Expiry date is within 1 to 30 calendar days.
   - `EXPIRED` (Red badge): Expiry date has passed.
-- **Operational Enforcement**: Vehicles with expired Fitness or Tax tokens are locked from `AVAILABLE` status and trigger critical alert banners.
+- **Operational Enforcement**: Vehicles with expired Fitness, Insurance, or Tax tokens are flagged with prominent `EXPIRED` / `EXPIRING_SOON` badges, filterable server-side (`?expiryStatus=EXPIRED`), and locked from `AVAILABLE` dispatch until renewed.
 
 ---
 
-### FR-08: Maintenance Workflow & Service History Tracking
-- **Workflow & Trigger**: A Maintenance Engineer logs a routine service, emergency breakdown, or preventative repair.
-- **Attributes Recorded**: Service Date, Service Category (Oil Change, Brake Overhaul, Engine Diagnostics, Tire Replacement), Odometer Mileage, Workshop Name, Invoice Number, Total Cost, Remarks.
-- **State Machine Integration**: Shifting vehicle status to `MAINTENANCE` locks the asset from dispatcher selection. Upon technician clearance, status transitions back to `AVAILABLE`.
+### FR-08: Maintenance Workflow & Per-Vehicle Service History
+- **Workflow & Trigger**: A Maintenance Engineer logs a routine service, emergency breakdown, or preventative repair (`POST /api/v1/vehicles/{id}/maintenance`), or inspects a vehicle's complete maintenance history (`GET /api/v1/vehicles/{id}/maintenance`).
+- **Attributes Recorded**: Maintenance Date (`serviceDate`), Maintenance Type (`type`: Oil Change, Brake Overhaul, Engine Diagnostics, Tire Replacement, Bodywork, Periodic Inspection), Total Cost (`cost`), Workshop Vendor (`vendor`), Notes (`notes`), Odometer Mileage (`serviceOdometer`), and Invoice Number.
+- **Per-Vehicle History & State Machine Integration**: Displays a chronological, per-vehicle maintenance timeline with cumulative cost aggregation. Shifting vehicle status to `MAINTENANCE` locks the asset from dispatcher selection; upon technician clearance, status transitions back to `AVAILABLE` / `ACTIVE`.
 
 ---
 
@@ -308,10 +317,17 @@ flowchart LR
    - The Flutter Web client (`vms-frontend/`) and Java Spring Boot backend (`vms-backend/`) must maintain completely decoupled runtimes (Dart/CanvasKit vs JVM). Cross-boundary interaction occurs exclusively over HTTP/JSON REST contracts.
 2. **DTO Invariant & Domain Segregation**:
    - Database `@Entity` classes must never be serialized directly to the external network. All external communications must utilize immutable DTO schemas (`VehicleRequestDto`, `VehicleResponseDto`).
-3. **Database Migration Standard**:
+3. **Database Migration & Seeding Standard**:
    - All schema changes must be versioned via Flyway migration scripts located in `db/migration/`. Manual schema edits in production are forbidden.
+   - Local/demo environments support automatic `DataSeeder` initialization (20 sample vehicles when `vehicleRepository.count() == 0`) across both MySQL (local dev) and PostgreSQL (production).
 4. **Regulatory & Geographic Constraints**:
    - Vehicle registration numbers must conform to Bangladesh Road Transport Authority (BRTA) formatting patterns (e.g., `DHAKA-METRO-GA-11-2233`).
+5. **Frontend Reference Stack & Responsive/Adaptive Standards**:
+   - The Flutter Web client (`vms-frontend/`) uses **Riverpod** for state management, **Retrofit + Dio** with **`json_serializable`** (`build_runner`) for type-safe API contracts, **`shadcn_ui`** + **`skeletonizer`** for Material 3/modern UI polish, **`infinite_scroll_pagination`** for server-side paging (`PagedResponse`), and **`hive_ce`** for local caching/persistence.
+   - Layouts must support responsive/adaptive breakpoints across Desktop Web, Tablet, and Mobile viewports.
+6. **Two-Phase Delivery Roadmap (Assignment 1 & Assignment 2 Alignment)**:
+   - **Phase 1 (Core VMS Skeleton)**: Paginated Vehicle List, Single Vehicle Details, Create/Update/Delete Vehicle, `DataSeeder`, and basic Search/Filter UI.
+   - **Phase 2 (Extended Advanced Fleet Management)**: Document & Photo Upload, Expiry Tracking (`EXPIRED` / `EXPIRING_SOON`), Maintenance Logging & Per-Vehicle History, Status (`ACTIVE`, `INACTIVE`, `MAINTENANCE`), Server-Side Search/Filter/Sort/Pagination, Driver Management CRUD & Assignment/Reassignment, Statistical Dashboard, and RBAC Authentication.
 
 ---
 
@@ -360,15 +376,17 @@ flowchart LR
     end
 
     subgraph Boundaries["SquareHealth-VMS Core System Boundary"]
-        UC1["UC-01: Register Vehicle\n(FR-01)"]
-        UC2["UC-02: Check Duplicate License\n(FR-02)"]
-        UC3["UC-03: Search & Filter Fleet\n(FR-05)"]
-        UC4["UC-04: View KPI Dashboard\n(FR-06)"]
-        UC5["UC-05: Rent Vehicle to Driver\n(FR-03)"]
+        UC1["UC-01: Register Vehicle\n(FR-03)"]
+        UC2["UC-02: Check Duplicate License\n(FR-04)"]
+        UC3["UC-03: Search, Filter, Sort & Paginate\n(FR-02 / FR-03)"]
+        UC4["UC-04: View KPI Dashboard\n(FR-05)"]
+        UC5["UC-05: Rent / Dispatch Vehicle\n(FR-03 / FR-06)"]
         UC6["UC-06: Return & Inspect Vehicle\n(FR-03)"]
-        UC7["UC-07: Log Maintenance & Repair\n(FR-04)"]
-        UC8["UC-08: Decommission Vehicle\n(FR-07)"]
+        UC7["UC-07: Log Maintenance & History\n(FR-08)"]
+        UC8["UC-08: Deactivate / Retire Vehicle\n(FR-03)"]
         UC9["UC-09: Export Audit Reports\n(FR-10)"]
+        UC10["UC-10: Upload Docs & Track Expiry\n(FR-07)"]
+        UC11["UC-11: Driver CRUD & Assignment\n(FR-06)"]
     end
 
     FM --> UC1
@@ -377,10 +395,14 @@ flowchart LR
     FM --> UC5
     FM --> UC8
     FM --> UC9
+    FM --> UC10
+    FM --> UC11
 
     OP --> UC3
     OP --> UC5
     OP --> UC6
+    OP --> UC10
+    OP --> UC11
 
     MT --> UC7
     MT --> UC3
@@ -489,17 +511,21 @@ The State Machine Diagram formalizes all valid lifecycle states and transition g
 
 ```mermaid
 stateDiagram-v2
-    [*] --> AVAILABLE : Vehicle Registered & Certified (FR-01)
+    [*] --> AVAILABLE : Vehicle Registered & Certified (FR-03)
     
-    AVAILABLE --> RENTED : Rental Agreement Signed (FR-03)
-    RENTED --> AVAILABLE : Vehicle Returned (Inspection Passed)
+    AVAILABLE --> IN_USE : Assigned / Dispatched / Rented (FR-06)
+    IN_USE --> AVAILABLE : Vehicle Returned & Cleared
     
-    RENTED --> MAINTENANCE : Vehicle Returned with Damage/Defect (FR-04)
-    AVAILABLE --> MAINTENANCE : Scheduled Odometer Service Due (FR-04)
+    IN_USE --> MAINTENANCE : Returned with Damage/Defect (FR-08)
+    AVAILABLE --> MAINTENANCE : Scheduled Service or Expiry Lock (FR-07 / FR-08)
     
     MAINTENANCE --> AVAILABLE : Work Order Completed & Inspected
     
-    AVAILABLE --> RETIRED : End of Service Life / Sold (FR-07)
+    AVAILABLE --> INACTIVE : Temporarily Deactivated (FR-03)
+    INACTIVE --> AVAILABLE : Reactivated & Compliance Verified
+    
+    AVAILABLE --> RETIRED : End of Service Life / Sold
+    INACTIVE --> RETIRED : Decommissioned from Fleet
     MAINTENANCE --> RETIRED : Total Economic Loss / Write-Off
     
     RETIRED --> [*] : Archived & Historical Retained
@@ -508,12 +534,14 @@ stateDiagram-v2
 ### State Transition Invariant Table
 | Current State | Target State | Triggering Event | Guard Condition |
 |---|---|---|---|
-| `AVAILABLE` | `RENTED` | `allocateRental()` | Driver license valid, security deposit cleared |
-| `RENTED` | `AVAILABLE` | `returnVehicle()` | Inspection passed, zero mechanical faults |
-| `RENTED` | `MAINTENANCE` | `reportDamageOnReturn()` | Fault logged, insurance claim initiated |
+| `AVAILABLE` | `IN_USE` | `allocateOrDispatch()` | Driver license valid, compliance docs not `EXPIRED` |
+| `IN_USE` | `AVAILABLE` | `returnVehicle()` | Inspection passed, zero mechanical faults |
+| `IN_USE` | `MAINTENANCE` | `reportDamageOnReturn()` | Fault logged, maintenance work order created |
 | `AVAILABLE` | `MAINTENANCE` | `scheduleService()` | Odometer threshold exceeded or periodic inspection |
 | `MAINTENANCE` | `AVAILABLE` | `completeWorkOrder()` | Technician sign-off, road test cleared |
-| `AVAILABLE` | `RETIRED` | `decommissionVehicle()` | Vehicle age > 10 yrs or salvage decision |
+| `AVAILABLE` | `INACTIVE` | `deactivateVehicle()` | No active trip/rental, fleet manager authorization |
+| `INACTIVE` | `AVAILABLE` | `reactivateVehicle()` | Registration, Tax Token & Insurance `VALID` |
+| `AVAILABLE` / `INACTIVE` | `RETIRED` | `decommissionVehicle()` | Vehicle age > 10 yrs or salvage decision |
 
 ---
 
@@ -555,39 +583,78 @@ classDiagram
     class VehicleStatus {
         <<enumeration>>
         AVAILABLE
-        RENTED
+        ACTIVE
+        IN_USE
         MAINTENANCE
+        INACTIVE
         RETIRED
+    }
+
+    class VehicleType {
+        <<enumeration>>
+        CAR
+        SUV
+        VAN
+        MICROBUS
+        BUS
+        TRUCK
+        PICKUP
+        MOTORCYCLE
+        AMBULANCE
     }
 
     class FuelType {
         <<enumeration>>
         PETROL
-        OCTANE
         DIESEL
+        OCTANE
+        CNG
+        LPG
         HYBRID
         ELECTRIC
+    }
+
+    class DocumentType {
+        <<enumeration>>
+        REGISTRATION
+        TAX_TOKEN
+        INSURANCE
+        FITNESS
+        ROUTE_PERMIT
+        VEHICLE_PHOTO
+    }
+
+    class ExpiryStatus {
+        <<enumeration>>
+        VALID
+        EXPIRING_SOON
+        EXPIRED
     }
 
     class Vehicle {
         -Long id
         -String vehicleNumber
         -String company
-        -String type
+        -VehicleType vehicleType
         -String brand
         -String model
         -Integer manufacturingYear
+        -String color
+        -Integer seatingCapacity
         -VehicleStatus status
         -BigDecimal dailyRate
         -FuelType fuelType
         -Integer odometerKm
-        -String assignedDriver
+        -String driverName
+        -String driverPhone
+        -Driver assignedDriver
         -String department
         -LocalDateTime createdAt
         -LocalDateTime updatedAt
         +isAvailable() Boolean
-        +markRented() void
+        +markInUse() void
         +markAvailable() void
+        +markInactive() void
         +sendToMaintenance() void
         +retire() void
     }
@@ -597,9 +664,24 @@ classDiagram
         -String nationalId
         -String fullName
         -String licenseNumber
+        -LocalDate licenseExpiryDate
         -String phone
+        -String emergencyContact
+        -Boolean medicalCleared
         -Boolean active
         +isEligible() Boolean
+    }
+
+    class VehicleDocument {
+        -Long id
+        -Vehicle vehicle
+        -DocumentType documentType
+        -String fileName
+        -String fileUrl
+        -LocalDate expiryDate
+        -ExpiryStatus expiryStatus
+        -LocalDateTime uploadedAt
+        +computeExpiryStatus() ExpiryStatus
     }
 
     class RentalBooking {
@@ -617,23 +699,35 @@ classDiagram
     class MaintenanceLog {
         -Long id
         -Vehicle vehicle
-        -String description
-        -BigDecimal serviceCost
-        -Integer serviceOdometer
         -LocalDate serviceDate
+        -String maintenanceType
+        -BigDecimal serviceCost
         -String workshopVendor
+        -String notes
+        -Integer serviceOdometer
+        -String invoiceNumber
+    }
+
+    class PagedResponse~T~ {
+        +List~T~ content
+        +Boolean hasNext
+        +Long totalElements
     }
 
     class VehicleRequestDto {
         +String vehicleNumber
         +String company
-        +String type
+        +VehicleType vehicleType
         +String brand
         +String model
         +Integer manufacturingYear
-        +BigDecimal dailyRate
+        +String color
+        +Integer seatingCapacity
         +FuelType fuelType
-        +String assignedDriver
+        +VehicleStatus status
+        +BigDecimal dailyRate
+        +String driverName
+        +String driverPhone
         +String department
     }
 
@@ -641,38 +735,47 @@ classDiagram
         +Long id
         +String vehicleNumber
         +String company
-        +String type
+        +VehicleType vehicleType
         +String brand
         +String model
         +Integer manufacturingYear
-        +String status
+        +String color
+        +Integer seatingCapacity
+        +FuelType fuelType
+        +VehicleStatus status
         +BigDecimal dailyRate
+        +String driverName
+        +String driverPhone
         +LocalDateTime createdAt
+        +LocalDateTime updatedAt
     }
 
     class VehicleController {
         -VehicleService vehicleService
-        +getAllVehicles(String status, String brand) ResponseEntity
+        +getVehicles(int page, int size, String search, String status, String sort) ResponseEntity
         +getVehicleById(Long id) ResponseEntity
         +createVehicle(VehicleRequestDto dto) ResponseEntity
         +updateVehicle(Long id, VehicleRequestDto dto) ResponseEntity
         +deleteVehicle(Long id) ResponseEntity
+        +assignDriver(Long id, Long driverId) ResponseEntity
     }
 
     class VehicleService {
         «Interface»
-        +findAll(String status, String brand) List~VehicleResponseDto~
-        +findById(Long id) VehicleResponseDto
-        +create(VehicleRequestDto dto) VehicleResponseDto
-        +update(Long id, VehicleRequestDto dto) VehicleResponseDto
-        +delete(Long id) void
+        +getVehicles(int page, int size, String search, String status, String sort) PagedResponse~VehicleResponseDto~
+        +getVehicleById(Long id) VehicleResponseDto
+        +createVehicle(VehicleRequestDto dto) VehicleResponseDto
+        +updateVehicle(Long id, VehicleRequestDto dto) VehicleResponseDto
+        +deleteVehicle(Long id) void
+        +assignDriver(Long vehicleId, Long driverId) VehicleResponseDto
     }
 
     class VehicleServiceImpl {
         -VehicleRepository vehicleRepository
+        -DriverRepository driverRepository
         -VehicleMapper vehicleMapper
-        +findAll(String status, String brand) List~VehicleResponseDto~
-        +create(VehicleRequestDto dto) VehicleResponseDto
+        +getVehicles(int page, int size, String search, String status, String sort) PagedResponse~VehicleResponseDto~
+        +createVehicle(VehicleRequestDto dto) VehicleResponseDto
     }
 
     class VehicleRepository {
@@ -683,7 +786,12 @@ classDiagram
     }
 
     Vehicle --> VehicleStatus : has status
+    Vehicle --> VehicleType : has type
     Vehicle --> FuelType : uses fuel
+    Vehicle --> Driver : assigned to
+    VehicleDocument --> Vehicle : attached to
+    VehicleDocument --> DocumentType : categorized as
+    VehicleDocument --> ExpiryStatus : tracks expiry
     RentalBooking --> Vehicle : references
     RentalBooking --> Driver : booked by
     MaintenanceLog --> Vehicle : repairs
@@ -692,6 +800,7 @@ classDiagram
     VehicleServiceImpl --> VehicleRepository : persists through
     VehicleController ..> VehicleRequestDto : accepts
     VehicleController ..> VehicleResponseDto : produces
+    VehicleController ..> PagedResponse : paginates with
 ```
 
 ---
@@ -786,12 +895,12 @@ flowchart LR
 |---|---|---|---|---|
 | **FR-01** | Authentication & RBAC | SecurityFilter / Controller | Use Case (`UC-01`), Component Tier 2 | `AuthController.java`, `login_screen.dart` |
 | **FR-02** | Operating Company Classification | Entity / Service / UI | Class Diagram (`Vehicle.company`), Component Tier 1 | `Vehicle.java`, `vehicles_mock.json` |
-| **FR-03** | Vehicle Master CRUD | Service / Controller / UI | Sequence 1 (`10.1`), Class (`Vehicle`) | `VehicleController.java`, `vehicle_form_dialog.dart` |
+| **FR-03** | Vehicle Master CRUD, Search, Filter, Sort & Pagination | Service / Controller / UI | Sequence 1 (`10.1`), Class (`Vehicle`, `PagedResponse`, `VehicleType`) | `VehicleController.java`, `PagedResponse.java`, `DataSeeder.java`, `vehicle_form_dialog.dart` |
 | **FR-04** | Duplicate Plate Prevention | Business Rule & DB Invariant | Sequence 1 (`10.1`), Activity Diagram | `VehicleServiceImpl.java`, `VehicleControllerTest.java` |
 | **FR-05** | Executive Analytics | Service / Controller / UI | Use Case (`UC-04`), Component Tier 1 | `DashboardController.java`, `dashboard_screen.dart` |
-| **FR-06** | Driver Assignment | Service / Persistence | Class (`Driver`, `RentalBooking`) | `Vehicle.java`, `V1__init_schema.sql` |
-| **FR-07** | Compliance & Expiry | Domain Logic / UI Monitor | State Machine Invariant Table | `validators.dart`, `vehicles_mock.json` |
-| **FR-08** | Maintenance Workflow | State Machine / DB | State Machine Diagram (Section 11) | `V1__init_schema.sql`, `Vehicle.java` |
+| **FR-06** | Driver CRUD & Assignment / Reassignment | Service / Persistence / UI | Use Case (`UC-11`), Class (`Driver`, `RentalBooking`) | `DriverController.java`, `Vehicle.java`, `V1__init_schema.sql` |
+| **FR-07** | Document Upload & Compliance Expiry | Domain Logic / Storage / UI | Use Case (`UC-10`), Class (`VehicleDocument`, `ExpiryStatus`), State Machine | `DocumentController.java`, `validators.dart`, `vehicles_mock.json` |
+| **FR-08** | Maintenance & Per-Vehicle History | State Machine / Service / DB | Use Case (`UC-07`), Class (`MaintenanceLog`), State Machine (Section 11) | `MaintenanceController.java`, `V1__init_schema.sql`, `Vehicle.java` |
 | **FR-09** | Fuel Reserves Alerting | Domain Logic / Analytics | Class (`Vehicle.fuelType`, DTOs) | `DashboardStatsDto.java`, `VehicleRequestDto.java` |
 | **FR-10** | Immutable Audit Trail | Persistence / Entity | Activity Diagram (Audit step) | `V1__init_schema.sql` |
 | **NFR-01** | Latency & Performance | Database & Backend | Class Diagram, Indexes | `V1__init_schema.sql` B-Tree indexes |

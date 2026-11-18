@@ -6,7 +6,7 @@ A full-stack, enterprise-ready Vehicle Management System developed with **Flutte
 
 ## AI-Assisted Pair Programming Architecture
 
-![AI-Assisted Pair Programming Architecture](ai_pair_programming_architecture.png)
+![AI-Assisted Pair Programming Architecture](AI_Pair_Programming/ai_pair_programming_architecture.png)
 
 The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver** paradigm:
 1. **Human Engineer (Navigator & Architect)**: Defines business requirements (SRS), designs system boundaries, reviews generated diffs, and validates runtime correctness. The AI never decides what to build.
@@ -18,13 +18,13 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
 ## System Architecture
 
 ### High-Level System Architecture
-![StarkGroup-VMS System Architecture](architecture_diagram.jpg)
+![StarkGroup-VMS System Architecture](AI_Pair_Programming/architecture_diagram.jpg)
 
 ### Deep Technical Architecture Blueprint
-![StarkGroup-VMS Deep Technical Blueprint](architecture_detailed_spec.png)
+![StarkGroup-VMS Deep Technical Blueprint](AI_Pair_Programming/architecture_detailed_spec.png)
 
 ### 4-Tier Visual Architecture Blueprint
-![StarkGroup-VMS Visual Blueprint](architecture_blueprint.jpg)
+![StarkGroup-VMS Visual Blueprint](AI_Pair_Programming/architecture_blueprint.jpg)
 
 ### Architectural Layers in Detail
 
@@ -82,10 +82,10 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
 The following diagrams illustrate the end-to-end communication sequence when a user triggers an action (e.g. creating a vehicle) from the Flutter Web client to the Java Spring Boot backend, through validation and persistence in PostgreSQL, and back to the reactive UI:
 
 ### End-to-End Request Flow Sequence Diagram
-![StarkGroup-VMS Request Flow Sequence](request_flow_sequence.jpg)
+![StarkGroup-VMS Request Flow Sequence](AI_Pair_Programming/request_flow_sequence.jpg)
 
 ### Detailed Request-Response Technical Specification
-![StarkGroup-VMS Detailed Request Flow](request_flow_detailed_spec.png)
+![StarkGroup-VMS Detailed Request Flow](AI_Pair_Programming/request_flow_detailed_spec.png)
 
 ### Step-by-Step Execution Lifecycle
 
@@ -144,28 +144,19 @@ StarkGroup-VMS/
 │   │   ├── exception/                   # Global exception handling
 │   │   └── config/                      # CORS & Security configs
 │   └── src/test/java/                   # Unit (Mockito) & Integration (MockMvc) test suite
-├── chat/                                # Conversation logs & session history
-│   └── chat.md                          # Full transcript of user requests & agent actions
-├── notebook/                            # Kid-friendly comprehensive technology guide
-│   └── Notebook.md                      # Complete story and tech breakdown for a 10-year-old
-├── FOLDER_STRUCTURE.md            # Detailed framework-specific & merged folder documentation
-├── specifications/                      # Centralized technical specification repository
-│   ├── SPECIFICATIONS_CATALOG.md        # Master specification catalog & index
-│   ├── STEP_1_REQUIREMENTS_SPECIFICATION.md
-│   ├── STEP_2_FOLDER_STRUCTURE_SPECIFICATION.md
-│   ├── STEP_3_SPECIFICATION.md          # Centralized REST API data contracts & UI prototype
-│   ├── STEP_4_DATABASE_SPECIFICATION.md # Relational schema, ER diagram & Flyway migrations
-│   ├── STEP_5_BACKEND_SPECIFICATION.md  # Spring Boot architecture, JPA domain & REST controllers
-│   ├── STEP_6_INTEGRATION_SPECIFICATION.md # Full-stack client-server network wire-up
-│   ├── STEP_7_TESTING_SPECIFICATION.md  # Multi-tier testing pyramid & duplicate vehicle test
-│   └── STEP_8_DEPLOYMENT_SPECIFICATION.md # Cloud hosting (Netlify, Render, Neon) & CI/CD
 ├── commands/                            # Developer CLI command guide & execution references
 │   └── COMMAND_GUIDE.md                 # Maven & Flutter CLI cheat sheet
-├── project status/                      # Project status & lifecycle implementation audit
-│   └── PROJECT_STATUS.md                # Completed vs remaining task breakdown across all 8 steps
-├── Generic_Project_Template/           # Reusable generic engineering project templates
-│   ├── TEMPLATE_GUIDELINE.md            # Blueprint guide & distinction matrix
-│   └── Any Project Skill.docx          # Step-by-step master project blueprint (Steps 1–8)
+├── notebook/                            # Kid-friendly comprehensive technology guide
+│   └── Notebook.md                      # Complete story and tech breakdown for a 10-year-old
+├── AI_Pair_Programming/                 # Dedicated AI Agent Pair-Programming & Meta-Specifications
+│   ├── chat/                            # Conversation logs & prompt session history (chat.md)
+│   ├── Generic_Project_Template/        # Reusable framework-agnostic blueprints & skill docs
+│   ├── requirements/                    # Dedicated project requirements specifications
+│   ├── specifications/                  # Centralized technical engineering specifications (Steps 1–8)
+│   ├── project status/                  # Implementation audit across all 8 steps
+│   ├── scripts/                         # Rendering scripts & zero-failure audit tool
+│   ├── FOLDER_STRUCTURE.md              # Detailed architecture manual
+│   └── *.png / *.jpg                    # Visual blueprints & flow sequence diagrams
 ```
 
 ---

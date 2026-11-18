@@ -169,8 +169,8 @@ StarkGroup-VMS/
 │   ├── Requirement Gathering.png                        # Requirement gathering flow diagram
 │   └── DataIngestiion.md                                # Consolidated Single Ingestion Specification
 │
-├── requirements/                                        # Dedicated Requirements Specification Folder
-│   └── PROJECT_REQUIREMENTS.md                          # Exhaustive Functional & Non-Functional Requirements
+├── System_Requirements/                                 # Dedicated Requirements & UML Specifications
+│   └── System Requirements and UML Diagrams.md              # Exhaustive Requirements & UML Modeling Blueprint
 │
 ├── vms-frontend/                                        # Frontend Project (Flutter Web)
 │   ├── .gitignore

@@ -150,27 +150,15 @@ The full-stack application adopts a **Clean Monorepo Layout** that unifies the r
 ```text
 StarkGroup-VMS/
 │
-├── Data_Ingestion/                                      # Multi-Source Ingestion Artifacts & Raw Datasets
-│   ├── Document/
-│   │   └── Projecet Requirements DataV.docx             # Original Word requirement document
-│   ├── UdemyScrapper/                                   # 7 Course curriculum modules & guides
-│   │   ├── 01_The Story & Build Roadmap/
-│   │   ├── 02_Build the Flutter Web Frontend/
-│   │   ├── 03_Build the Spring Boot Backend & Database/
-│   │   ├── 04_Connect Flutter Web to the Backend/
-│   │   ├── 05_Testing the VMS/
-│   │   ├── 06_Ship It — CICD & Free Deployment/
-│   │   ├── 07_Conclusion/
-│   │   └── Course Build a Full-Stack Web App with Flutter & Spring Boot_Full.md
-│   ├── YoutubeScrapper/                                 # Audio & Session transcripts
-│   │   ├── 001 - full-stack-AI-with-flutter-spring-boot kickoff Class.md
-│   │   ├── 002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.flac
-│   │   └── 002 - Session  Weekly Support 01   Full-Stack Web Development with Flutter & Spring Boot.md
-│   ├── Requirement Gathering.png                        # Requirement gathering flow diagram
-│   └── DataIngestiion.md                                # Consolidated Single Ingestion Specification
-│
 ├── System_Requirements/                                 # Dedicated Requirements & UML Specifications
-│   └── System Requirements and UML Diagrams.md              # Exhaustive Requirements & UML Modeling Blueprint
+│   ├── Data_Ingestion/                                  # Multi-Source Ingestion Artifacts & Raw Datasets
+│   │   ├── Document/
+│   │   │   └── Projecet Requirements DataV.docx         # Original Word requirement document
+│   │   ├── UdemyScrapper/                               # 7 Course curriculum modules & guides
+│   │   ├── YoutubeScrapper/                             # Audio & Session transcripts
+│   │   ├── Data_Ingestion.png                           # Requirement gathering flow diagram
+│   │   └── DataIngestiion.md                            # Consolidated Single Ingestion Specification
+│   └── System Requirements and UML Diagrams.md          # Exhaustive Requirements & UML Modeling Blueprint
 │
 ├── vms-frontend/                                        # Frontend Project (Flutter Web)
 │   ├── .gitignore

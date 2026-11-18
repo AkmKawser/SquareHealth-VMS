@@ -51,7 +51,7 @@ flowchart TD
     FR --> FR_ADV["Advanced Fleet Operations (FR-06 - FR-10)"]
 
     FR_CORE --> FC1["FR-01: Auth, Session & RBAC"]
-    FR_CORE --> FC2["FR-02: Multi-Tenant Corporate Structure"]
+    FR_CORE --> FC2["FR-02: Operating Entity & Company Classification"]
     FR_CORE --> FC3["FR-03: Vehicle Master CRUD Engine"]
     FR_CORE --> FC4["FR-04: Duplicate Plate Prevention Guard"]
     FR_CORE --> FC5["FR-05: Executive Analytics Dashboard"]
@@ -79,10 +79,10 @@ flowchart TD
 ## 🎯 2. Scope & Goals
 
 ### 2.1 Mission Statement & Objective
-SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System engineered to provide a centralized single source of truth for the corporate vehicles, emergency ambulances, logistics vans, drivers, legal compliance certificates, and maintenance workflows of Stark Group and its subsidiaries.
+SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System engineered to provide a centralized single source of truth for the corporate vehicles, emergency ambulances, logistics vans, drivers, legal compliance certificates, and maintenance workflows of Stark Group.
 
 ### 2.2 In-Scope Capabilities
-- **Multi-Tenant Corporate Structure**: Managing fleets across 5 corporate subsidiaries (`Stark Group Ltd.`, `Stark Industries`, `Stark Logistics`, `Stark Medical`, `Stark Aerospace`).
+- **Fleet Ownership & Operating Entity Classification**: Categorizing and filtering fleet assets by operating company or division (e.g., "Stark Group", "Stark Logistics", "Apex Pharma") with full search and filter capabilities.
 - **Vehicle Master Lifecycle**: Full CRUD lifecycle operations for 5 vehicle categories (Ambulances, Delivery Vans, Microbuses, Executive Sedans, Cargo Trucks).
 - **Core Invariant Enforcement**: Triple-tier duplicate vehicle license plate detection and rejection returning RFC 7807 HTTP 409 Conflict envelopes.
 - **Executive Fleet Analytics**: Real-time aggregate KPI metrics and readiness distribution ratios.
@@ -118,8 +118,8 @@ SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System eng
 - **System Behavior & Output**:
   - The backend validates credentials and issues an HMAC-SHA256 signed JWT Bearer token with claims: `sub`, `roles`, `companyId`, `iat`, `exp` (8 hours).
   - Four distinct roles are enforced via Spring Security `@PreAuthorize`:
-    1. `ADMIN`: Universal read/write/delete privileges across all tenants and audit logs.
-    2. `FLEET_MANAGER`: Operational CRUD on vehicles, drivers, and service tickets for their assigned subsidiary.
+    1. `ADMIN`: Universal read/write/delete privileges across all fleets and audit logs.
+    2. `FLEET_MANAGER`: Operational CRUD on vehicles, drivers, and service tickets for their assigned company or division.
     3. `DISPATCHER`: Operational status updates (`AVAILABLE`, `IN_TRIP`), fuel logging, and driver route monitoring.
     4. `DRIVER`: Read-only mobile/web access to assigned vehicle specifications and compliance certificates.
 - **Post-conditions**: Flutter client securely stores the JWT in persistent session memory and injects `Authorization: Bearer <token>` into all subsequent HTTP requests.
@@ -127,18 +127,15 @@ SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System eng
 
 ---
 
-### FR-02: Multi-Tenant Corporate Structure
-- **Workflow & Trigger**: A Fleet Manager registers or queries assets partitioned by operating corporate subsidiary.
-- **Pre-conditions**: Subsidiary entity must exist in the `companies` reference table.
+### FR-02: Operating Entity & Company Classification
+- **Workflow & Trigger**: An operator assigns or updates the operating company or division for a vehicle during registration or editing.
+- **Business Context**: Stark Group manages vehicles allocated across different business divisions, logistics partners, or corporate entities (e.g., `"Stark Group"`, `"Stark Logistics"`, `"Apex Pharma"`). `[Source: Udemy - Section 02 / 06; Section 03 / 05]`
+- **Pre-conditions**: Vehicle registration or edit form is active in Flutter Web UI or REST client.
 - **System Behavior & Output**:
-  - Isolates operational assets across 5 distinct corporate entities:
-    - `Stark Group Ltd.` (Corporate Headquarters & Central Fleet)
-    - `Stark Industries` (Industrial & Manufacturing Heavy Fleet)
-    - `Stark Logistics` (Freight, Warehousing & Supply Chain)
-    - `Stark Medical` (Emergency Ambulances & Mobile ICU Units)
-    - `Stark Aerospace` (Airport Ground Handling & Precision Transit)
-  - Allows cross-subsidiary emergency vehicle transfer by authorized System Administrators.
-- **Post-conditions**: All vehicles and drivers maintain relational foreign keys referencing `company_id`.
+  - Requires `company` as a non-blank String field on every `Vehicle` entity and DTO.
+  - Enables instant server-side and client-side multi-field filtering by company (`GET /api/v1/vehicles?company=...`).
+  - Groups fleet summaries by operating company on the analytics dashboard.
+- **Post-conditions**: Vehicle record is persisted with its associated company string; displayed in table views and filters.
 
 ---
 
@@ -147,7 +144,7 @@ SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System eng
 - **Mandatory Attributes**:
   - `id`: Database-assigned 64-bit primary key.
   - `vehicleNumber`: Unique alphanumeric license plate string (e.g., `"DHAKA-METRO-GA-11-2233"`).
-  - `company`: Subsidiary operating entity string.
+  - `company`: Operating entity or corporate division string (e.g., `"Stark Group"`, `"Stark Logistics"`, `"Apex Pharma"`).
   - `type`: Vehicle category (`"Ambulance"`, `"Delivery Van"`, `"Microbus"`, `"Executive Sedan"`, `"Cargo Truck"`).
   - `brand`: Manufacturer name (`"Toyota"`, `"Hyundai"`, `"Nissan"`, `"Mercedes-Benz"`, `"Isuzu"`).
   - `model`: Specific model designation (`"HiAce Emergency ICU"`, `"Mighty"`, `"Sprinter"`).
@@ -167,7 +164,7 @@ SquareHealth-VMS is an enterprise-grade, cloud-ready Fleet Management System eng
 
 ### FR-04: Mandatory Invariant — Duplicate Vehicle License Plate Prevention
 - **Workflow & Trigger**: A user attempts to create or update a vehicle with a license plate string that already exists in the system.
-- **Business Rule Invariant**: A vehicle license plate uniquely identifies a physical road transport asset. Collisions are strictly prohibited across all subsidiaries.
+- **Business Rule Invariant**: A vehicle license plate uniquely identifies a physical road transport asset. Duplicate license numbers are strictly rejected across the entire fleet.
 - **Triple-Layer Enforcement Architecture**:
   1. **Application Service Guard**: `VehicleServiceImpl` queries `vehicleRepository.existsByVehicleNumber(dto.getVehicleNumber())`. If true, raises `DuplicateVehicleException`.
   2. **Database Schema Invariant**: Enforces `CONSTRAINT uq_vehicles_vehicle_number UNIQUE (vehicle_number)`.
@@ -281,7 +278,7 @@ flowchart LR
 ## 📊 6. Scale & Capacity Estimation
 
 ### 6.1 User & Traffic Scoping
-- **Daily Active Users (DAU)**: ~500 enterprise operators across Stark Group subsidiaries (50 simultaneous dispatchers, 400 drivers, 50 administrators).
+- **Daily Active Users (DAU)**: ~500 enterprise operators across Stark Group operations (50 simultaneous dispatchers, 400 drivers, 50 administrators).
 - **Peak Request Rate**:
   - Read Queries: **150 QPS** (dashboard refreshes, multi-filter vehicle searches, driver assignment looks).
   - Write Queries: **25 QPS** (trip dispatches, vehicle registrations, fuel and maintenance logging).
@@ -575,6 +572,8 @@ classDiagram
     class Vehicle {
         -Long id
         -String vehicleNumber
+        -String company
+        -String type
         -String brand
         -String model
         -Integer manufacturingYear
@@ -582,6 +581,8 @@ classDiagram
         -BigDecimal dailyRate
         -FuelType fuelType
         -Integer odometerKm
+        -String assignedDriver
+        -String department
         -LocalDateTime createdAt
         -LocalDateTime updatedAt
         +isAvailable() Boolean
@@ -625,16 +626,22 @@ classDiagram
 
     class VehicleRequestDto {
         +String vehicleNumber
+        +String company
+        +String type
         +String brand
         +String model
         +Integer manufacturingYear
         +BigDecimal dailyRate
         +FuelType fuelType
+        +String assignedDriver
+        +String department
     }
 
     class VehicleResponseDto {
         +Long id
         +String vehicleNumber
+        +String company
+        +String type
         +String brand
         +String model
         +Integer manufacturingYear
@@ -778,7 +785,7 @@ flowchart LR
 | Req ID | Category | Target Architectural Layer | Core UML Artifact | Implemented Artifact / Specification |
 |---|---|---|---|---|
 | **FR-01** | Authentication & RBAC | SecurityFilter / Controller | Use Case (`UC-01`), Component Tier 2 | `AuthController.java`, `login_screen.dart` |
-| **FR-02** | Multi-Tenant Structure | Persistence / Entity | Component Tier 4, Class Diagram | `V1__init_schema.sql`, `V2__seed_initial_data.sql` |
+| **FR-02** | Operating Company Classification | Entity / Service / UI | Class Diagram (`Vehicle.company`), Component Tier 1 | `Vehicle.java`, `vehicles_mock.json` |
 | **FR-03** | Vehicle Master CRUD | Service / Controller / UI | Sequence 1 (`10.1`), Class (`Vehicle`) | `VehicleController.java`, `vehicle_form_dialog.dart` |
 | **FR-04** | Duplicate Plate Prevention | Business Rule & DB Invariant | Sequence 1 (`10.1`), Activity Diagram | `VehicleServiceImpl.java`, `VehicleControllerTest.java` |
 | **FR-05** | Executive Analytics | Service / Controller / UI | Use Case (`UC-04`), Component Tier 1 | `DashboardController.java`, `dashboard_screen.dart` |

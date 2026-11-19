@@ -1,30 +1,60 @@
 package com.starkgroup.vms.controller;
 
-import com.starkgroup.vms.dto.request.LoginRequestDto;
-import com.starkgroup.vms.dto.response.LoginResponseDto;
+import com.starkgroup.vms.dto.AuthRequestDto;
+import com.starkgroup.vms.dto.AuthResponseDto;
+import com.starkgroup.vms.entity.User;
+import com.starkgroup.vms.repository.UserRepository;
+import com.starkgroup.vms.security.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin(origins = "*")
 public class AuthController {
 
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
+
+    public AuthController(
+            AuthenticationManager authenticationManager,
+            UserDetailsService userDetailsService,
+            UserRepository userRepository,
+            JwtService jwtService) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginDto) {
-        // Authenticate credentials (standard dev token generation)
-        String mockJwt = "eyJhGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                UUID.randomUUID().toString().replace("-", "") +
-                ".vms-signature-token";
+    public ResponseEntity<AuthResponseDto> login(@Valid @RequestBody AuthRequestDto request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
-        String role = "admin".equalsIgnoreCase(loginDto.getUsername()) ? "ADMIN" : "OPERATOR";
-        Long companyId = 1L;
+        User user = userRepository.findByUsernameIgnoreCase(request.username()).orElseThrow();
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        String token = jwtService.generateToken(userDetails, Map.of(
+                "role", user.getRole().name(),
+                "company", user.getCompany()
+        ));
 
-        LoginResponseDto response = new LoginResponseDto(mockJwt, loginDto.getUsername(), role, companyId);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new AuthResponseDto(
+                token,
+                "Bearer",
+                user.getUsername(),
+                user.getFullName(),
+                user.getCompany(),
+                user.getRole(),
+                jwtService.getExpirationMs()
+        ));
     }
 }
-

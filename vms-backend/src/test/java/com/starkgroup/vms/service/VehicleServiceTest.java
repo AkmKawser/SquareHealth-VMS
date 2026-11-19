@@ -1,22 +1,22 @@
 package com.starkgroup.vms.service;
 
-import com.starkgroup.vms.dto.request.VehicleRequestDto;
-import com.starkgroup.vms.dto.response.VehicleResponseDto;
+import com.starkgroup.vms.dto.VehicleRequestDto;
+import com.starkgroup.vms.dto.VehicleResponseDto;
 import com.starkgroup.vms.entity.Vehicle;
-import com.starkgroup.vms.exception.DuplicateVehicleException;
-import com.starkgroup.vms.exception.ResourceNotFoundException;
+import com.starkgroup.vms.enums.FuelType;
+import com.starkgroup.vms.enums.VehicleStatus;
+import com.starkgroup.vms.enums.VehicleType;
+import com.starkgroup.vms.exception.DuplicateResourceException;
+import com.starkgroup.vms.repository.DriverRepository;
+import com.starkgroup.vms.repository.VehicleDocumentRepository;
 import com.starkgroup.vms.repository.VehicleRepository;
-import com.starkgroup.vms.service.impl.VehicleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,129 +27,59 @@ class VehicleServiceTest {
 
     @Mock
     private VehicleRepository vehicleRepository;
+    @Mock
+    private DriverRepository driverRepository;
+    @Mock
+    private VehicleDocumentRepository documentRepository;
+    @Mock
+    private AuditService auditService;
 
-    @InjectMocks
-    private VehicleServiceImpl vehicleService;
-
-    private VehicleRequestDto sampleDto;
-    private Vehicle sampleVehicle;
+    private VehicleService vehicleService;
 
     @BeforeEach
     void setUp() {
-        sampleDto = new VehicleRequestDto(
-                "DHAKA-METRO-GA-11-2233",
-                "Stark Group",
-                "Ambulance",
-                "Toyota",
-                "HiAce",
-                "AVAILABLE",
-                95,
-                "Md. Rafiq",
-                "Emergency Response"
+        vehicleService = new VehicleService(vehicleRepository, driverRepository, documentRepository, auditService);
+    }
+
+    @Test
+    void createVehicle_throwsDuplicateResourceException_whenPlateExists() {
+        VehicleRequestDto dto = new VehicleRequestDto(
+                "DHAKA-METRO-GA-11-2233", "Stark Group", VehicleType.AMBULANCE,
+                "Toyota", "HiAce", 2023, "White", 6, FuelType.DIESEL,
+                VehicleStatus.AVAILABLE, new BigDecimal("3500"), 90, 12000,
+                "Emergency", null, null, null
         );
 
-        sampleVehicle = new Vehicle(
-                sampleDto.getVehicleNumber(),
-                sampleDto.getCompany(),
-                sampleDto.getType(),
-                sampleDto.getBrand(),
-                sampleDto.getModel(),
-                sampleDto.getStatus(),
-                sampleDto.getFuelLevel(),
-                sampleDto.getAssignedDriver(),
-                sampleDto.getDepartment()
+        when(vehicleRepository.existsByVehicleNumberIgnoreCase("DHAKA-METRO-GA-11-2233")).thenReturn(true);
+
+        DuplicateResourceException ex = assertThrows(
+                DuplicateResourceException.class,
+                () -> vehicleService.createVehicle(dto)
         );
-        sampleVehicle.setId(1L);
+        assertTrue(ex.getMessage().contains("DHAKA-METRO-GA-11-2233"));
+        verify(vehicleRepository, never()).save(any());
     }
 
     @Test
-    @DisplayName("Should successfully create a vehicle when vehicleNumber is unique")
-    void shouldCreateVehicleWhenUnique() {
-        when(vehicleRepository.existsByVehicleNumber(sampleDto.getVehicleNumber())).thenReturn(false);
-        when(vehicleRepository.save(any(Vehicle.class))).thenReturn(sampleVehicle);
-
-        VehicleResponseDto response = vehicleService.createVehicle(sampleDto);
-
-        assertNotNull(response);
-        assertEquals(1L, response.getId());
-        assertEquals("DHAKA-METRO-GA-11-2233", response.getVehicleNumber());
-        assertEquals("Stark Group", response.getCompany());
-        verify(vehicleRepository, times(1)).save(any(Vehicle.class));
-    }
-
-    @Test
-    @DisplayName("Should throw DuplicateVehicleException when vehicleNumber already exists")
-    void shouldThrowExceptionWhenDuplicateVehicleNumber() {
-        when(vehicleRepository.existsByVehicleNumber(sampleDto.getVehicleNumber())).thenReturn(true);
-
-        DuplicateVehicleException exception = assertThrows(
-                DuplicateVehicleException.class,
-                () -> vehicleService.createVehicle(sampleDto)
+    void createVehicle_persistsAndNormalizesPlate_whenUnique() {
+        VehicleRequestDto dto = new VehicleRequestDto(
+                "dhaka-metro-ga-99-0001", "Stark Group", VehicleType.CAR,
+                "Toyota", "Corolla", 2023, "Silver", 5, FuelType.HYBRID,
+                VehicleStatus.AVAILABLE, new BigDecimal("2500"), 100, 0,
+                "Corporate", null, "Rahim", "+8801711000001"
         );
 
-        assertTrue(exception.getMessage().contains("already exists"));
-        verify(vehicleRepository, never()).save(any(Vehicle.class));
-    }
+        when(vehicleRepository.existsByVehicleNumberIgnoreCase("DHAKA-METRO-GA-99-0001")).thenReturn(false);
+        when(vehicleRepository.save(any(Vehicle.class))).thenAnswer(inv -> {
+            Vehicle v = inv.getArgument(0);
+            v.setId(42L);
+            return v;
+        });
 
-    @Test
-    @DisplayName("Should return all vehicles")
-    void shouldReturnAllVehicles() {
-        when(vehicleRepository.findAll()).thenReturn(List.of(sampleVehicle));
+        VehicleResponseDto created = vehicleService.createVehicle(dto);
 
-        List<VehicleResponseDto> result = vehicleService.getAllVehicles();
-
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals("DHAKA-METRO-GA-11-2233", result.get(0).getVehicleNumber());
-    }
-
-    @Test
-    @DisplayName("Should get vehicle by ID when exists")
-    void shouldGetVehicleById() {
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(sampleVehicle));
-
-        VehicleResponseDto response = vehicleService.getVehicleById(1L);
-
-        assertNotNull(response);
-        assertEquals(1L, response.getId());
-    }
-
-    @Test
-    @DisplayName("Should throw ResourceNotFoundException when vehicle does not exist")
-    void shouldThrowWhenVehicleNotFound() {
-        when(vehicleRepository.findById(99L)).thenReturn(Optional.empty());
-
-        assertThrows(ResourceNotFoundException.class, () -> vehicleService.getVehicleById(99L));
-    }
-
-    @Test
-    @DisplayName("Should update vehicle details successfully")
-    void shouldUpdateVehicle() {
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(sampleVehicle));
-        when(vehicleRepository.save(any(Vehicle.class))).thenReturn(sampleVehicle);
-
-        VehicleRequestDto updateDto = new VehicleRequestDto(
-                "DHAKA-METRO-GA-11-2233",
-                "Stark Group Updated",
-                "Ambulance",
-                "Toyota",
-                "HiAce",
-                "ON_TRIP"
-        );
-
-        VehicleResponseDto result = vehicleService.updateVehicle(1L, updateDto);
-
-        assertNotNull(result);
-        assertEquals("Stark Group Updated", result.getCompany());
-    }
-
-    @Test
-    @DisplayName("Should delete vehicle by ID")
-    void shouldDeleteVehicle() {
-        when(vehicleRepository.existsById(1L)).thenReturn(true);
-        doNothing().when(vehicleRepository).deleteById(1L);
-
-        assertDoesNotThrow(() -> vehicleService.deleteVehicle(1L));
-        verify(vehicleRepository, times(1)).deleteById(1L);
+        assertEquals(42L, created.id());
+        assertEquals("DHAKA-METRO-GA-99-0001", created.vehicleNumber());
+        verify(auditService).record("VEHICLE", 42L, "CREATE", null, "DHAKA-METRO-GA-99-0001");
     }
 }

@@ -1,0 +1,1 @@
+ C:\\Users\\USER\\Documents\\.MYGITHUB\\SquareHealth-VMS\\vms-frontend\\build\\web\\manifest.json:  C:\\Users\\USER\\Documents\\.MYGITHUB\\SquareHealth-VMS\\vms-frontend\\web\\index.html C:\\Users\\USER\\Documents\\.MYGITHUB\\SquareHealth-VMS\\vms-frontend\\web\\manifest.json

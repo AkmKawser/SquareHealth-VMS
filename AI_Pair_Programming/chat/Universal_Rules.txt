@@ -1,0 +1,12 @@
+1. install all the necessary tools required to ensure the technology stack. This will be your 1st task. Also check if everything is installed.
+2. I will only run the proejct using the tools mentiuoned in the technology stack. dont use anything by yourself. 3
+3. store all the chatlog  in detail of the user and the agent in chat.md file. Directive: Every single interaction without exception must be systematically recorded in chat/chatLog.md in chronological session format immediately after the agent finishes formulating the response.
+
+Mandatory Contents for Every Session Entry:
+
+Serial Number, Date, Time & Title: Every entry must have an incrementing serial number, exact date and timestamp, and a concise descriptive title based on the query.
+User Request / Prompt: The exact user prompt or question in full.
+Agentic Log: Key internal actions, decisions made, tools invoked, file modifications, in-depth background execution details, and verification steps executed.
+Agent Response: The complete response, solution, or guidance delivered to the user.
+
+4.

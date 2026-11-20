@@ -1,8 +1,12 @@
 # SquareHealth-VMS (Stark Group Fleet Management System)
 
-![SquareHealth-VMS Request Flow](AI_Pair_Programming/request_flow.svg)
+## Full Project Architecture (Data Ingestion to Cloud Deployment)
+
+![SquareHealth-VMS Full Project Architecture](AI_Pair_Programming/project_architecture.svg)
 
 ## Request-Response Lifecycle Architecture
+
+![SquareHealth-VMS Request Flow](AI_Pair_Programming/request_flow.svg)
 
 The end-to-end communication sequence when a user triggers an action (e.g. creating a vehicle) from the Flutter Web client to the Java Spring Boot backend, through validation and persistence in PostgreSQL, and back to the reactive UI:
 
@@ -39,8 +43,9 @@ The end-to-end communication sequence when a user triggers an action (e.g. creat
 A full-stack, enterprise-ready Vehicle Management System developed with **Flutter Web**, **Java Spring Boot**, and **PostgreSQL / MySQL**, paired with **Google Antigravity AI**.
 
 ### Core Documentation & Blueprints
-- **[System Requirements & UML Diagrams](System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md)** — Complete SRS (FR-01–FR-10, NFRs, capacity estimation) and behavioral/structural UML blueprints (Use Case, Sequence, State Machine, Activity, Class, Component, Deployment).
-- **[Technology Stack](System_Requirements/Technology%20Stack/Technology%20Stack.md)** — Full-stack breakdown across Flutter Web (`Riverpod`, `Retrofit`, `Dio`, `json_serializable`, `shadcn_ui`, `infinite_scroll_pagination`, `hive_ce`), Spring Boot (`Java 21`, `JPA/Hibernate`, `Bean Validation`, `Lombok`, `Flyway`, `DataSeeder`), PostgreSQL/MySQL/H2, Docker, Netlify, and Render.
+
+- **[System Requirements &amp; UML Diagrams](<System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md>)** — Complete SRS (FR-01–FR-10, NFRs, capacity estimation) and behavioral/structural UML blueprints (Use Case, Sequence, State Machine, Activity, Class, Component, Deployment).
+- **[Technology Stack](<System_Requirements/Technology%20Stack/Technology%20Stack.md>)** — Full-stack breakdown across Flutter Web (`Riverpod`, `Retrofit`, `Dio`, `json_serializable`, `shadcn_ui`, `infinite_scroll_pagination`, `hive_ce`), Spring Boot (`Java 21`, `JPA/Hibernate`, `Bean Validation`, `Lombok`, `Flyway`, `DataSeeder`), PostgreSQL/MySQL/H2, Docker, Netlify, and Render.
 - **[Consolidated Data Ingestion](System_Requirements/Data_Ingestion/DataIngestiion.md)** — Multi-source requirements gathered from Udemy curriculum, YouTube Live/Support sessions (01–02), `Projecet Requirements DataV.docx`, `Assignment-2.png`, and the `SampleProject` archives.
 
 ---
@@ -48,6 +53,7 @@ A full-stack, enterprise-ready Vehicle Management System developed with **Flutte
 ## AI-Assisted Pair Programming Architecture
 
 The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver** paradigm:
+
 1. **Human Engineer (Navigator & Architect)**: Defines business requirements (SRS), designs system boundaries, reviews generated diffs, and validates runtime correctness. The AI never decides what to build.
 2. **AI Agent (Driver & Implementer - Google Antigravity)**: Rapidly synthesizes boilerplate, scaffolds clean architecture, executes surgical fixes from error stack traces, runs single-pass audits, and automates Git synchronization.
 3. **6-Stage Interactive Loop**: Context Grounding (`@workspace`) ➔ Atomic Micro-Prompting ➔ Diff Inspection ➔ Runtime Verification (Mockito/MockMvc/Flutter) ➔ Diagnostic Self-Correction ➔ Attestation & Git Sync.
@@ -59,6 +65,7 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
 ### Architectural Layers in Detail
 
 1. **Client Layer (Flutter Web Frontend)**
+
    - **Framework**: Flutter Web 3.x (Dart) compiling to WebAssembly / CanvasKit for 60fps responsive desktop web experiences.
    - **Styling**: Stark Group Material 3 Design System (`#0A192F` Deep Navy, `#3B82F6` Electric Blue, `#10B981` Emerald).
    - **Feature-First Architecture**:
@@ -71,8 +78,8 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
    - **Core & Networking**:
      - `ApiClient` / `Retrofit + Dio`: Centralized HTTP REST client with `json_serializable` models, Bearer JWT injection, timeout interceptors, and `hive_ce` local caching.
      - `Mock Data Fallback`: `assets/mock_data/vehicles_mock.json` allowing independent frontend verification without a live backend.
-
 2. **API & Business Logic Layer (Java Spring Boot)**
+
    - **Framework**: Spring Boot 3.2.x / 4.x on Java 21.
    - **REST API Endpoints**:
      - `GET /api/v1/vehicles`: Server-side paginated (`page`, `size`), sorted, searchable, and filterable retrieval mapped to `PagedResponse<VehicleResponseDto>`.
@@ -88,8 +95,8 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
    - **Error Handling & Security**:
      - `GlobalExceptionHandler` (`@RestControllerAdvice`): Uniform RFC 7807 error envelope (`ErrorResponseDto`) returning standard HTTP 400, 404, and 409 responses.
      - `CorsConfig` & `SecurityConfig`: Cross-Origin controls for Netlify frontend origin and stateless REST security.
-
 3. **Data Layer (PostgreSQL / MySQL Relational Database)**
+
    - **Persistence Provider**: Spring Data JPA with Hibernate ORM, Flyway migrations (`db/migration/`), and HikariCP connection pool (PostgreSQL 16 in production/Docker; MySQL supported for local dev; H2 for tests).
    - **Relational Schema**:
      - `vehicles`: `id` (PK), `vehicle_number` (UNIQUE NOT NULL), `company`, `vehicle_type`, `brand`, `model`, `manufacturing_year`, `color`, `fuel_type`, `seating_capacity`, `status`, `driver_name`, `driver_phone`, `created_at`, `updated_at`.
@@ -97,8 +104,8 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
      - `vehicle_documents`: `id` (PK), `vehicle_id` (FK), `document_type`, `file_url`, `expiry_date`, `expiry_status`.
      - `maintenance_logs`: `id` (PK), `vehicle_id` (FK referencing `vehicles.id`), `maintenance_type`, `service_cost`, `service_date`, `workshop_vendor`, `notes`.
      - `users`: `id` (PK), `username` (UNIQUE), `password_hash`, `role`.
-
 4. **DevOps, Testing & Cloud Infrastructure**
+
    - **Monorepo Design**: Clean technical separation between `vms-frontend/` and `vms-backend/`.
    - **Test Pyramid**:
      - Mockito Unit Tests (`VehicleServiceTest`): Business validation logic verification in isolation.
@@ -182,7 +189,7 @@ Complete, step-by-step terminal commands for running, building, testing, and man
   - Architecture for requirement gathering documented and visualized (`System_Requirements/Data_Ingestion/Data_Ingestion.png`).
   - Session audio files transcribed into Markdown (`002 - Session  Weekly Support 01 Transcript.md`, `003 - session_weekly_support_02 Transcript.md`).
   - Exhaustive consolidated requirements document created at [`System_Requirements/Data_Ingestion/DataIngestiion.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Data_Ingestion/DataIngestiion.md) with every requirement citing its source in brackets `[Source: ...]`.
-  - Unified SRS & UML Blueprints authored at [`System_Requirements/System Requirements and UML Diagrams.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md) and Technology Stack documented at [`System_Requirements/Technology Stack/Technology Stack.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Technology%20Stack/Technology%20Stack.md).
+  - Unified SRS & UML Blueprints authored at [`System_Requirements/System Requirements and UML Diagrams.md`](<file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md>) and Technology Stack documented at [`System_Requirements/Technology Stack/Technology Stack.md`](<file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Technology%20Stack/Technology%20Stack.md>).
 - **Step-2: Folder Structure**
   - Official Flutter Web (frontend) and Spring Boot (backend) folder structures analyzed from official documentation.
   - Merged into a unified monorepo folder structure and created on disk.
@@ -191,9 +198,8 @@ Complete, step-by-step terminal commands for running, building, testing, and man
   - Centralized API data contract and DTO JSON schemas defined to eliminate schema drift and AI field hallucination.
   - Mock datasets created at [`vms-frontend/assets/mock_data/vehicles_mock.json`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/assets/mock_data/vehicles_mock.json) covering all domain states.
   - Client presentation layer (theme, responsive AppShell, forms with regex validation) verified in browser.
-  - Detailed technical blueprint and engineering rationale documented in [`AI_Pair_Programming/query/Generic_Project_Template/Any Project Skill.docx`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/Generic_Project_Template/Any%20Project%20Skill.docx).
+  - Detailed technical blueprint and engineering rationale documented in [`AI_Pair_Programming/query/Generic_Project_Template/Any Project Skill.docx`](<file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/Generic_Project_Template/Any%20Project%20Skill.docx>).
 - **Step-4: Database Architecture, Relational Schema & Migration Engine**
   - Relational persistence architecture, ER diagram, and Data Dictionary formalized in [`AI_Pair_Programming/query/specifications/STEP_4_DATABASE_SPECIFICATION.md`](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/specifications/STEP_4_DATABASE_SPECIFICATION.md).
   - Storage-level invariants enforced: `UNIQUE(vehicle_number)`, check constraints on lifecycle statuses, and B-Tree performance indexes.
   - Version-controlled migration pipeline configured using Flyway with executable DDL (`V1__initial_schema.sql`) and baseline seed data (`V2__seed_baseline_data.sql`).
-

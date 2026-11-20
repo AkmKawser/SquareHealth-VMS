@@ -425,3 +425,93 @@
        - **Documents & Expiry**: Upload a Registration, Tax Token, Insurance, or Vehicle Photo with an expiry date and see `Valid` / `Expiring Soon` / `Expired` badges.
        - **Maintenance History**: Log a service (`date`, `type`, `cost`, `vendor`, `notes`) and view the per-vehicle timeline.
   4. **Drivers Tab**: Search, add, edit, or delete drivers.
+
+---
+
+## Entry #023
+- **Date & Time**: 2026-11-20 14:11:00 +06:00
+- **Title**: Confirm All 7 Core VMS Requirements Are Implemented
+- **User Request / Prompt**:
+  > does this project ensures all these? 
+  >
+  > • Vehicle List.
+  > • Add/Register Vehicle.
+  > • Edit Vehicle.
+  > • Delete Vehicle.
+  > • Flutter Web frontend + Java Spring Boot backend + SQL database + REST API integration.
+  > • Duplicate Vehicle Number validation.
+  > • Real database-backed data instead of mock vehicle data.
+- **Agentic Log**:
+  - Verified all 7 items against the rebuilt `vms-backend/` and `vms-frontend/` implementation (`VehicleController.java`, `VehicleService.java`, `GlobalExceptionHandler.java`, `V1__initial_schema.sql`, `DataSeeder.java`, `vehicles_screen.dart`, `fleet_providers.dart`).
+  - Appended `Entry #023` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  **Yes — all 7 requirements are fully implemented and verified:**
+
+  1. **Vehicle List**:
+     - Backend: `GET /api/v1/vehicles` in [VehicleController.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/controller/VehicleController.java) with server-side pagination, search, status filtering, and sorting.
+     - Frontend: [vehicles_screen.dart](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/lib/screens/vehicles_screen.dart) renders the live paginated list via `vehiclesPageProvider`.
+  2. **Add / Register Vehicle**:
+     - Backend: `POST /api/v1/vehicles` (`@Valid` `VehicleRequestDto`, HTTP `201 Created`).
+     - Frontend: **Add Vehicle** modal in [vehicles_screen.dart](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/lib/screens/vehicles_screen.dart) calling `fleetActionsProvider.createVehicle`.
+  3. **Edit Vehicle**:
+     - Backend: `PUT /api/v1/vehicles/{id}` (HTTP `200 OK`).
+     - Frontend: Edit icon on each vehicle card opening the pre-populated form dialog calling `fleetActionsProvider.updateVehicle`.
+  4. **Delete Vehicle**:
+     - Backend: `DELETE /api/v1/vehicles/{id}` (HTTP `204 No Content`).
+     - Frontend: Delete icon with confirmation dialog calling `fleetActionsProvider.deleteVehicle`.
+  5. **Flutter Web Frontend + Java Spring Boot Backend + SQL Database + REST API Integration**:
+     - Flutter Web (`vms-frontend/`, Riverpod + Dio) ↔ Java 21 Spring Boot `3.2.5` (`vms-backend/`) ↔ PostgreSQL + Flyway ([V1__initial_schema.sql](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/resources/db/migration/V1__initial_schema.sql)) over `/api/v1/...` REST JSON.
+  6. **Duplicate Vehicle Number Validation**:
+     - **Service Guard**: [VehicleService.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/service/VehicleService.java) checks `existsByVehicleNumberIgnoreCase` / `existsByVehicleNumberIgnoreCaseAndIdNot` and throws `DuplicateResourceException` (covered by `VehicleServiceTest` & `VehicleControllerTest`).
+     - **Database Constraint**: `vehicle_number VARCHAR(60) NOT NULL UNIQUE` in [V1__initial_schema.sql](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/resources/db/migration/V1__initial_schema.sql).
+     - **HTTP `409 Conflict` & UI Alert**: [GlobalExceptionHandler.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/exception/GlobalExceptionHandler.java) returns `409 Conflict`, and the Flutter form dialog displays the red error banner inline without closing.
+  7. **Real Database-Backed Data (No Mock Fallback)**:
+     - `vms-frontend/` has **no** mock vehicle JSON fallback; all vehicles, drivers, documents, maintenance logs, and dashboard stats come directly from PostgreSQL via Spring Boot REST APIs (with [DataSeeder.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/config/DataSeeder.java) populating real rows into PostgreSQL on first boot if the tables are empty).
+
+---
+
+## Entry #024
+- **Date & Time**: 2026-11-20 14:12:17 +06:00
+- **Title**: Instructions to Make `AkmKawser/SquareHealth-VMS` Repository Public
+- **User Request / Prompt**:
+  > make the rep public
+- **Agentic Log**:
+  - Checked `git remote -v` (`https://github.com/AkmKawser/SquareHealth-VMS.git`) and `gh --version` (`gh` CLI is not installed).
+  - Appended `Entry #024` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  The GitHub CLI (`gh`) is not installed on this machine, so I cannot toggle repository visibility directly from the terminal. You can make `AkmKawser/SquareHealth-VMS` public in ~10 seconds via the GitHub Web UI:
+
+  ### Option 1: GitHub Web UI (Fastest)
+  1. Open: `https://github.com/AkmKawser/SquareHealth-VMS/settings`
+  2. Scroll down to the **Danger Zone** section at the bottom.
+  3. Click **Change repository visibility** → **Change visibility** → **Make public** and confirm.
+
+  ### Option 2: Using GitHub CLI (`gh`)
+  If you prefer doing it from PowerShell:
+  ```powershell
+  winget install --id GitHub.cli --exact
+  # Restart terminal, then:
+  gh auth login
+  gh repo edit AkmKawser/SquareHealth-VMS --visibility public --accept-visibility-change-consequences
+  ```
+
+---
+
+## Entry #025
+- **Date & Time**: 2026-11-20 14:15:40 +06:00
+- **Title**: Browser Subagent Blocked — Chrome Remote Debugging Not Enabled
+- **User Request / Prompt**:
+  > do it yourself
+- **Agentic Log**:
+  - Invoked `browser` subagent (`e4b99378-c5b2-4c23-9653-c91bb8e514e8`) to navigate to `https://github.com/AkmKawser/SquareHealth-VMS/settings` and change visibility to Public.
+  - Subagent reported `DevToolsActivePort` not found at `C:\Users\USER\AppData\Local\Google\Chrome\User Data\DevToolsActivePort` (`ENOENT`).
+  - Appended `Entry #025` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  The browser agent could not connect to Chrome because Chrome's remote debugging (`DevToolsActivePort`) is not active (`ENOENT`).
+
+  To let me do it via Chrome:
+  1. Open **Google Chrome**.
+  2. Navigate to `chrome://inspect/#remote-debugging` and enable remote debugging.
+  3. Reply **"retry"** (or **"done"**) and I will immediately resume the browser agent to make `AkmKawser/SquareHealth-VMS` public.
+
+  *(Alternatively, if you want me to install GitHub CLI `gh` instead, let me know and I can install it via `winget`, after which you just complete the one-time browser login prompt.)*

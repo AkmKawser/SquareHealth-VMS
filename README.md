@@ -11,8 +11,6 @@ A full-stack, enterprise-ready Vehicle Management System developed with **Flutte
 
 ## AI-Assisted Pair Programming Architecture
 
-![AI-Assisted Pair Programming Architecture](AI_Pair_Programming/ai_pair_programming_architecture.png)
-
 The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver** paradigm:
 1. **Human Engineer (Navigator & Architect)**: Defines business requirements (SRS), designs system boundaries, reviews generated diffs, and validates runtime correctness. The AI never decides what to build.
 2. **AI Agent (Driver & Implementer - Google Antigravity)**: Rapidly synthesizes boilerplate, scaffolds clean architecture, executes surgical fixes from error stack traces, runs single-pass audits, and automates Git synchronization.
@@ -21,15 +19,6 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
 ---
 
 ## System Architecture
-
-### High-Level System Architecture
-![StarkGroup-VMS System Architecture](AI_Pair_Programming/architecture_diagram.jpg)
-
-### Deep Technical Architecture Blueprint
-![StarkGroup-VMS Deep Technical Blueprint](AI_Pair_Programming/architecture_detailed_spec.png)
-
-### 4-Tier Visual Architecture Blueprint
-![StarkGroup-VMS Visual Blueprint](AI_Pair_Programming/architecture_blueprint.jpg)
 
 ### Architectural Layers in Detail
 
@@ -86,13 +75,10 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
 
 ## Request-Response Lifecycle Architecture
 
-The following diagrams illustrate the end-to-end communication sequence when a user triggers an action (e.g. creating a vehicle) from the Flutter Web client to the Java Spring Boot backend, through validation and persistence in PostgreSQL, and back to the reactive UI:
+The following diagram illustrates the end-to-end communication sequence when a user triggers an action (e.g. creating a vehicle) from the Flutter Web client to the Java Spring Boot backend, through validation and persistence in PostgreSQL, and back to the reactive UI:
 
-### End-to-End Request Flow Sequence Diagram
-![StarkGroup-VMS Request Flow Sequence](AI_Pair_Programming/request_flow_sequence.jpg)
-
-### Detailed Request-Response Technical Specification
-![StarkGroup-VMS Detailed Request Flow](AI_Pair_Programming/request_flow_detailed_spec.png)
+### End-to-End Request Flow
+![SquareHealth-VMS Request Flow](AI_Pair_Programming/request_flow.svg)
 
 ### Step-by-Step Execution Lifecycle
 

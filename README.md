@@ -1,5 +1,7 @@
 # SquareHealth-VMS (Stark Group Fleet Management System)
 
+![SquareHealth-VMS Request Flow](AI_Pair_Programming/request_flow.svg)
+
 A full-stack, enterprise-ready Vehicle Management System developed with **Flutter Web**, **Java Spring Boot**, and **PostgreSQL / MySQL**, paired with **Google Antigravity AI**.
 
 ### Core Documentation & Blueprints
@@ -75,10 +77,7 @@ The project leverages a **Human-in-the-Loop Navigator + Autonomous Agent Driver*
 
 ## Request-Response Lifecycle Architecture
 
-The following diagram illustrates the end-to-end communication sequence when a user triggers an action (e.g. creating a vehicle) from the Flutter Web client to the Java Spring Boot backend, through validation and persistence in PostgreSQL, and back to the reactive UI:
-
-### End-to-End Request Flow
-![SquareHealth-VMS Request Flow](AI_Pair_Programming/request_flow.svg)
+The end-to-end communication sequence when a user triggers an action (e.g. creating a vehicle) from the Flutter Web client to the Java Spring Boot backend, through validation and persistence in PostgreSQL, and back to the reactive UI:
 
 ### Step-by-Step Execution Lifecycle
 

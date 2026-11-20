@@ -530,3 +530,16 @@
   - Appended `Entry #026` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
 - **Agent Response**:
   Updated [README.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/README.md) to remove all previous images (`ai_pair_programming_architecture.png`, `architecture_diagram.jpg`, `architecture_detailed_spec.png`, `architecture_blueprint.jpg`, `request_flow_sequence.jpg`, and `request_flow_detailed_spec.png`) and keep only [request_flow.svg](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/request_flow.svg) under **Request-Response Lifecycle Architecture**.
+
+---
+
+## Entry #027
+- **Date & Time**: 2026-11-20 14:23:21 +06:00
+- **Title**: Move `request_flow.svg` to the Beginning of `README.md`
+- **User Request / Prompt**:
+  > put the image at the beginning of the readme.md file
+- **Agentic Log**:
+  - Moved `![SquareHealth-VMS Request Flow](AI_Pair_Programming/request_flow.svg)` to the top of `README.md` directly below the main title, and removed the duplicate section from **Request-Response Lifecycle Architecture**.
+  - Appended `Entry #027` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  Moved [request_flow.svg](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/request_flow.svg) to the beginning of [README.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/README.md), directly below the main title.

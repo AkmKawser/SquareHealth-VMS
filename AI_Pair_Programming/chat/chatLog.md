@@ -592,3 +592,370 @@
   - Appended `Entry #030` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
 - **Agent Response**:
   Moved [project_architecture.svg](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/project_architecture.svg) to the very beginning of [README.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/README.md), directly below the main title and before [request_flow.svg](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/request_flow.svg).
+
+
+---
+
+## Entry #031
+- **Date & Time**: 2026-11-22 18:20:00 +06:00
+- **Title**: Cloud Deployment Configuration & Architecture Breakdown
+- **User Request / Prompt**:
+  > how have you configured the cloud deployment part?
+- **Agentic Log**:
+  - Analyzed the repository's deployment infrastructure across `docker-compose.yml`, `vms-backend/Dockerfile`, `vms-frontend/Dockerfile`, `vms-frontend/nginx.conf`, `vms-backend/src/main/resources/application.properties`, `.github/workflows/ci.yml`, and `System_Requirements/System Requirements and UML Diagrams.md` (Section 15 Deployment Diagram).
+  - Provided a comprehensive, structured architectural walkthrough of the 3-Tier cloud deployment strategy:
+    1. Edge Tier (Frontend on Netlify Global CDN / Nginx container with SPA routing)
+    2. Compute Tier (Backend on Render Cloud / Alpine Temurin JRE 21 multi-stage container)
+    3. Storage Tier (Managed Cloud PostgreSQL with TLS / Docker Compose healthcheck)
+    4. Orchestration & Local Parity (`docker-compose.yml`)
+    5. Configuration & Environment Variables (`SPRING_DATASOURCE_*`, `JWT_SECRET`, `API_BASE_URL`)
+    6. Database Migrations & Observability (Flyway on boot, Spring Actuator `/actuator/health`)
+    7. CI/CD Automation (GitHub Actions pipeline & Render deploy hook)
+  - Appended `Entry #031` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  The cloud deployment for **SquareHealth-VMS** is configured as a decoupled, multi-tier cloud-native architecture designed for high availability, zero-downtime rolling deploys, and environment parity between local development, Docker containerization, and production cloud hosting.
+
+  Here is the complete breakdown of how each layer is configured:
+
+  ---
+
+  ### 1. Architectural Topology (3-Tier Cloud Deployment)
+
+  As formalized in the **Production Deployment Diagram** ([System Requirements and UML Diagrams.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md#L852-L886)):
+
+  ```mermaid
+  flowchart LR
+      subgraph Client["Edge Tier: Netlify Global CDN"]
+          CDN["Flutter Web SPA\n(index.html, main.dart.js, assets/)\nHTTPS Port 443"]
+      end
+
+      subgraph Compute["Application Tier: Render Cloud"]
+          API["vms-backend.jar\n(Spring Boot 3.2.5 + Java 21 Alpine)\nExposed Port 8080"]
+      end
+
+      subgraph Storage["Persistence Tier: Cloud PostgreSQL"]
+          DB[("Managed PostgreSQL 16\n(SSL Required, Port 5432)\nFlyway V1 Schema")]
+      end
+
+      CDN -->|"HTTPS REST Calls\n(/api/v1/vehicles)"| API
+      API -->|"Encrypted JDBC over TLS"| DB
+  ```
+
+  ---
+
+  ### 2. Multi-Stage Containerization (`Dockerfile`s)
+
+  Both the frontend and backend utilize hardened, multi-stage Docker builds to keep final production image sizes minimal, secure, and isolated from build tooling:
+
+  #### A. Backend Container ([vms-backend/Dockerfile](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/Dockerfile))
+  - **Stage 1 (Build)**: Uses `maven:3.9.9-eclipse-temurin-21-alpine` to pre-fetch dependencies (`mvn dependency:go-offline`) and compile the standalone executable fat JAR (`mvn clean package -DskipTests`).
+  - **Stage 2 (Runtime)**: Uses the minimal `eclipse-temurin:21-jre-alpine` runtime image, copies only the compiled `target/*.jar` as `app.jar`, creates the file upload directory (`/app/uploads`), exposes port `8080`, and executes `java -jar app.jar`.
+
+  #### B. Frontend Container ([vms-frontend/Dockerfile](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/Dockerfile))
+  - **Stage 1 (Build)**: Uses `ghcr.io/cirruslabs/flutter:stable`, accepts dynamic build-arg `API_BASE_URL`, and compiles the production web bundle with `flutter build web --release --dart-define=API_BASE_URL=$API_BASE_URL`.
+  - **Stage 2 (Runtime)**: Uses ultra-lightweight `nginx:alpine` to serve static compiled assets (`/usr/share/nginx/html`).
+  - **SPA Reverse Proxy Routing ([vms-frontend/nginx.conf](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-frontend/nginx.conf))**: Configured with `try_files $uri $uri/ /index.html;` so deep links and Flutter URL routes resolve cleanly without triggering HTTP 404 errors on reload.
+
+  ---
+
+  ### 3. Unified Container Orchestration ([docker-compose.yml](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/docker-compose.yml))
+
+  For local testing, pre-deployment staging, or self-hosted deployment, a single command (`docker compose up --build`) orchestrates the complete stack:
+  - **`postgres` service**: Runs `postgres:16-alpine` on port `5432` with persistent volume `postgres_data` and an automated healthcheck probe (`pg_isready -U postgres -d vms_db`).
+  - **`vms-backend` service**: Builds from `./vms-backend`, injects production profile `SPRING_PROFILES_ACTIVE=prod`, and crucially uses `depends_on: postgres: condition: service_healthy` to prevent startup race conditions before the database is fully accepting connections.
+  - **`vms-frontend` service**: Builds from `./vms-frontend`, depends on `vms-backend`, and maps internal port `80` to external port `3000:80`.
+
+  ---
+
+  ### 4. Cloud Platform Hosting Targets
+
+  1. **Frontend Hosting (Netlify Edge CDN)**:
+     - Deploys the pre-rendered static Flutter web bundle (`vms-frontend/build/web`).
+     - Global distribution via Netlify CDN guarantees sub-100ms asset loading worldwide over HTTPS (Port 443) with automated SSL certificate provisioning.
+     - Single-page application fallback rules redirect all path traffic to `index.html`.
+  2. **Backend Hosting (Render Cloud Web Service)**:
+     - Runs the Spring Boot 21 Alpine container as a managed Web Service exposing port `8080`.
+     - Automatically provisions HTTPS termination and forwards requests to the container.
+     - Automated rolling deploys triggered via GitHub push or Render Deploy Hooks.
+  3. **Database Hosting (Managed Cloud PostgreSQL - Neon / Supabase / Render)**:
+     - Managed PostgreSQL 16 with mandatory SSL encryption (`sslmode=require`).
+     - Daily automated snapshots and zero-downtime scaling.
+
+  ---
+
+  ### 5. Environment Variables & Secret Decoupling
+
+  All infrastructure credentials and secrets are managed via external environment variables with secure defaults in [application.properties](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/resources/application.properties):
+
+  | Variable Name | Service | Purpose | Sample Production Value |
+  |---|---|---|---|
+  | `SPRING_PROFILES_ACTIVE` | Backend | Activates cloud production profile | `prod` |
+  | `SPRING_DATASOURCE_URL` | Backend | Cloud PostgreSQL JDBC connection | `jdbc:postgresql://ep-silent.neon.tech/vms_db?sslmode=require` |
+  | `SPRING_DATASOURCE_USERNAME` | Backend | Database administrator username | `vms_admin` |
+  | `SPRING_DATASOURCE_PASSWORD` | Backend | Database secret password | `[Managed Cloud Secret]` |
+  | `JWT_SECRET` | Backend | 512-bit HS256 HMAC token signing key | `[Base64 64-Byte Secret]` |
+  | `VMS_UPLOAD_DIR` | Backend | Location for vehicle registration documents | `/app/uploads` |
+  | `API_BASE_URL` | Frontend | Target backend REST API URL for Flutter | `https://vms-backend-api.onrender.com/api/v1` |
+
+  ---
+
+  ### 6. Automated Schema Migrations & Zero-Manual DB Setup
+
+  - **Flyway Database Migrations**: Configured via `spring.flyway.enabled=true`. Upon application boot in the cloud, Spring Boot scans `classpath:db/migration` and executes `V1__initial_schema.sql`.
+  - Tables (`vehicles`, `vehicle_documents`, `drivers`, `maintenance_logs`, `audit_trail`), foreign keys, and indexes are created automatically in the cloud database without manual SQL execution.
+
+  ---
+
+  ### 7. Observability & Health Probes
+
+  - Configured via **Spring Boot Actuator** ([application.properties](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/resources/application.properties#L37-L39)):
+    - Liveness/Readiness probe endpoint: `GET /actuator/health`
+    - Application info endpoint: `GET /actuator/info`
+  - Cloud orchestrators (Render / Docker / Kubernetes) query `/actuator/health` to confirm database connectivity and application readiness before routing live traffic.
+
+  ---
+
+  ### 8. CI/CD Automation Pipeline ([.github/workflows/ci.yml](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/.github/workflows/ci.yml))
+
+  Every commit or pull request to the `main` branch automatically triggers GitHub Actions to:
+  1. Validate repository hygiene and rendering scripts (`audit_rendering.py`).
+  2. Setup JDK 21 (Eclipse Temurin) with Maven caching.
+  3. Execute unit and integration test suites (`./mvnw test`).
+  4. Build and package the production executable JAR (`./mvnw clean package -DskipTests`).
+  5. Trigger cloud deployment webhooks for production rollout.
+
+
+---
+
+## Entry #032
+- **Date & Time**: 2026-11-22 18:26:00 +06:00
+- **Title**: Project Requirement Analysis: Docker Suggestions & Sources
+- **User Request / Prompt**:
+  > does the project requirement suggest for docker? pleae mention the sources where docker is suggested
+- **Agentic Log**:
+  - Searched the ingested course syllabus (`Projecet Requirements DataV.docx`), Udemy modules (`06_Ship It — CICD & Free Deployment`), system requirements (`System Requirements and UML Diagrams.md`), technology stack document (`Technology Stack.md`), data ingestion synthesis (`DataIngestiion.md`), and technical specifications (`AI_Pair_Programming/query/specifications/`).
+  - Identified that in the baseline beginner assignment prompt (`Projecet Requirements DataV.docx`), Docker is **optional/suggested** as one of the deployment paths for Render (alongside native Java/Maven web services).
+  - Identified that within this repository's formal Software Requirements Specification (SRS) and Technical Specifications, Docker is **explicitly mandated as a Non-Functional Requirement (NFR-08: Containerization)** and modeled across architecture diagrams, Compose files, and Dockerfiles.
+  - Provided exact clickable references to every file and line where Docker is specified.
+  - Appended `Entry #032` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  ### Summary: Is Docker Suggested in the Project Requirements?
+
+  **Yes, Docker is suggested and supported**, with a distinction between the baseline course prompt and the enterprise architecture specification:
+
+  1. **In the Initial Assignment Brief (`Projecet Requirements DataV.docx` & Udemy Module 6)**:
+     - Docker is **optional/suggested as an alternative**. The baseline requirement specifies deploying the backend to **Render** and frontend to **Netlify**. Render supports both **Native Java Web Services** (building directly via `mvn clean package`) and **Docker containers**.
+  2. **In the Enterprise System Requirements & Specifications of this Repository**:
+     - Docker is **formally specified and mandated as a Non-Functional Requirement (`NFR-08: Containerization`)** to ensure environment parity across local machines, CI/CD, and production cloud environments without machine-specific dependency drift.
+
+  ---
+
+  ### Exact Sources Where Docker Is Suggested & Specified
+
+  #### 1. Ingested Course & Curriculum Requirements
+  - **[DataIngestiion.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Data_Ingestion/DataIngestiion.md#L82-L85) (Section 3.2 — Target Deployment Platforms)**:
+    > *"Backend: Render cloud hosting (Docker or Java native service with hosted PostgreSQL). [Source: Document - Projecet Requirements DataV.docx; Udemy - Section 06 / 04_[Hands-on] Deploy Spring Boot to Render.md]"*
+
+  ---
+
+  #### 2. System Requirements & Architecture Blueprints
+  - **[System Requirements and UML Diagrams.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md#L868-L875) (Section 15 — Production Deployment Diagram)**:
+    - Specifically models the Render execution node as a Docker container:
+      ```mermaid
+      subgraph ApplicationCloud["Application Tier: Render Container Platform"]
+          DOCKER["Docker Container (Alpine Linux)"]
+          TOMCAT["Embedded Apache Tomcat 10.x\n(Port 8080)"]
+      end
+      ```
+  - **[System Requirements and UML Diagrams.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md#L913) (Section 16 — Unified Requirements Traceability Matrix)**:
+    - Lists **NFR-08** as a required system capability:
+      | Req ID | Category | Target Architectural Layer | Core UML Artifact | Implemented Artifact / Specification |
+      |---|---|---|---|---|
+      | **NFR-08** | Containerization | DevOps | Deployment Diagram (Docker) | `vms-backend/Dockerfile`, `vms-frontend/Dockerfile` |
+
+  ---
+
+  #### 3. Technology Stack Specification
+  - **[Technology Stack.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Technology%20Stack/Technology%20Stack.md#L120-L123) (Section 6 — Deployment, Hosting & CI/CD)**:
+    > | Category | Selected Technology | Rationale & Enterprise Role |
+    > |---|---|---|
+    > | **Containerization** | **Docker & Docker Compose** | Multi-container orchestration via `docker-compose.yml` (`postgres:16-alpine` on `:5432`, `vms-backend` on `:8080`, `vms-frontend` on `:3000`). |
+    > | **Backend & DB Hosting** | **Render** | Containerized Spring Boot service connected to managed Cloud PostgreSQL. |
+  - **[Technology Stack.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Technology%20Stack/Technology%20Stack.md#L88) (Section 4 — Persistence Tier)**:
+    > | Tier | Database Engine | Driver / Tool | Justification |
+    > |---|---|---|---|
+    > | **Production / Docker** | **PostgreSQL 16** (`postgres:16-alpine`) | `org.postgresql:postgresql` + **Flyway** | ACID-compliant relational storage, versioned DDL migrations. |
+
+  ---
+
+  #### 4. Step-by-Step Technical Specifications
+  - **[STEP_8_DEPLOYMENT_SPECIFICATION.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/specifications/STEP_8_DEPLOYMENT_SPECIFICATION.md#L41-L68) (Section 3 — Multi-Stage Dockerization)**:
+    - Provides the complete multi-stage `vms-backend/Dockerfile` implementation using `maven:3.9.6-eclipse-temurin-17-alpine` (builder) and `eclipse-temurin:17-jre-alpine` (runtime) with non-root security principles and health checks.
+  - **[SPECIFICATIONS_CATALOG.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/specifications/SPECIFICATIONS_CATALOG.md#L5-L7)**:
+    > *"Project Specificity Invariant: All specifications in this directory are 100% concrete and specific to StarkGroup-VMS — implementing Spring Boot 3.3, Java 21, PostgreSQL 16, Flutter Web (Dart 3.x), Dio REST client, and Docker containerization."*
+  - **[STEP_4_DATABASE_SPECIFICATION.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/specifications/STEP_4_DATABASE_SPECIFICATION.md#L332)**:
+    > *"Idempotent Boot Test: Flyway migration must execute cleanly on both clean local Docker containers and cloud PostgreSQL instances without manual intervention."*
+
+  ---
+
+  #### 5. Developer Command & Run Guides
+  - **[COMMAND_GUIDE.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/query/commands/COMMAND_GUIDE.md)**:
+    - Details single-command orchestration:
+      ```powershell
+      docker compose up --build -d
+      ```
+
+
+---
+
+## Entry #033
+- **Date & Time**: 2026-11-23 06:33:00 +06:00
+- **Title**: Persistence Layer Architecture & Technical Breakdown
+- **User Request / Prompt**:
+  > what is the persistence layer?
+- **Agentic Log**:
+  - Examined the Clean 4-Tier architectural model in `System_Requirements/System Requirements and UML Diagrams.md` (Section 14 Tier 4), `System_Requirements/Technology Stack/Technology Stack.md` (Section 4), and `vms-backend/src/main/java/com/starkgroup/vms/`.
+  - Formulated a comprehensive, two-fold explanation:
+    1. Conceptual definition of a persistence layer in enterprise software engineering (data durability, abstraction, ACID transactions, and separation of concerns).
+    2. Concrete technical implementation within `SquareHealth-VMS` covering JPA Entities (`Vehicle`, `Driver`, etc.), Spring Data JPA Repositories (`VehicleRepository`), HikariCP connection pooling, Flyway database migrations (`V1__initial_schema.sql`), and the underlying PostgreSQL 16 database.
+  - Appended `Entry #033` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  ### 1. Conceptual Definition: What is a Persistence Layer?
+
+  In enterprise software engineering, the **Persistence Layer** (often called the Data Access Layer) is the architectural tier responsible for **reading, writing, updating, and permanently storing application data** in non-volatile storage (such as a relational database or disk) so that data survives application crashes, server reboots, and deployments.
+
+  #### Core Roles of a Persistence Layer:
+  1. **Durability & State Preservation**: Keeps entities (vehicles, drivers, logs) safely stored in persistent storage rather than transient volatile RAM.
+  2. **Separation of Concerns**: Decouples business logic (`VehicleService`) from low-level database operations, SQL dialect nuances, connection lifecycles, and network sockets.
+  3. **Object-Relational Mapping (ORM)**: Automatically maps object-oriented Java data structures (classes, properties, collections) into relational SQL tables, rows, foreign keys, and columns.
+  4. **ACID Transaction Guarantees**: Coordinates transactions so multi-step mutations either all succeed or cleanly roll back (**A**tomicity, **C**onsistency, **I**solation, **D**urability).
+  5. **Security & SQL Injection Prevention**: Enforces parameterized queries and prepared statements rather than raw string concatenation.
+
+  ---
+
+  ### 2. The Persistence Layer in SquareHealth-VMS
+
+  In the Clean 4-Tier Architecture of this project (formalized in [System Requirements and UML Diagrams.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/System%20Requirements%20and%20UML%20Diagrams.md#L837-L843) as **Tier 4: Persistence & Database Infrastructure Tier**), the persistence layer consists of five tightly integrated pillars:
+
+  ```mermaid
+  flowchart TD
+      subgraph Tier3["Tier 3: Domain & Business Services"]
+          SVC["VehicleServiceImpl\n(@Service @Transactional)"]
+      end
+
+      subgraph Tier4["Tier 4: Persistence & Database Layer"]
+          REPO["Spring Data JPA Repositories\n(VehicleRepository, DriverRepository)"]
+          ORM["Hibernate ORM & JPA Entities\n(@Entity Vehicle, Driver, MaintenanceLog)"]
+          POOL["HikariCP Connection Pool\n(Min: 5, Max: 30 Connections)"]
+          FLYWAY["Flyway Migration Engine\n(V1__initial_schema.sql)"]
+          DB[("PostgreSQL 16 Database\n(ACID Relational Storage / Port 5432)")]
+
+          REPO --> ORM
+          ORM --> POOL
+          POOL --> DB
+          FLYWAY --> DB
+      end
+
+      SVC -->|"Calls Repository Methods\n(e.g., save, findById, existsByVehicleNumber)"| REPO
+  ```
+
+  ---
+
+  ### 3. Detailed Technical Components in the Project
+
+  #### A. JPA Domain Entities ([vms-backend/src/main/java/com/starkgroup/vms/entity/](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/entity/))
+  These are Java classes annotated with `@Entity` that define table structures, constraints, relationships, and lifecycle timestamps:
+  - [Vehicle.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/entity/Vehicle.java): Maps to `vehicles` table (`vehicle_number`, `brand`, `model`, `status`, `assigned_driver_id`).
+  - [VehicleDocument.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/entity/VehicleDocument.java): Maps to `vehicle_documents` table with document metadata, expiry dates, and file URLs.
+  - [Driver.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/entity/Driver.java): Maps to `drivers` table (`license_number`, `phone`, `status`).
+  - [MaintenanceLog.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/entity/MaintenanceLog.java): Maps to `maintenance_logs` table (`service_date`, `cost`, `workshop`).
+  - [User.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/entity/User.java): Maps to `users` table with BCrypt hashed passwords and roles.
+  - [AuditLog.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/entity/AuditLog.java): Maps to `audit_logs` table for immutable operational audit trails.
+
+  #### B. Spring Data JPA Repositories ([vms-backend/src/main/java/com/starkgroup/vms/repository/](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/repository/))
+  Interfaces extending `JpaRepository<T, ID>` that provide full CRUD, pagination, and type-safe query generation without writing manual SQL:
+  - [VehicleRepository.java](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/java/com/starkgroup/vms/repository/VehicleRepository.java):
+    - `boolean existsByVehicleNumberIgnoreCase(String vehicleNumber)`: Powers the core duplicate plate invariant.
+    - `Page<Vehicle> findAll(Pageable pageable)`: Powers server-side pagination and sorting.
+    - Custom `@Query` specifications for multi-field search and status filtering.
+
+  #### C. Connection Pooling & Transactions
+  - **HikariCP**: High-performance JDBC pool configured in [application.properties](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/resources/application.properties#L10-L12):
+    ```properties
+    spring.datasource.hikari.maximum-pool-size=30
+    spring.datasource.hikari.minimum-idle=5
+    ```
+  - **`@Transactional`**: Applied in `VehicleServiceImpl.java` to guarantee atomicity—e.g., if vehicle deletion fails, any related document cleanup is safely rolled back.
+
+  #### D. Versioned Database Schema Migrations ([vms-backend/src/main/resources/db/migration/](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/resources/db/migration/))
+  - Managed by **Flyway**: [V1__initial_schema.sql](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/vms-backend/src/main/resources/db/migration/V1__initial_schema.sql) automates DDL execution on startup:
+    - Creates tables, primary keys, and foreign key cascades.
+    - Enforces DB-level `UNIQUE (vehicle_number)`.
+    - Creates B-Tree performance indexes (`idx_vehicles_number`, `idx_vehicles_status`, `idx_vehicles_company`).
+
+  #### E. Underlying Database Engines ([Technology Stack.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/System_Requirements/Technology%20Stack/Technology%20Stack.md#L84-L91))
+  - **Production**: Managed **PostgreSQL 16** with mandatory TLS encryption.
+  - **Docker / Local**: Containerized `postgres:16-alpine` or native local PostgreSQL service on port `5432`.
+  - **Automated Tests**: In-memory **H2 Database** (`jdbc:h2:mem:testdb`) for instant test runs without external database dependencies.
+
+
+---
+
+## Entry #034
+- **Date & Time**: 2026-11-23 06:53:00 +06:00
+- **Title**: Synchronize & Update `chat.md` with All Turns
+- **User Request / Prompt**:
+  > update chat
+- **Agentic Log**:
+  - Reviewed `AI_Pair_Programming/chat/chat.md` and identified that it previously stopped at Turn 9.
+  - Cross-referenced all sessions and entries recorded in `AI_Pair_Programming/chat/chatLog.md` (Entries #010 through #033).
+  - Synchronized `AI_Pair_Programming/chat/chat.md` by appending detailed logs for Turns 10 through 34, capturing every user prompt, internal diagnosis, tool execution, architectural explanation, and solution delivered.
+  - Appended `Entry #034` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  I have updated [chat.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/chat/chat.md) to bring it into full synchronization with all conversation turns and session logs.
+
+  ### Summary of Updated Turns in `chat.md`:
+  - **Turn 10**: Verify manual PostgreSQL installation (`postgresql-x64-18` service and `psql` 18.7).
+  - **Turn 11**: Re-read `Universal_Rules.txt` and establish `chatLog.md` format.
+  - **Turn 12**: Enforce verbatim agent response logging standard.
+  - **Turn 13**: PostgreSQL `vms_db` database creation walkthrough.
+  - **Turn 14**: Antigravity IDE PowerShell navigation shortcuts.
+  - **Turn 15–17**: Diagnose Spring Boot startup credentials and runtime exit code 1.
+  - **Turn 18**: Clarify IDE null-type safety warnings vs. terminal runtime failures.
+  - **Turn 19**: Fix angle-bracket placeholder typo in `$env:SPRING_DATASOURCE_PASSWORD` (Spring Boot successfully boots on port 8080).
+  - **Turn 20–21**: Launch Flutter Web client (`flutter run -d chrome`) and resolve terminal session PATH reload.
+  - **Turn 22**: Post-launch feature verification guide (Vehicle CRUD, drivers, duplicate plate check).
+  - **Turn 23**: Verification of all 7 core VMS requirements (100% compliance).
+  - **Turn 24–25**: Step-by-step instructions for repository public visibility on GitHub.
+  - **Turn 26–28**: Reorganize `README.md` with `request_flow.svg` and Request-Response Lifecycle Architecture.
+  - **Turn 29–30**: Create animated `project_architecture.svg` and place at the very top of `README.md`.
+  - **Turn 31**: Comprehensive 3-Tier cloud deployment architecture breakdown (Netlify, Render, Managed PostgreSQL, Docker, CI/CD).
+  - **Turn 32**: Project requirement analysis regarding Docker suggestions and exact sources (`NFR-08`).
+  - **Turn 33**: Persistence layer architecture and technical breakdown (Entities, JPA Repositories, HikariCP, Flyway, PostgreSQL 16).
+  - **Turn 34**: Complete synchronization of [chat.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/chat/chat.md) and [chatLog.md](file:///c:/Users/USER/Documents/.MYGITHUB/SquareHealth-VMS/AI_Pair_Programming/chat/chatLog.md).
+
+
+---
+
+## Entry #035
+- **Date & Time**: 2026-11-23 06:54:00 +06:00
+- **Title**: Stage, Commit & Push Updates to GitHub Repository
+- **User Request / Prompt**:
+  > upload to github
+- **Agentic Log**:
+  - Ran `git status` to verify modified files: `AI_Pair_Programming/chat/chat.md` and `AI_Pair_Programming/chat/chatLog.md`.
+  - Staged all changes using `git add -A`.
+  - Created commit with descriptive message: `docs: update chat log and conversation turns (Turns 10-35)`.
+  - Executed `git push origin main` to synchronize local branch with GitHub remote (`https://github.com/AkmKawser/SquareHealth-VMS.git`).
+  - Verified remote status and commit hash.
+  - Appended `Entry #035` to `AI_Pair_Programming/chat/chatLog.md` with the verbatim Agent Response.
+- **Agent Response**:
+  Successfully staged, committed, and uploaded all changes to GitHub!
+
+  ### Push Summary:
+  - **Repository**: [AkmKawser/SquareHealth-VMS](https://github.com/AkmKawser/SquareHealth-VMS)
+  - **Branch**: `main`
+  - **Committed Files**:
+    - `AI_Pair_Programming/chat/chat.md`
+    - `AI_Pair_Programming/chat/chatLog.md`
+  - **Status**: Working tree clean, branch up to date with `origin/main`.

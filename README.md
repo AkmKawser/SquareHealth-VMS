@@ -1,5 +1,61 @@
 # SquareHealth-VMS (Stark Group Fleet Management System)
 
+## 🌐 Distributed System Architecture (Decoupled 3-Tier Model)
+
+SquareHealth-VMS is architected and classified as a **Decoupled Multi-Tier (3-Tier) Client-Server Distributed System**. While the backend application is engineered as a **Modular Monolith** for operational robustness and single-database ACID integrity, the system's runtime topology is fully distributed across autonomous networked physical nodes.
+
+```mermaid
+flowchart LR
+    subgraph Node1["Node 1: Client Workstation / Browser"]
+        UI["Flutter Web SPA Runtime\n(Dart / CanvasKit / Riverpod)\nRuns in user's browser worldwide\nServed from Netlify Edge CDN"]
+    end
+
+    subgraph Node2["Node 2: Render Cloud Application Server"]
+        API["vms-backend Container\n(Java 21 / Spring Boot 3.2.5 / Tomcat)\nStateless compute node in cloud\nPort 8080"]
+    end
+
+    subgraph Node3["Node 3: Cloud Database Server"]
+        DB[("Managed PostgreSQL 16\n(RDBMS with persistent disk storage)\nDedicated database node\nPort 5432 (SSL Required)")]
+    end
+
+    UI -->|"1. Message Passing: HTTPS REST / JSON\n(Public Internet / Port 443)"| API
+    API -->|"2. Message Passing: JDBC wire protocol\n(Private TLS Network / Port 5432)"| DB
+```
+
+### Core Distributed System Characteristics
+
+1. **Physical Node Separation & Absence of Shared Memory**:
+   - The Presentation layer (Flutter Web), Application compute engine (Spring Boot), and Persistence engine (PostgreSQL) do **not share memory, CPU, or physical disks**.
+   - They execute on physically separate nodes located in different geographic datacenters, coordinating exclusively via network message-passing protocols.
+2. **Standardized Message-Passing Communication**:
+   - **Frontend $\leftrightarrow$ Backend**: Communicates via stateless **HTTPS REST APIs** with JSON payloads adhering to RFC 7807 problem details.
+   - **Backend $\leftrightarrow$ Database**: Communicates via the encrypted **PostgreSQL wire protocol (JDBC over TLS)**.
+3. **Independent Failure Modes & Fault Isolation**:
+   - **Database Outage**: If the database server is restarting or undergoing maintenance, the backend container remains active, reporting degradation through `/actuator/health` and returning graceful HTTP 503 envelopes.
+   - **Backend Redeployments**: When the backend container redeploys or experiences cold starts, the browser-resident Flutter client remains fully operational, providing user-friendly retry banners without page crashes.
+   - **Client Isolation**: Failures or network dropouts on a user's workstation have zero blast radius on the backend or other fleet operators.
+4. **Heterogeneous Runtimes & Polyglot Architecture**:
+   - Seamlessly coordinates three distinct computing paradigms:
+     - **Client Node**: Dart compiled to WebAssembly / JavaScript executing inside browser engines.
+     - **Compute Node**: Java 21 bytecode executing on Eclipse Temurin OpenJDK inside an Alpine Linux container.
+     - **Storage Node**: C/C++ native database binary executing PostgreSQL 16 with WAL journaling.
+5. **Stateless Horizontal Scalability**:
+   - The backend stores zero user session state in local memory; authentication is completely stateless using signed **JWT (JSON Web Tokens)**.
+   - Multiple backend container instances can be launched in parallel behind a cloud load balancer or reverse proxy without session stickiness or cache invalidation bottlenecks.
+
+### Architectural Classification: Distributed 3-Tier vs. Microservices
+
+| Architectural Dimension | Distributed Microservices Architecture | SquareHealth-VMS (Distributed 3-Tier Model) |
+|---|---|---|
+| **Physical Topology** | Distributed across 10–50+ independent services | **Distributed across 3 distinct tiers (Client, Compute, Storage)** |
+| **Backend Structure** | Polyrepo / Multiple decoupled service binaries | **Modular Monolith (`vms-backend.jar`) with clean domain separation** |
+| **Data Consistency** | Eventual consistency (Saga pattern, 2-Phase Commit) | **Strong immediate ACID consistency via PostgreSQL transactions** |
+| **Duplicate Rule Invariant** | Requires distributed locking or event deduplication | **Enforced atomically via `@Transactional` & DB `UNIQUE` constraints** |
+| **Network Overhead** | High internal latency (service-to-service gRPC / Kafka) | **Minimal network hops (Direct: Client $\to$ Backend $\to$ Database)** |
+| **Operational Complexity** | High (service discovery, distributed tracing, meshes) | **Clean and robust (Docker Compose, Flyway auto-DDL, single JAR)** |
+
+---
+
 ## Full Project Architecture (Data Ingestion to Cloud Deployment)
 
 ![SquareHealth-VMS Full Project Architecture](AI_Pair_Programming/project_architecture.svg)
